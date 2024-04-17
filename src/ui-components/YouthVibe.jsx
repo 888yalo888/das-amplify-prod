@@ -117,7 +117,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={youth?.id}
+            children={youth?.fullName}
             {...getOverrideProps(overrides, "Britt Reid")}
           ></Text>
           <Text
@@ -138,6 +138,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
+            children={youth?.gender}
             {...getOverrideProps(overrides, "Grade 3")}
           ></Text>
         </Flex>
