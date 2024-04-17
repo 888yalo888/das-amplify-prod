@@ -23,10 +23,9 @@ const Status = {
   "ARCHIVED": "ARCHIVED"
 };
 
-const { SiteDemo, Vibe, Youth, ProgramManager, Site, YouthSite, ProgramManagerSite } = initSchema(schema);
+const { Vibe, Youth, ProgramManager, Site, YouthSite, ProgramManagerSite } = initSchema(schema);
 
 export {
-  SiteDemo,
   Vibe,
   Youth,
   ProgramManager,

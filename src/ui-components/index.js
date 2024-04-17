@@ -38,8 +38,6 @@ export { default as ProgramManagerUpdateForm } from "./ProgramManagerUpdateForm"
 export { default as ReviewCard } from "./ReviewCard";
 export { default as SideBar } from "./SideBar";
 export { default as SiteCreateForm } from "./SiteCreateForm";
-export { default as SiteDemoCreateForm } from "./SiteDemoCreateForm";
-export { default as SiteDemoUpdateForm } from "./SiteDemoUpdateForm";
 export { default as SiteUpdateForm } from "./SiteUpdateForm";
 export { default as SocialPost } from "./SocialPost";
 export { default as StandardCard } from "./StandardCard";

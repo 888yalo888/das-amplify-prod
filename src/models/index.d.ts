@@ -25,36 +25,6 @@ export enum Status {
 
 
 
-type EagerSiteDemo = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<SiteDemo, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly sitename?: string | null;
-  readonly siteID?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazySiteDemo = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<SiteDemo, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly sitename?: string | null;
-  readonly siteID?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type SiteDemo = LazyLoading extends LazyLoadingDisabled ? EagerSiteDemo : LazySiteDemo
-
-export declare const SiteDemo: (new (init: ModelInit<SiteDemo>) => SiteDemo) & {
-  copyOf(source: SiteDemo, mutator: (draft: MutableModel<SiteDemo>) => MutableModel<SiteDemo> | void): SiteDemo;
-}
-
 type EagerVibe = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Vibe, 'id'>;
