@@ -1,0 +1,405 @@
+/***************************************************************************
+ * The contents of this file were generated with Amplify Studio.           *
+ * Please refrain from making any modifications to this file.              *
+ * Any changes to this file will be overwritten when running amplify pull. *
+ **************************************************************************/
+
+/* eslint-disable */
+import * as React from "react";
+import { getOverrideProps } from "./utils";
+import { Flex, Icon, Text, View } from "@aws-amplify/ui-react";
+import Vibe from "./Vibe";
+export default function VibeSummary(props) {
+  const { overrides, ...rest } = props;
+  return (
+    <View
+      width="256px"
+      height="96px"
+      display="block"
+      gap="unset"
+      alignItems="unset"
+      justifyContent="unset"
+      position="relative"
+      padding="0px 0px 0px 0px"
+      {...getOverrideProps(overrides, "VibeSummary")}
+      {...rest}
+    >
+      <View
+        width="256px"
+        height="96px"
+        display="block"
+        gap="unset"
+        alignItems="unset"
+        justifyContent="unset"
+        position="absolute"
+        top="0%"
+        bottom="0%"
+        left="0%"
+        right="0%"
+        border="1px SOLID rgba(194,194,194,1)"
+        borderRadius="4px"
+        padding="0px 0px 0px 0px"
+        backgroundColor="rgba(244,244,244,1)"
+        {...getOverrideProps(overrides, "Rectangle 21")}
+      ></View>
+      <Text
+        fontFamily="Inter"
+        fontSize="20px"
+        fontWeight="700"
+        color="rgba(0,0,0,1)"
+        lineHeight="25px"
+        textAlign="left"
+        display="block"
+        direction="column"
+        justifyContent="unset"
+        width="15.06px"
+        height="27.27px"
+        gap="unset"
+        alignItems="unset"
+        position="absolute"
+        top="70.45%"
+        bottom="1.14%"
+        left="22.27%"
+        right="71.85%"
+        padding="0px 0px 0px 0px"
+        whiteSpace="pre-wrap"
+        children="4"
+        {...getOverrideProps(overrides, "4")}
+      ></Text>
+      <Text
+        fontFamily="Inter"
+        fontSize="20px"
+        fontWeight="700"
+        color="rgba(0,0,0,1)"
+        lineHeight="25px"
+        textAlign="left"
+        display="block"
+        direction="column"
+        justifyContent="unset"
+        width="10.76px"
+        height="27.27px"
+        gap="unset"
+        alignItems="unset"
+        position="absolute"
+        top="70.45%"
+        bottom="1.14%"
+        left="71.85%"
+        right="23.95%"
+        padding="0px 0px 0px 0px"
+        whiteSpace="pre-wrap"
+        children="1"
+        {...getOverrideProps(overrides, "15922668")}
+      ></Text>
+      <Flex
+        gap="24px"
+        direction="row"
+        width="unset"
+        height="unset"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        position="absolute"
+        top="13px"
+        left="11px"
+        padding="0px 0px 0px 0px"
+        {...getOverrideProps(overrides, "Frame 447")}
+      >
+        <Flex
+          gap="8px"
+          direction="row"
+          width="unset"
+          height="unset"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          {...getOverrideProps(overrides, "Cool")}
+        >
+          <Text
+            fontFamily="Inter"
+            fontSize="16px"
+            fontWeight="400"
+            color="rgba(0,0,0,1)"
+            lineHeight="24px"
+            textAlign="right"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            children="1"
+            {...getOverrideProps(overrides, "15922672")}
+          ></Text>
+          <Vibe
+            width="24px"
+            height="24px"
+            display="block"
+            gap="unset"
+            alignItems="unset"
+            justifyContent="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            vibe="AtEase"
+            {...getOverrideProps(overrides, "Vibe59551259")}
+          ></Vibe>
+        </Flex>
+        <Flex
+          gap="8px"
+          direction="row"
+          width="unset"
+          height="unset"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          {...getOverrideProps(overrides, "Frame 444")}
+        >
+          <Text
+            fontFamily="Inter"
+            fontSize="16px"
+            fontWeight="400"
+            color="rgba(0,0,0,1)"
+            lineHeight="24px"
+            textAlign="right"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            children="1"
+            {...getOverrideProps(overrides, "15922671")}
+          ></Text>
+          <Vibe
+            width="24px"
+            height="24px"
+            display="block"
+            gap="unset"
+            alignItems="unset"
+            justifyContent="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            vibe="Happy"
+            {...getOverrideProps(overrides, "Vibe59551292")}
+          ></Vibe>
+        </Flex>
+        <Flex
+          gap="8px"
+          direction="row"
+          width="unset"
+          height="unset"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          {...getOverrideProps(overrides, "Frame 445")}
+        >
+          <Text
+            fontFamily="Inter"
+            fontSize="16px"
+            fontWeight="400"
+            color="rgba(0,0,0,1)"
+            lineHeight="24px"
+            textAlign="right"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            children="1"
+            {...getOverrideProps(overrides, "15922670")}
+          ></Text>
+          <Vibe
+            width="24px"
+            height="24px"
+            display="block"
+            gap="unset"
+            alignItems="unset"
+            justifyContent="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            vibe="Sad"
+            {...getOverrideProps(overrides, "Vibe59551334")}
+          ></Vibe>
+        </Flex>
+        <Flex
+          gap="8px"
+          direction="row"
+          width="unset"
+          height="unset"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          {...getOverrideProps(overrides, "Frame 446")}
+        >
+          <Text
+            fontFamily="Inter"
+            fontSize="16px"
+            fontWeight="400"
+            color="rgba(0,0,0,1)"
+            lineHeight="24px"
+            textAlign="right"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            children="1"
+            {...getOverrideProps(overrides, "15922669")}
+          ></Text>
+          <Vibe
+            width="24px"
+            height="24px"
+            display="block"
+            gap="unset"
+            alignItems="unset"
+            justifyContent="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            vibe="Angry"
+            {...getOverrideProps(overrides, "Vibe59551385")}
+          ></Vibe>
+        </Flex>
+      </Flex>
+      <Text
+        fontFamily="Inter"
+        fontSize="12px"
+        fontWeight="400"
+        color="rgba(0,0,0,1)"
+        lineHeight="18px"
+        textAlign="center"
+        display="block"
+        direction="column"
+        justifyContent="unset"
+        width="80.67px"
+        height="19.64px"
+        gap="unset"
+        alignItems="unset"
+        position="absolute"
+        top="53.41%"
+        bottom="26.14%"
+        left="8.82%"
+        right="59.66%"
+        padding="0px 0px 0px 0px"
+        whiteSpace="pre-wrap"
+        children="CHECKED-IN"
+        {...getOverrideProps(overrides, "CHECKED-IN")}
+      ></Text>
+      <Text
+        fontFamily="Inter"
+        fontSize="12px"
+        fontWeight="400"
+        color="rgba(0,0,0,1)"
+        lineHeight="18px"
+        textAlign="center"
+        display="block"
+        direction="column"
+        justifyContent="unset"
+        width="68.84px"
+        height="19.64px"
+        gap="unset"
+        alignItems="unset"
+        position="absolute"
+        top="53.41%"
+        bottom="26.14%"
+        left="61.76%"
+        right="11.34%"
+        padding="0px 0px 0px 0px"
+        whiteSpace="pre-wrap"
+        children="PICKED UP"
+        {...getOverrideProps(overrides, "PICKED UP")}
+      ></Text>
+      <Icon
+        width="256px"
+        height="0px"
+        viewBox={{
+          minX: 0,
+          minY: 0,
+          width: 256,
+          height: 0.000022380232621799223,
+        }}
+        paths={[
+          {
+            d: "M0 0L256 0L256 -1L0 -1L0 0Z",
+            stroke: "rgba(169,169,169,1)",
+            fillRule: "nonzero",
+            strokeWidth: 1,
+          },
+        ]}
+        display="block"
+        gap="unset"
+        alignItems="unset"
+        justifyContent="unset"
+        position="absolute"
+        top="51.14%"
+        bottom="48.86%"
+        left="0%"
+        right="0%"
+        transformOrigin="top left"
+        transform="rotate(0deg)"
+        {...getOverrideProps(overrides, "Line 9")}
+      ></Icon>
+      <Icon
+        width="48px"
+        height="0px"
+        viewBox={{
+          minX: 0,
+          minY: 0,
+          width: 0.000001923301169881597,
+          height: 48,
+        }}
+        paths={[
+          {
+            d: "M0 0L48 0L48 -1L0 -1L0 0Z",
+            stroke: "rgba(169,169,169,1)",
+            fillRule: "nonzero",
+            strokeWidth: 1,
+          },
+        ]}
+        display="block"
+        gap="unset"
+        alignItems="unset"
+        justifyContent="unset"
+        position="absolute"
+        top="50%"
+        bottom="50%"
+        left="50%"
+        right="31.25%"
+        transformOrigin="top left"
+        transform="rotate(90deg)"
+        {...getOverrideProps(overrides, "Line 10")}
+      ></Icon>
+    </View>
+  );
+}
