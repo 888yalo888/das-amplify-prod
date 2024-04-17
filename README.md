@@ -2,8 +2,6 @@
 
 April 12, 2024 
 
-Spencer's change
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
