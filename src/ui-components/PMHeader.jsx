@@ -6,10 +6,17 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useStateMutationAction } from "./utils";
 import { Flex, Heading, Icon, Image, View } from "@aws-amplify/ui-react";
 export default function PMHeader(props) {
   const { overrides, ...rest } = props;
+  const [
+    headingFiveNineThreeOneOneThreeSixOneChildren,
+    setHeadingFiveNineThreeOneOneThreeSixOneChildren,
+  ] = useStateMutationAction("test1");
+  const iconOnClick = () => {
+    setHeadingFiveNineThreeOneOneThreeSixOneChildren("test2");
+  };
   return (
     <Flex
       gap="24px"
@@ -19,7 +26,7 @@ export default function PMHeader(props) {
       justifyContent="flex-start"
       alignItems="center"
       position="relative"
-      boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
+      boxShadow="0px 3px 3px rgba(0, 0, 0, 0.25)"
       padding="4px 16px 4px 16px"
       backgroundColor="rgba(255,255,255,1)"
       {...getOverrideProps(overrides, "PMHeader")}
@@ -36,6 +43,7 @@ export default function PMHeader(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         objectFit="cover"
+        src="https://mbxe81.p3cdn1.secureserver.net/wp-content/uploads/2019/08/cropped-DAS-logo-for-web.png"
         {...getOverrideProps(overrides, "Logo")}
       ></Image>
       <Flex
@@ -57,7 +65,7 @@ export default function PMHeader(props) {
           height="unset"
           shrink="0"
           level="5"
-          children="Kiddie Academy of Far North Dallas"
+          children={headingFiveNineThreeOneOneThreeSixOneChildren}
           {...getOverrideProps(overrides, "Heading59311361")}
         ></Heading>
         <Icon
@@ -73,6 +81,9 @@ export default function PMHeader(props) {
           padding="0px 0px 0px 0px"
           type="chevron_down"
           fontSize="24px"
+          onClick={() => {
+            iconOnClick();
+          }}
           {...getOverrideProps(overrides, "\uD83D\uDD12Icon")}
         ></Icon>
       </Flex>
