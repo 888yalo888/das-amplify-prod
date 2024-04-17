@@ -138,7 +138,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="youth.grade"
+            children={youth?.gender}
             {...getOverrideProps(overrides, "Grade 3")}
           ></Text>
         </Flex>
