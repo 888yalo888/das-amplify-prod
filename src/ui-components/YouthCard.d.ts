@@ -5,7 +5,6 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth } from "../models";
 import { CardProps, IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
@@ -30,8 +29,6 @@ export declare type YouthCardOverridesProps = {
     MyIcon?: MyIconProps;
 } & EscapeHatchProps;
 export declare type YouthCardProps = React.PropsWithChildren<Partial<ViewProps> & {
-    youth?: Youth;
-} & {
     overrides?: YouthCardOverridesProps | undefined | null;
 }>;
 export default function YouthCard(props: YouthCardProps): React.ReactElement;
