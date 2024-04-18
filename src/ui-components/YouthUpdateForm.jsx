@@ -20,7 +20,7 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { Youth, Site, Vibe, YouthSite } from "../models";
+import { Youth, Site, YouthSite } from "../models";
 import {
   fetchByPath,
   getOverrideProps,
@@ -205,7 +205,6 @@ export default function YouthUpdateForm(props) {
     gender: "",
     status: "",
     site: [],
-    vibes: [],
   };
   const [fullName, setFullName] = React.useState(initialValues.fullName);
   const [createdDate, setCreatedDate] = React.useState(
@@ -224,16 +223,10 @@ export default function YouthUpdateForm(props) {
   const [gender, setGender] = React.useState(initialValues.gender);
   const [status, setStatus] = React.useState(initialValues.status);
   const [site, setSite] = React.useState(initialValues.site);
-  const [vibes, setVibes] = React.useState(initialValues.vibes);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = youthRecord
-      ? {
-          ...initialValues,
-          ...youthRecord,
-          site: linkedSite,
-          vibes: linkedVibes,
-        }
+      ? { ...initialValues, ...youthRecord, site: linkedSite }
       : initialValues;
     setFullName(cleanValues.fullName);
     setCreatedDate(cleanValues.createdDate);
@@ -246,16 +239,11 @@ export default function YouthUpdateForm(props) {
     setSite(cleanValues.site ?? []);
     setCurrentSiteValue(undefined);
     setCurrentSiteDisplayValue("");
-    setVibes(cleanValues.vibes ?? []);
-    setCurrentVibesValue(undefined);
-    setCurrentVibesDisplayValue("");
     setErrors({});
   };
   const [youthRecord, setYouthRecord] = React.useState(youthModelProp);
   const [linkedSite, setLinkedSite] = React.useState([]);
   const canUnlinkSite = false;
-  const [linkedVibes, setLinkedVibes] = React.useState([]);
-  const canUnlinkVibes = false;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
@@ -272,45 +260,28 @@ export default function YouthUpdateForm(props) {
           )
         : [];
       setLinkedSite(linkedSite);
-      const linkedVibes = record ? await record.vibes.toArray() : [];
-      setLinkedVibes(linkedVibes);
     };
     queryData();
   }, [idProp, youthModelProp]);
-  React.useEffect(resetStateValues, [youthRecord, linkedSite, linkedVibes]);
+  React.useEffect(resetStateValues, [youthRecord, linkedSite]);
   const [currentSiteDisplayValue, setCurrentSiteDisplayValue] =
     React.useState("");
   const [currentSiteValue, setCurrentSiteValue] = React.useState(undefined);
   const siteRef = React.createRef();
-  const [currentVibesDisplayValue, setCurrentVibesDisplayValue] =
-    React.useState("");
-  const [currentVibesValue, setCurrentVibesValue] = React.useState(undefined);
-  const vibesRef = React.createRef();
   const getIDValue = {
     site: (r) => JSON.stringify({ id: r?.id }),
-    vibes: (r) => JSON.stringify({ id: r?.id }),
   };
   const siteIdSet = new Set(
     Array.isArray(site)
       ? site.map((r) => getIDValue.site?.(r))
       : getIDValue.site?.(site)
   );
-  const vibesIdSet = new Set(
-    Array.isArray(vibes)
-      ? vibes.map((r) => getIDValue.vibes?.(r))
-      : getIDValue.vibes?.(vibes)
-  );
   const siteRecords = useDataStoreBinding({
     type: "collection",
     model: Site,
   }).items;
-  const vibeRecords = useDataStoreBinding({
-    type: "collection",
-    model: Vibe,
-  }).items;
   const getDisplayValue = {
     site: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
-    vibes: (r) => `${r?.checkInVibe ? r?.checkInVibe + " - " : ""}${r?.id}`,
   };
   const validations = {
     fullName: [],
@@ -322,7 +293,6 @@ export default function YouthUpdateForm(props) {
     gender: [],
     status: [],
     site: [{ type: "Required", validationMessage: "Site is required." }],
-    vibes: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -376,7 +346,6 @@ export default function YouthUpdateForm(props) {
           gender,
           status,
           site,
-          vibes,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -482,45 +451,6 @@ export default function YouthUpdateForm(props) {
               );
             }
           });
-          const vibesToLink = [];
-          const vibesToUnLink = [];
-          const vibesSet = new Set();
-          const linkedVibesSet = new Set();
-          vibes.forEach((r) => vibesSet.add(getIDValue.vibes?.(r)));
-          linkedVibes.forEach((r) => linkedVibesSet.add(getIDValue.vibes?.(r)));
-          linkedVibes.forEach((r) => {
-            if (!vibesSet.has(getIDValue.vibes?.(r))) {
-              vibesToUnLink.push(r);
-            }
-          });
-          vibes.forEach((r) => {
-            if (!linkedVibesSet.has(getIDValue.vibes?.(r))) {
-              vibesToLink.push(r);
-            }
-          });
-          vibesToUnLink.forEach((original) => {
-            if (!canUnlinkVibes) {
-              throw Error(
-                `Vibe ${original.id} cannot be unlinked from Youth because youthID is a required field.`
-              );
-            }
-            promises.push(
-              DataStore.save(
-                Vibe.copyOf(original, (updated) => {
-                  updated.youthID = null;
-                })
-              )
-            );
-          });
-          vibesToLink.forEach((original) => {
-            promises.push(
-              DataStore.save(
-                Vibe.copyOf(original, (updated) => {
-                  updated.youthID = youthRecord.id;
-                })
-              )
-            );
-          });
           const modelFieldsToSave = {
             fullName: modelFields.fullName,
             createdDate: modelFields.createdDate,
@@ -569,7 +499,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.fullName ?? value;
@@ -604,7 +533,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.createdDate ?? value;
@@ -638,7 +566,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.dateOfBirth ?? value;
@@ -671,7 +598,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.guardianFullName ?? value;
@@ -705,7 +631,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.guardianPhoneNumber ?? value;
@@ -740,7 +665,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.grade ?? value;
@@ -839,7 +763,6 @@ export default function YouthUpdateForm(props) {
               gender: value,
               status,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.gender ?? value;
@@ -872,7 +795,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status: value,
               site,
-              vibes,
             };
             const result = onChange(modelFields);
             value = result?.status ?? value;
@@ -912,7 +834,6 @@ export default function YouthUpdateForm(props) {
               gender,
               status,
               site: values,
-              vibes,
             };
             const result = onChange(modelFields);
             values = result?.site ?? values;
@@ -977,89 +898,6 @@ export default function YouthUpdateForm(props) {
           ref={siteRef}
           labelHidden={true}
           {...getOverrideProps(overrides, "site")}
-        ></Autocomplete>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              fullName,
-              createdDate,
-              dateOfBirth,
-              guardianFullName,
-              guardianPhoneNumber,
-              grade,
-              gender,
-              status,
-              site,
-              vibes: values,
-            };
-            const result = onChange(modelFields);
-            values = result?.vibes ?? values;
-          }
-          setVibes(values);
-          setCurrentVibesValue(undefined);
-          setCurrentVibesDisplayValue("");
-        }}
-        currentFieldValue={currentVibesValue}
-        label={"Vibes"}
-        items={vibes}
-        hasError={errors?.vibes?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("vibes", currentVibesValue)
-        }
-        errorMessage={errors?.vibes?.errorMessage}
-        getBadgeText={getDisplayValue.vibes}
-        setFieldValue={(model) => {
-          setCurrentVibesDisplayValue(
-            model ? getDisplayValue.vibes(model) : ""
-          );
-          setCurrentVibesValue(model);
-        }}
-        inputFieldRef={vibesRef}
-        defaultFieldValue={""}
-      >
-        <Autocomplete
-          label="Vibes"
-          isRequired={false}
-          isReadOnly={false}
-          placeholder="Search Vibe"
-          value={currentVibesDisplayValue}
-          options={vibeRecords
-            .filter((r) => !vibesIdSet.has(getIDValue.vibes?.(r)))
-            .map((r) => ({
-              id: getIDValue.vibes?.(r),
-              label: getDisplayValue.vibes?.(r),
-            }))}
-          onSelect={({ id, label }) => {
-            setCurrentVibesValue(
-              vibeRecords.find((r) =>
-                Object.entries(JSON.parse(id)).every(
-                  ([key, value]) => r[key] === value
-                )
-              )
-            );
-            setCurrentVibesDisplayValue(label);
-            runValidationTasks("vibes", label);
-          }}
-          onClear={() => {
-            setCurrentVibesDisplayValue("");
-          }}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.vibes?.hasError) {
-              runValidationTasks("vibes", value);
-            }
-            setCurrentVibesDisplayValue(value);
-            setCurrentVibesValue(undefined);
-          }}
-          onBlur={() => runValidationTasks("vibes", currentVibesDisplayValue)}
-          errorMessage={errors.vibes?.errorMessage}
-          hasError={errors.vibes?.hasError}
-          ref={vibesRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "vibes")}
         ></Autocomplete>
       </ArrayField>
       <Flex
