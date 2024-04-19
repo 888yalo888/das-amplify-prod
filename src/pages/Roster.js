@@ -5,7 +5,7 @@ function Roster() {
   return (
     <>
     <h1>Roster</h1>
-    <Link to="/check-in">
+    <Link to="/">
       <button>Go Back to Check In</button>
     </Link>  
     </>
