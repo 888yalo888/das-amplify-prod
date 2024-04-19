@@ -7,16 +7,25 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps, useStateMutationAction } from "./utils";
+import { useEffect } from "react";
 import { Flex, Heading, Icon, Image, View } from "@aws-amplify/ui-react";
 export default function PMHeader(props) {
-  const { overrides, ...rest } = props;
+  const { SiteName, overrides, ...rest } = props;
   const [
     headingFiveNineThreeOneOneThreeSixOneChildren,
     setHeadingFiveNineThreeOneOneThreeSixOneChildren,
-  ] = useStateMutationAction("test1");
+  ] = useStateMutationAction(undefined);
   const iconOnClick = () => {
     setHeadingFiveNineThreeOneOneThreeSixOneChildren("test2");
   };
+  useEffect(() => {
+    if (
+      headingFiveNineThreeOneOneThreeSixOneChildren === undefined &&
+      SiteName !== undefined &&
+      SiteName?.name !== undefined
+    )
+      setHeadingFiveNineThreeOneOneThreeSixOneChildren(SiteName?.name);
+  }, [SiteName]);
   return (
     <Flex
       gap="24px"
