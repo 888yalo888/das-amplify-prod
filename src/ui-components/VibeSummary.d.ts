@@ -19,14 +19,14 @@ export declare type Variant = {
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type VibeSummaryOverridesProps = {
-    "4"?: PrimitiveOverrideProps<TextProps>;
-    "15922668"?: PrimitiveOverrideProps<TextProps>;
     "15922669"?: PrimitiveOverrideProps<TextProps>;
     "15922670"?: PrimitiveOverrideProps<TextProps>;
     "15922671"?: PrimitiveOverrideProps<TextProps>;
     "15922672"?: PrimitiveOverrideProps<TextProps>;
     VibeSummary?: PrimitiveOverrideProps<ViewProps>;
     "Rectangle 21"?: PrimitiveOverrideProps<ViewProps>;
+    "4/11"?: PrimitiveOverrideProps<TextProps>;
+    "1/4"?: PrimitiveOverrideProps<TextProps>;
     "Frame 447"?: PrimitiveOverrideProps<FlexProps>;
     Cool?: PrimitiveOverrideProps<FlexProps>;
     Vibe59551259?: VibeProps;
