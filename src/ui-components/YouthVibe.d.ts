@@ -24,7 +24,7 @@ export declare type YouthVibeOverridesProps = {
     YouthVibe?: PrimitiveOverrideProps<FlexProps>;
     TopCard?: PrimitiveOverrideProps<FlexProps>;
     YouthInfo?: PrimitiveOverrideProps<FlexProps>;
-    "Britt Reid"?: PrimitiveOverrideProps<TextProps>;
+    "Britt Reifffffffffd"?: PrimitiveOverrideProps<TextProps>;
     "Grade 3"?: PrimitiveOverrideProps<TextProps>;
     Vibe?: VibeProps;
     Divider?: PrimitiveOverrideProps<DividerProps>;
@@ -35,7 +35,7 @@ export declare type YouthVibeOverridesProps = {
 export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
     youth?: Youth;
 } & {
-    property1?: "Default" | "Variant2";
+    youthStatus?: "CheckedIn" | "Default";
 } & {
     overrides?: YouthVibeOverridesProps | undefined | null;
 }>;

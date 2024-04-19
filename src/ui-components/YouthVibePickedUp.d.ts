@@ -5,7 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FlexProps, HeadingProps, IconProps, ImageProps, ViewProps } from "@aws-amplify/ui-react";
+import { DividerProps, FlexProps, TextProps } from "@aws-amplify/ui-react";
+import { VibeProps } from "./Vibe";
 import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -18,17 +19,19 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type PMHeaderOverridesProps = {
-    PMHeader?: PrimitiveOverrideProps<FlexProps>;
-    Logo?: PrimitiveOverrideProps<ImageProps>;
-    "Site Drop Down"?: PrimitiveOverrideProps<FlexProps>;
-    Heading59311361?: PrimitiveOverrideProps<HeadingProps>;
+export declare type YouthVibePickedUpOverridesProps = {
+    YouthVibePickedUp?: PrimitiveOverrideProps<FlexProps>;
+    TopCard?: PrimitiveOverrideProps<FlexProps>;
+    YouthInfo?: PrimitiveOverrideProps<FlexProps>;
+    "Britt Reifffffffffd"?: PrimitiveOverrideProps<TextProps>;
+    "Grade 3"?: PrimitiveOverrideProps<TextProps>;
+    Vibe?: VibeProps;
+    Divider?: PrimitiveOverrideProps<DividerProps>;
+    BottomCard?: PrimitiveOverrideProps<FlexProps>;
     MyIcon?: MyIconProps;
-    "Profile Bug"?: PrimitiveOverrideProps<ViewProps>;
-    "Ellipse 1"?: PrimitiveOverrideProps<IconProps>;
-    Heading59311360?: PrimitiveOverrideProps<HeadingProps>;
+    "PICKED UP"?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
-export declare type PMHeaderProps = React.PropsWithChildren<Partial<FlexProps> & {
-    overrides?: PMHeaderOverridesProps | undefined | null;
+export declare type YouthVibePickedUpProps = React.PropsWithChildren<Partial<FlexProps> & {
+    overrides?: YouthVibePickedUpOverridesProps | undefined | null;
 }>;
-export default function PMHeader(props: PMHeaderProps): React.ReactElement;
+export default function YouthVibePickedUp(props: YouthVibePickedUpProps): React.ReactElement;

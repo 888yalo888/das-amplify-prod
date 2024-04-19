@@ -13,7 +13,7 @@ export default function RosterTable(props) {
   return (
     <View
       width="1252px"
-      height="516px"
+      height="548px"
       display="block"
       gap="unset"
       alignItems="unset"

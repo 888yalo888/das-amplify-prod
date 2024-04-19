@@ -6,26 +6,11 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps, useStateMutationAction } from "./utils";
-import { useEffect } from "react";
+import { getOverrideProps } from "./utils";
 import { Flex, Heading, Icon, Image, View } from "@aws-amplify/ui-react";
+import MyIcon from "./MyIcon";
 export default function PMHeader(props) {
-  const { SiteName, overrides, ...rest } = props;
-  const [
-    headingFiveNineThreeOneOneThreeSixOneChildren,
-    setHeadingFiveNineThreeOneOneThreeSixOneChildren,
-  ] = useStateMutationAction(undefined);
-  const iconOnClick = () => {
-    setHeadingFiveNineThreeOneOneThreeSixOneChildren("test2");
-  };
-  useEffect(() => {
-    if (
-      headingFiveNineThreeOneOneThreeSixOneChildren === undefined &&
-      SiteName !== undefined &&
-      SiteName?.name !== undefined
-    )
-      setHeadingFiveNineThreeOneOneThreeSixOneChildren(SiteName?.name);
-  }, [SiteName]);
+  const { overrides, ...rest } = props;
   return (
     <Flex
       gap="24px"
@@ -52,7 +37,6 @@ export default function PMHeader(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         objectFit="cover"
-        src="https://mbxe81.p3cdn1.secureserver.net/wp-content/uploads/2019/08/cropped-DAS-logo-for-web.png"
         {...getOverrideProps(overrides, "Logo")}
       ></Image>
       <Flex
@@ -74,10 +58,10 @@ export default function PMHeader(props) {
           height="unset"
           shrink="0"
           level="5"
-          children={headingFiveNineThreeOneOneThreeSixOneChildren}
+          children="Kiddie Academy of Far North Dallas"
           {...getOverrideProps(overrides, "Heading59311361")}
         ></Heading>
-        <Icon
+        <MyIcon
           width="24px"
           height="24px"
           display="block"
@@ -88,13 +72,9 @@ export default function PMHeader(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          type="chevron_down"
-          fontSize="24px"
-          onClick={() => {
-            iconOnClick();
-          }}
-          {...getOverrideProps(overrides, "\uD83D\uDD12Icon")}
-        ></Icon>
+          type="more_horiz"
+          {...getOverrideProps(overrides, "MyIcon")}
+        ></MyIcon>
       </Flex>
       <View
         width="40px"
