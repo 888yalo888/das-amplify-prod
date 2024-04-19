@@ -6,11 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Card, Icon, Text, View } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function YouthCard(props) {
   const { overrides, ...rest } = props;
+  const youthCardOnClick = useNavigateAction({ type: "url", url: "" });
   return (
     <View
       width="318px"
@@ -21,6 +22,9 @@ export default function YouthCard(props) {
       justifyContent="unset"
       position="relative"
       padding="0px 0px 0px 0px"
+      onClick={() => {
+        youthCardOnClick();
+      }}
       {...getOverrideProps(overrides, "YouthCard")}
       {...rest}
     >
