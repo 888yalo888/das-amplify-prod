@@ -15,12 +15,12 @@ Amplify.configure(config);
 function App({ signOut, user }) {
   return (
     <>
-      <h1>Hello {user.username}</h1>
-      <button onClick={signOut}>Sign out</button>
       <PMHeader width="100%" />
+      <h1>Hello {user.username}</h1>
+      <button onClick={signOut}>Sign out</button> <br/>
       <Router>
         <Routes>
-          <Route path="/check-in" element={<CheckIn />} />
+          <Route path="/" element={<CheckIn/>}/>
           <Route path="/check-out" element={<CheckOut />} />
           <Route path="/roster" element={<Roster />} />
           <Route path="/vibe-check" element={<VibeCheck />} />

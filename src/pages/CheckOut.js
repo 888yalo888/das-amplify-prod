@@ -5,7 +5,7 @@ function CheckOut() {
   return (
     <>
     <h1>Checkout</h1>
-    <Link to="/check-in">
+    <Link to="/">
       <button>Go Back to Check In</button>
     </Link>  
     </>
