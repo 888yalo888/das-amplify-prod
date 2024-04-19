@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FiltersProps } from "./Filters";
-import { FlexProps } from "@aws-amplify/ui-react";
+import { FlexProps, SelectFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -20,7 +19,8 @@ export declare type Variant = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type DropdownSelectorOverridesProps = {
     DropdownSelector?: PrimitiveOverrideProps<FlexProps>;
-    DropdownSelector60251229?: FiltersProps;
+    DropdownSelector6031537?: PrimitiveOverrideProps<FlexProps>;
+    SelectField?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type DropdownSelectorProps = React.PropsWithChildren<Partial<FlexProps> & {
     overrides?: DropdownSelectorOverridesProps | undefined | null;
