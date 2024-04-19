@@ -5,7 +5,7 @@ function YouthDetails() {
   return (
     <>
     <h1>Youth Details</h1>
-    <Link to="/check-in">
+    <Link to="/">
       <button>Go Back to Check In</button>
     </Link>  
     </>
