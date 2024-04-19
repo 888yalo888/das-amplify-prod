@@ -5,6 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
+import { Site } from "../models";
 import { FlexProps, HeadingProps, IconProps, ImageProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -28,6 +29,8 @@ export declare type PMHeaderOverridesProps = {
     Heading59311360?: PrimitiveOverrideProps<HeadingProps>;
 } & EscapeHatchProps;
 export declare type PMHeaderProps = React.PropsWithChildren<Partial<FlexProps> & {
+    SiteName?: Site;
+} & {
     overrides?: PMHeaderOverridesProps | undefined | null;
 }>;
 export default function PMHeader(props: PMHeaderProps): React.ReactElement;

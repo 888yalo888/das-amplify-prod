@@ -35,10 +35,12 @@ export default function Youths(props) {
   }, [itemsProp, itemsDataStore]);
   return (
     <Collection
-      type="list"
+      type="grid"
       searchPlaceholder="Search..."
-      direction="row"
+      templateColumns="1fr 1fr"
+      autoFlow="row"
       alignItems="stretch"
+      justifyContent="stretch"
       items={items || []}
       {...getOverrideProps(overrides, "Youths")}
       {...rest}
@@ -46,6 +48,9 @@ export default function Youths(props) {
       {(item, index) => (
         <YouthVibe
           youth={item}
+          height="auto"
+          width="300px"
+          margin="5px 5px 5px 5px"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
         ></YouthVibe>

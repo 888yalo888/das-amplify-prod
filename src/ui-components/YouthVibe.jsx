@@ -10,6 +10,7 @@ import {
   getOverrideProps,
   getOverridesFromVariants,
   mergeVariantsAndOverrides,
+  useNavigateAction,
 } from "./utils";
 import { Divider, Flex, Text } from "@aws-amplify/ui-react";
 import Vibe from "./Vibe";
@@ -55,6 +56,11 @@ export default function YouthVibe(props) {
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
+  const youthVibeOnClick = useNavigateAction({
+    type: "url",
+    url: "/check-out",
+  });
+  const topCardOnClick = useNavigateAction({ type: "url", url: "/vibe-check" });
   return (
     <Flex
       gap="7px"
@@ -69,6 +75,9 @@ export default function YouthVibe(props) {
       padding="23px 15px 23px 15px"
       backgroundColor="rgba(255,255,255,1)"
       display="flex"
+      onClick={() => {
+        youthVibeOnClick();
+      }}
       {...getOverrideProps(overrides, "YouthVibe")}
       {...rest}
     >
@@ -84,6 +93,9 @@ export default function YouthVibe(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         display="flex"
+        onClick={() => {
+          topCardOnClick();
+        }}
         {...getOverrideProps(overrides, "TopCard")}
       >
         <Flex
@@ -138,7 +150,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="youth.grade"
+            children={youth?.dateOfBirth}
             {...getOverrideProps(overrides, "Grade 3")}
           ></Text>
         </Flex>

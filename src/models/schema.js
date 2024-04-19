@@ -696,6 +696,16 @@ export const schema = {
         }
     },
     "enums": {
+        "Routes": {
+            "name": "Routes",
+            "values": [
+                "LOGIN",
+                "CHECKIN",
+                "CHECKOUT",
+                "ROSTER",
+                "VIBECHECK"
+            ]
+        },
         "Grade": {
             "name": "Grade",
             "values": [
