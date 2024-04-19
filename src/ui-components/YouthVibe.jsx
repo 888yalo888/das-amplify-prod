@@ -56,8 +56,11 @@ export default function YouthVibe(props) {
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
-  const youthVibeOnClick = useNavigateAction({ type: "url", url: "" });
-  const topCardOnClick = useNavigateAction({ type: "url", url: "google.com" });
+  const youthVibeOnClick = useNavigateAction({
+    type: "url",
+    url: "/check-out",
+  });
+  const topCardOnClick = useNavigateAction({ type: "url", url: "/vibe-check" });
   return (
     <Flex
       gap="7px"
@@ -126,7 +129,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Jeff"
+            children={youth?.fullName}
             {...getOverrideProps(overrides, "Britt Reid")}
           ></Text>
           <Text
@@ -147,7 +150,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={youth?.gender}
+            children={youth?.dateOfBirth}
             {...getOverrideProps(overrides, "Grade 3")}
           ></Text>
         </Flex>
