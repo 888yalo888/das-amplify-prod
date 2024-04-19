@@ -7,8 +7,7 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "./utils";
-import Filters from "./Filters";
-import { Flex } from "@aws-amplify/ui-react";
+import { Flex, SelectField } from "@aws-amplify/ui-react";
 export default function DropdownSelector(props) {
   const { overrides, ...rest } = props;
   return (
@@ -24,8 +23,7 @@ export default function DropdownSelector(props) {
       {...getOverrideProps(overrides, "DropdownSelector")}
       {...rest}
     >
-      <Filters
-        display="flex"
+      <Flex
         gap="16px"
         direction="row"
         width="unset"
@@ -36,8 +34,21 @@ export default function DropdownSelector(props) {
         shrink="0"
         position="relative"
         padding="16px 16px 16px 16px"
-        {...getOverrideProps(overrides, "DropdownSelector60251229")}
-      ></Filters>
+        backgroundColor="rgba(255,255,255,1)"
+        {...getOverrideProps(overrides, "DropdownSelector6031537")}
+      >
+        <SelectField
+          width="240px"
+          height="unset"
+          placeholder="All"
+          shrink="0"
+          size="small"
+          isDisabled={false}
+          labelHidden={false}
+          variation="default"
+          {...getOverrideProps(overrides, "SelectField")}
+        ></SelectField>
+      </Flex>
     </Flex>
   );
 }
