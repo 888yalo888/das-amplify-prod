@@ -1,4 +1,5 @@
-import { PMHeader, YouthVibe, Youths } from './ui-components'
+import { PMHeader, Youths} from './ui-components'
+
 function App() {
   return (
    <>
