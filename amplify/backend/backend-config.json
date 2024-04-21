@@ -56,5 +56,6 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
-  }
+  },
+  "function": {}
 }

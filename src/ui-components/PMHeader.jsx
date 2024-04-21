@@ -38,6 +38,7 @@ export default function PMHeader(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         objectFit="cover"
+        src="https://mbxe81.p3cdn1.secureserver.net/wp-content/uploads/2019/08/cropped-DAS-logo-for-web.png"
         {...getOverrideProps(overrides, "Logo")}
       ></Image>
       <Flex
