@@ -15,7 +15,14 @@ import {
 import { Divider, Flex, Image, Text } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function YouthVibe(props) {
-  const { youth, overrides: overridesProp, ...rest } = props;
+  const {
+    youth,
+    vibe,
+    grade,
+    vibes,
+    overrides: overridesProp,
+    ...rest
+  } = props;
   const variants = [
     {
       overrides: {
@@ -75,13 +82,9 @@ export default function YouthVibe(props) {
   );
   const youthVibeOnClick = useNavigateAction({
     type: "url",
-    url: `${"/attendance-details/"}${youth?.id}`,
+    url: `${"/check-in/"}${youth?.id}`,
   });
   const topCardOnClick = useNavigateAction({ type: "url", url: "/vibe-check" });
-  const youthNameOnClick = useNavigateAction({
-    type: "url",
-    url: `${"/check-out/"}${youth?.id}`,
-  });
   return (
     <Flex
       gap="7px"
@@ -151,9 +154,6 @@ export default function YouthVibe(props) {
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
             children={youth?.fullName}
-            onClick={() => {
-              youthNameOnClick();
-            }}
             {...getOverrideProps(overrides, "YouthName")}
           ></Text>
           <Text
@@ -174,7 +174,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={youth?.dateOfBirth}
+            children={youth?.grade == "first" ? "FIRST" : "TEST"}
             {...getOverrideProps(overrides, "YouthGrade")}
           ></Text>
         </Flex>

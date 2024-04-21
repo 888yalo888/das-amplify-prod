@@ -6,10 +6,11 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Flex, Text } from "@aws-amplify/ui-react";
 export default function ButtonRoster(props) {
   const { overrides, ...rest } = props;
+  const labelOnClick = useNavigateAction({ type: "url", url: "/check-in" });
   return (
     <Flex
       gap="0"
@@ -57,6 +58,9 @@ export default function ButtonRoster(props) {
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
           children="Switch to Check-In"
+          onClick={() => {
+            labelOnClick();
+          }}
           {...getOverrideProps(overrides, "label")}
         ></Text>
       </Flex>
