@@ -5,9 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth } from "../models";
-import { DividerProps, FlexProps, TextProps } from "@aws-amplify/ui-react";
-import { VibeProps } from "./Vibe";
+import { Youth, Vibe } from "../models";
+import { DividerProps, FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
 import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -24,18 +23,21 @@ export declare type YouthVibeOverridesProps = {
     YouthVibe?: PrimitiveOverrideProps<FlexProps>;
     TopCard?: PrimitiveOverrideProps<FlexProps>;
     YouthInfo?: PrimitiveOverrideProps<FlexProps>;
-    "Britt Reifffffffffd"?: PrimitiveOverrideProps<TextProps>;
-    "Grade 3"?: PrimitiveOverrideProps<TextProps>;
-    Vibe?: VibeProps;
+    YouthName?: PrimitiveOverrideProps<TextProps>;
+    YouthGrade?: PrimitiveOverrideProps<TextProps>;
+    EmoteCool?: PrimitiveOverrideProps<ImageProps>;
     Divider?: PrimitiveOverrideProps<DividerProps>;
     BottomCard?: PrimitiveOverrideProps<FlexProps>;
-    MyIcon?: MyIconProps;
-    "CHECK OUT"?: PrimitiveOverrideProps<TextProps>;
+    YouthStatusIcon?: MyIconProps;
+    YouthStatus?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
     youth?: Youth;
+    vibe?: Vibe;
+    grade?: String;
+    vibes?: Youth;
 } & {
-    youthStatus?: "CheckedIn" | "Default";
+    youthStatus?: "CheckedIn" | "Default" | "PickedUp";
 } & {
     overrides?: YouthVibeOverridesProps | undefined | null;
 }>;

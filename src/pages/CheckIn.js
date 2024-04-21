@@ -1,7 +1,5 @@
 import React from 'react';
-import { ButtonCheckIn,Youths, VibeSummary, YouthVibePickedUp} from '../ui-components'
-import { Link } from 'react-router-dom'
-
+import { ButtonCheckIn,Youths, VibeSummary} from '../ui-components'
 
 const CheckIn = () => {
 
@@ -14,11 +12,9 @@ const CheckIn = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', margin: '10px 20px' }}>
-        <Link to="/roster" style={{ textDecoration: 'none'}}>
           <ButtonCheckIn >
             ButtonCheckIn
           </ButtonCheckIn>
-        </Link>
         <div style={{ fontFamily: 'var(--amplify-fonts-default-variable)', fontSize: '2em', fontWeight:'bold' }}>
           {getCurrentDate()}
         </div>        <div>
@@ -27,7 +23,6 @@ const CheckIn = () => {
       </div>
       <div>
         <Youths />
-        <YouthVibePickedUp/>
       </div>
     </div>
   );

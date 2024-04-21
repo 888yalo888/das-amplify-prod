@@ -12,22 +12,28 @@ import {
   mergeVariantsAndOverrides,
   useNavigateAction,
 } from "./utils";
-import { Divider, Flex, Text } from "@aws-amplify/ui-react";
-import Vibe from "./Vibe";
+import { Divider, Flex, Image, Text } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function YouthVibe(props) {
-  const { youth, overrides: overridesProp, ...rest } = props;
+  const {
+    youth,
+    vibe,
+    grade,
+    vibes,
+    overrides: overridesProp,
+    ...rest
+  } = props;
   const variants = [
     {
       overrides: {
-        "Britt Reifffffffffd": {},
-        "Grade 3": {},
+        YouthName: {},
+        YouthGrade: {},
         YouthInfo: {},
-        Vibe: {},
+        EmoteCool: {},
         TopCard: {},
         Divider: {},
-        MyIcon: {},
-        "CHECK OUT": {},
+        YouthStatusIcon: {},
+        YouthStatus: {},
         BottomCard: {},
         YouthVibe: {},
       },
@@ -35,18 +41,14 @@ export default function YouthVibe(props) {
     },
     {
       overrides: {
-        "Britt Reifffffffffd": {
-          fontSize: "20px",
-          lineHeight: "30px",
-          width: "206px",
-        },
-        "Grade 3": {},
+        YouthName: { fontSize: "20px", lineHeight: "30px", width: "206px" },
+        YouthGrade: {},
         YouthInfo: {},
-        Vibe: { display: "block" },
+        EmoteCool: { display: "block" },
         TopCard: { gap: "26px", width: "272px" },
         Divider: {},
-        MyIcon: {},
-        "CHECK OUT": {},
+        YouthStatusIcon: {},
+        YouthStatus: { children: "CHECKED IN" },
         BottomCard: { display: "flex" },
         YouthVibe: {
           padding: "7px 15px 7px 15px",
@@ -55,11 +57,33 @@ export default function YouthVibe(props) {
       },
       variantValues: { youthStatus: "CheckedIn" },
     },
+    {
+      overrides: {
+        YouthName: { fontSize: "20px", lineHeight: "30px" },
+        YouthGrade: {},
+        YouthInfo: { shrink: "1", grow: "1", basis: "0" },
+        EmoteCool: { display: "block" },
+        TopCard: { gap: "16px", width: "272px" },
+        Divider: {},
+        YouthStatusIcon: { type: "checkmark" },
+        YouthStatus: { children: "PICKED UP" },
+        BottomCard: { gap: "8px", display: "flex" },
+        YouthVibe: {
+          padding: "7px 15px 7px 15px",
+          backgroundColor: "rgba(214,245,219,1)",
+        },
+      },
+      variantValues: { youthStatus: "PickedUp" },
+    },
   ];
   const overrides = mergeVariantsAndOverrides(
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
+  const youthVibeOnClick = useNavigateAction({
+    type: "url",
+    url: `${"/check-in/"}${youth?.id}`,
+  });
   const topCardOnClick = useNavigateAction({ type: "url", url: "/vibe-check" });
   return (
     <Flex
@@ -75,6 +99,9 @@ export default function YouthVibe(props) {
       padding="23px 15px 23px 15px"
       backgroundColor="rgba(255,255,255,1)"
       display="flex"
+      onClick={() => {
+        youthVibeOnClick();
+      }}
       {...getOverrideProps(overrides, "YouthVibe")}
       {...rest}
     >
@@ -127,7 +154,7 @@ export default function YouthVibe(props) {
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
             children={youth?.fullName}
-            {...getOverrideProps(overrides, "Britt Reifffffffffd")}
+            {...getOverrideProps(overrides, "YouthName")}
           ></Text>
           <Text
             fontFamily="Inter"
@@ -147,13 +174,13 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={youth?.dateOfBirth}
-            {...getOverrideProps(overrides, "Grade 3")}
+            children={youth?.grade == "first" ? "FIRST" : "TEST"}
+            {...getOverrideProps(overrides, "YouthGrade")}
           ></Text>
         </Flex>
-        <Vibe
-          width="36px"
-          height="36px"
+        <Image
+          width="30px"
+          height="30px"
           display="none"
           gap="unset"
           alignItems="unset"
@@ -161,9 +188,9 @@ export default function YouthVibe(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          vibe="AtEase"
-          {...getOverrideProps(overrides, "Vibe")}
-        ></Vibe>
+          objectFit="cover"
+          {...getOverrideProps(overrides, "EmoteCool")}
+        ></Image>
       </Flex>
       <Divider
         width="unset"
@@ -201,7 +228,7 @@ export default function YouthVibe(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           type="checkout"
-          {...getOverrideProps(overrides, "MyIcon")}
+          {...getOverrideProps(overrides, "YouthStatusIcon")}
         ></MyIcon>
         <Text
           fontFamily="Inter"
@@ -222,7 +249,7 @@ export default function YouthVibe(props) {
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
           children="CHECK OUT"
-          {...getOverrideProps(overrides, "CHECK OUT")}
+          {...getOverrideProps(overrides, "YouthStatus")}
         ></Text>
       </Flex>
     </Flex>

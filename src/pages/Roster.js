@@ -9,11 +9,9 @@ const Roster = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', margin: '10px 20px' }}>
-        <Link to="/" style={{ textDecoration: 'none'}}>
           <ButtonRoster>
             ButtonCheckIn
           </ButtonRoster>
-        </Link>
       <div>
           {/* inster add youth button */}
         </div>
