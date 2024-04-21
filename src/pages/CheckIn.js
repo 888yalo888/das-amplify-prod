@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonCheckIn,Youths, VibeSummary} from '../ui-components'
+import { ButtonCheckIn,Youths, VibeSummary, YouthVibePickedUp} from '../ui-components'
 import { Link } from 'react-router-dom'
 
 
@@ -27,6 +27,7 @@ const CheckIn = () => {
       </div>
       <div>
         <Youths />
+        <YouthVibePickedUp/>
       </div>
     </div>
   );

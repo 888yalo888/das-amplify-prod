@@ -16,8 +16,8 @@ function App({ signOut, user }) {
   return (
     <>
       <PMHeader width="100%" />
-      {/* <h1>Hello {user.username}</h1> */}
-      {/* <button onClick={signOut}>Sign out</button> <br/> */}
+      <h1>Hello {user.username}</h1> 
+      <button onClick={signOut}>Sign out</button> <br/>
       <Router>
         <Routes>
           <Route path="/" element={<CheckIn/>}/>
@@ -31,5 +31,4 @@ function App({ signOut, user }) {
   );
 }
 
-// export default withAuthenticator(App);
-export default App
+export default withAuthenticator(App);
