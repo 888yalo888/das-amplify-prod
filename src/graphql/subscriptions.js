@@ -19,12 +19,147 @@ export const onCreateVibe = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       vibeSiteId
       __typename
     }
@@ -48,12 +183,147 @@ export const onUpdateVibe = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       vibeSiteId
       __typename
     }
@@ -77,12 +347,147 @@ export const onDeleteVibe = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       vibeSiteId
       __typename
     }
@@ -101,15 +506,195 @@ export const onCreateYouth = /* GraphQL */ `
       gender
       status
       site {
+        items {
+          id
+          youthId
+          siteId
+          youth {
+            id
+            fullName
+            createdDate
+            dateOfBirth
+            guardianFullName
+            guardianPhoneNumber
+            grade
+            gender
+            status
+            site {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            vibes {
+              items {
+                id
+                checkInVibe
+                checkOutVibe
+                checkInTime
+                checkOutTime
+                youthID
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                vibeSiteId
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       vibes {
+        items {
+          id
+          checkInVibe
+          checkOutVibe
+          checkInTime
+          checkOutTime
+          youthID
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          vibeSiteId
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -127,15 +712,195 @@ export const onUpdateYouth = /* GraphQL */ `
       gender
       status
       site {
+        items {
+          id
+          youthId
+          siteId
+          youth {
+            id
+            fullName
+            createdDate
+            dateOfBirth
+            guardianFullName
+            guardianPhoneNumber
+            grade
+            gender
+            status
+            site {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            vibes {
+              items {
+                id
+                checkInVibe
+                checkOutVibe
+                checkInTime
+                checkOutTime
+                youthID
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                vibeSiteId
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       vibes {
+        items {
+          id
+          checkInVibe
+          checkOutVibe
+          checkInTime
+          checkOutTime
+          youthID
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          vibeSiteId
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -153,15 +918,195 @@ export const onDeleteYouth = /* GraphQL */ `
       gender
       status
       site {
+        items {
+          id
+          youthId
+          siteId
+          youth {
+            id
+            fullName
+            createdDate
+            dateOfBirth
+            guardianFullName
+            guardianPhoneNumber
+            grade
+            gender
+            status
+            site {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            vibes {
+              items {
+                id
+                checkInVibe
+                checkOutVibe
+                checkInTime
+                checkOutTime
+                youthID
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                vibeSiteId
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       vibes {
+        items {
+          id
+          checkInVibe
+          checkOutVibe
+          checkInTime
+          checkOutTime
+          youthID
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          vibeSiteId
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -177,11 +1122,103 @@ export const onCreateProgramManager = /* GraphQL */ `
       email
       status
       AssignedTo {
+        items {
+          id
+          programManagerId
+          siteId
+          programManager {
+            id
+            fullName
+            createdDate
+            email
+            status
+            AssignedTo {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -197,11 +1234,103 @@ export const onUpdateProgramManager = /* GraphQL */ `
       email
       status
       AssignedTo {
+        items {
+          id
+          programManagerId
+          siteId
+          programManager {
+            id
+            fullName
+            createdDate
+            email
+            status
+            AssignedTo {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -217,11 +1346,103 @@ export const onDeleteProgramManager = /* GraphQL */ `
       email
       status
       AssignedTo {
+        items {
+          id
+          programManagerId
+          siteId
+          programManager {
+            id
+            fullName
+            createdDate
+            email
+            status
+            AssignedTo {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -238,15 +1459,220 @@ export const onCreateSite = /* GraphQL */ `
       siteAdminEmail
       status
       ManagedBy {
+        items {
+          id
+          programManagerId
+          siteId
+          programManager {
+            id
+            fullName
+            createdDate
+            email
+            status
+            AssignedTo {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       AttendedBy {
+        items {
+          id
+          youthId
+          siteId
+          youth {
+            id
+            fullName
+            createdDate
+            dateOfBirth
+            guardianFullName
+            guardianPhoneNumber
+            grade
+            gender
+            status
+            site {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            vibes {
+              items {
+                id
+                checkInVibe
+                checkOutVibe
+                checkInTime
+                checkOutTime
+                youthID
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                vibeSiteId
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -263,15 +1689,220 @@ export const onUpdateSite = /* GraphQL */ `
       siteAdminEmail
       status
       ManagedBy {
+        items {
+          id
+          programManagerId
+          siteId
+          programManager {
+            id
+            fullName
+            createdDate
+            email
+            status
+            AssignedTo {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       AttendedBy {
+        items {
+          id
+          youthId
+          siteId
+          youth {
+            id
+            fullName
+            createdDate
+            dateOfBirth
+            guardianFullName
+            guardianPhoneNumber
+            grade
+            gender
+            status
+            site {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            vibes {
+              items {
+                id
+                checkInVibe
+                checkOutVibe
+                checkInTime
+                checkOutTime
+                youthID
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                vibeSiteId
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -288,15 +1919,220 @@ export const onDeleteSite = /* GraphQL */ `
       siteAdminEmail
       status
       ManagedBy {
+        items {
+          id
+          programManagerId
+          siteId
+          programManager {
+            id
+            fullName
+            createdDate
+            email
+            status
+            AssignedTo {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       AttendedBy {
+        items {
+          id
+          youthId
+          siteId
+          youth {
+            id
+            fullName
+            createdDate
+            dateOfBirth
+            guardianFullName
+            guardianPhoneNumber
+            grade
+            gender
+            status
+            site {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            vibes {
+              items {
+                id
+                checkInVibe
+                checkOutVibe
+                checkInTime
+                checkOutTime
+                youthID
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                vibeSiteId
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          site {
+            id
+            name
+            createdDate
+            address
+            phoneNumber
+            siteAdminName
+            siteAdminEmail
+            status
+            ManagedBy {
+              items {
+                id
+                programManagerId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            AttendedBy {
+              items {
+                id
+                youthId
+                siteId
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                __typename
+              }
+              nextToken
+              startedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          __typename
+        }
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -319,8 +2155,126 @@ export const onCreateYouthSite = /* GraphQL */ `
         grade
         gender
         status
+        site {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        vibes {
+          items {
+            id
+            checkInVibe
+            checkOutVibe
+            checkInTime
+            checkOutTime
+            youthID
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            vibeSiteId
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       site {
@@ -332,12 +2286,147 @@ export const onCreateYouthSite = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -360,8 +2449,126 @@ export const onUpdateYouthSite = /* GraphQL */ `
         grade
         gender
         status
+        site {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        vibes {
+          items {
+            id
+            checkInVibe
+            checkOutVibe
+            checkInTime
+            checkOutTime
+            youthID
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            vibeSiteId
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       site {
@@ -373,12 +2580,147 @@ export const onUpdateYouthSite = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -401,8 +2743,126 @@ export const onDeleteYouthSite = /* GraphQL */ `
         grade
         gender
         status
+        site {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        vibes {
+          items {
+            id
+            checkInVibe
+            checkOutVibe
+            checkInTime
+            checkOutTime
+            youthID
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            vibeSiteId
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       site {
@@ -414,12 +2874,147 @@ export const onDeleteYouthSite = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -438,8 +3033,71 @@ export const onCreateProgramManagerSite = /* GraphQL */ `
         createdDate
         email
         status
+        AssignedTo {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       site {
@@ -451,12 +3109,147 @@ export const onCreateProgramManagerSite = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -475,8 +3268,71 @@ export const onUpdateProgramManagerSite = /* GraphQL */ `
         createdDate
         email
         status
+        AssignedTo {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       site {
@@ -488,12 +3344,147 @@ export const onUpdateProgramManagerSite = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -512,8 +3503,71 @@ export const onDeleteProgramManagerSite = /* GraphQL */ `
         createdDate
         email
         status
+        AssignedTo {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       site {
@@ -525,12 +3579,147 @@ export const onDeleteProgramManagerSite = /* GraphQL */ `
         siteAdminName
         siteAdminEmail
         status
+        ManagedBy {
+          items {
+            id
+            programManagerId
+            siteId
+            programManager {
+              id
+              fullName
+              createdDate
+              email
+              status
+              AssignedTo {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
+        AttendedBy {
+          items {
+            id
+            youthId
+            siteId
+            youth {
+              id
+              fullName
+              createdDate
+              dateOfBirth
+              guardianFullName
+              guardianPhoneNumber
+              grade
+              gender
+              status
+              site {
+                nextToken
+                startedAt
+                __typename
+              }
+              vibes {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            site {
+              id
+              name
+              createdDate
+              address
+              phoneNumber
+              siteAdminName
+              siteAdminEmail
+              status
+              ManagedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              AttendedBy {
+                nextToken
+                startedAt
+                __typename
+              }
+              createdAt
+              updatedAt
+              _version
+              _deleted
+              _lastChangedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            __typename
+          }
+          nextToken
+          startedAt
+          __typename
+        }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
