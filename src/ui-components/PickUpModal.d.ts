@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FlexProps, HeadingProps, IconProps, ImageProps, ViewProps } from "@aws-amplify/ui-react";
-import { MyIconProps } from "./MyIcon";
+import { FlexProps, IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,17 +17,13 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type PMHeaderOverridesProps = {
-    PMHeader?: PrimitiveOverrideProps<FlexProps>;
-    Logo?: PrimitiveOverrideProps<ImageProps>;
-    "Site Drop Down"?: PrimitiveOverrideProps<FlexProps>;
-    Heading59311361?: PrimitiveOverrideProps<HeadingProps>;
-    MyIcon?: MyIconProps;
-    "Profile Bug"?: PrimitiveOverrideProps<ViewProps>;
-    "Ellipse 1"?: PrimitiveOverrideProps<IconProps>;
-    Heading59311360?: PrimitiveOverrideProps<HeadingProps>;
+export declare type PickUpModalOverridesProps = {
+    PickUpModal?: PrimitiveOverrideProps<ViewProps>;
+    "\uD83D\uDD12Icon"?: PrimitiveOverrideProps<IconProps>;
+    "Please confirm that Armando is being picked up"?: PrimitiveOverrideProps<TextProps>;
+    ButtonConfirmPickUp?: PrimitiveOverrideProps<FlexProps>;
 } & EscapeHatchProps;
-export declare type PMHeaderProps = React.PropsWithChildren<Partial<FlexProps> & {
-    overrides?: PMHeaderOverridesProps | undefined | null;
+export declare type PickUpModalProps = React.PropsWithChildren<Partial<ViewProps> & {
+    overrides?: PickUpModalOverridesProps | undefined | null;
 }>;
-export default function PMHeader(props: PMHeaderProps): React.ReactElement;
+export default function PickUpModal(props: PickUpModalProps): React.ReactElement;

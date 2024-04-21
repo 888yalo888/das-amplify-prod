@@ -2,6 +2,14 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
 
+export enum Routes {
+  LOGIN = "LOGIN",
+  CHECKIN = "CHECKIN",
+  CHECKOUT = "CHECKOUT",
+  ROSTER = "ROSTER",
+  VIBECHECK = "VIBECHECK"
+}
+
 export enum Grade {
   KINDERGARTEN = "KINDERGARTEN",
   FIRST = "FIRST",

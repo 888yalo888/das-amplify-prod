@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FlexProps, HeadingProps, IconProps, ImageProps, ViewProps } from "@aws-amplify/ui-react";
-import { MyIconProps } from "./MyIcon";
+import { FlexProps, TextProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,17 +17,17 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type PMHeaderOverridesProps = {
-    PMHeader?: PrimitiveOverrideProps<FlexProps>;
-    Logo?: PrimitiveOverrideProps<ImageProps>;
-    "Site Drop Down"?: PrimitiveOverrideProps<FlexProps>;
-    Heading59311361?: PrimitiveOverrideProps<HeadingProps>;
-    MyIcon?: MyIconProps;
-    "Profile Bug"?: PrimitiveOverrideProps<ViewProps>;
-    "Ellipse 1"?: PrimitiveOverrideProps<IconProps>;
-    Heading59311360?: PrimitiveOverrideProps<HeadingProps>;
+export declare type DataRowComponentOverridesProps = {
+    DataRowComponent?: PrimitiveOverrideProps<FlexProps>;
+    label6072547?: PrimitiveOverrideProps<TextProps>;
+    label6072573?: PrimitiveOverrideProps<TextProps>;
+    label6072574?: PrimitiveOverrideProps<TextProps>;
+    label6072575?: PrimitiveOverrideProps<TextProps>;
+    label6072576?: PrimitiveOverrideProps<TextProps>;
+    label6072571?: PrimitiveOverrideProps<TextProps>;
+    label6072549?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
-export declare type PMHeaderProps = React.PropsWithChildren<Partial<FlexProps> & {
-    overrides?: PMHeaderOverridesProps | undefined | null;
+export declare type DataRowComponentProps = React.PropsWithChildren<Partial<FlexProps> & {
+    overrides?: DataRowComponentOverridesProps | undefined | null;
 }>;
-export default function PMHeader(props: PMHeaderProps): React.ReactElement;
+export default function DataRowComponent(props: DataRowComponentProps): React.ReactElement;

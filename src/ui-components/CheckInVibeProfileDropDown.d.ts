@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FlexProps, HeadingProps, IconProps, ImageProps, ViewProps } from "@aws-amplify/ui-react";
-import { MyIconProps } from "./MyIcon";
+import { ButtonProps, FlexProps, HeadingProps, IconProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,17 +17,15 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type PMHeaderOverridesProps = {
-    PMHeader?: PrimitiveOverrideProps<FlexProps>;
-    Logo?: PrimitiveOverrideProps<ImageProps>;
-    "Site Drop Down"?: PrimitiveOverrideProps<FlexProps>;
-    Heading59311361?: PrimitiveOverrideProps<HeadingProps>;
-    MyIcon?: MyIconProps;
-    "Profile Bug"?: PrimitiveOverrideProps<ViewProps>;
-    "Ellipse 1"?: PrimitiveOverrideProps<IconProps>;
-    Heading59311360?: PrimitiveOverrideProps<HeadingProps>;
+export declare type CheckInVibeProfileDropDownOverridesProps = {
+    CheckInVibeProfileDropDown?: PrimitiveOverrideProps<FlexProps>;
+    "profile-badge"?: PrimitiveOverrideProps<FlexProps>;
+    "Ellipse 2"?: PrimitiveOverrideProps<IconProps>;
+    Heading59271131?: PrimitiveOverrideProps<HeadingProps>;
+    Heading59541254?: PrimitiveOverrideProps<HeadingProps>;
+    Button?: PrimitiveOverrideProps<ButtonProps>;
 } & EscapeHatchProps;
-export declare type PMHeaderProps = React.PropsWithChildren<Partial<FlexProps> & {
-    overrides?: PMHeaderOverridesProps | undefined | null;
+export declare type CheckInVibeProfileDropDownProps = React.PropsWithChildren<Partial<FlexProps> & {
+    overrides?: CheckInVibeProfileDropDownOverridesProps | undefined | null;
 }>;
-export default function PMHeader(props: PMHeaderProps): React.ReactElement;
+export default function CheckInVibeProfileDropDown(props: CheckInVibeProfileDropDownProps): React.ReactElement;

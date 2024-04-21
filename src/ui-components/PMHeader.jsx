@@ -6,17 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps, useStateMutationAction } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Flex, Heading, Icon, Image, View } from "@aws-amplify/ui-react";
+import MyIcon from "./MyIcon";
 export default function PMHeader(props) {
   const { overrides, ...rest } = props;
-  const [
-    headingFiveNineThreeOneOneThreeSixOneChildren,
-    setHeadingFiveNineThreeOneOneThreeSixOneChildren,
-  ] = useStateMutationAction("test1");
-  const iconOnClick = () => {
-    setHeadingFiveNineThreeOneOneThreeSixOneChildren("test2");
-  };
+  const profileBugOnClick = useNavigateAction({ type: "url", url: "" });
   return (
     <Flex
       gap="24px"
@@ -65,10 +60,10 @@ export default function PMHeader(props) {
           height="unset"
           shrink="0"
           level="5"
-          children={headingFiveNineThreeOneOneThreeSixOneChildren}
+          children="Kiddie Academy of Far North Dallas"
           {...getOverrideProps(overrides, "Heading59311361")}
         ></Heading>
-        <Icon
+        <MyIcon
           width="24px"
           height="24px"
           display="block"
@@ -79,13 +74,9 @@ export default function PMHeader(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          type="chevron_down"
-          fontSize="24px"
-          onClick={() => {
-            iconOnClick();
-          }}
-          {...getOverrideProps(overrides, "\uD83D\uDD12Icon")}
-        ></Icon>
+          type="more_horiz"
+          {...getOverrideProps(overrides, "MyIcon")}
+        ></MyIcon>
       </Flex>
       <View
         width="40px"
@@ -98,6 +89,9 @@ export default function PMHeader(props) {
         shrink="0"
         position="relative"
         padding="0px 0px 0px 0px"
+        onClick={() => {
+          profileBugOnClick();
+        }}
         {...getOverrideProps(overrides, "Profile Bug")}
       >
         <Icon

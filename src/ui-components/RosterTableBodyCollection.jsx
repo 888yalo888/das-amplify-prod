@@ -9,9 +9,9 @@ import * as React from "react";
 import { Youth } from "../models";
 import { SortDirection } from "@aws-amplify/datastore";
 import { getOverrideProps, useDataStoreBinding } from "./utils";
-import YouthVibe from "./YouthVibe";
+import RosterTableBody from "./RosterTableBody";
 import { Collection } from "@aws-amplify/ui-react";
-export default function Youths(props) {
+export default function RosterTableBodyCollection(props) {
   const { items: itemsProp, overrideItems, overrides, ...rest } = props;
   const itemsPagination = { sort: (s) => s.fullName(SortDirection.ASCENDING) };
   const [items, setItems] = React.useState(undefined);
@@ -39,25 +39,22 @@ export default function Youths(props) {
   return (
     <Collection
       type="grid"
-      isSearchable={true}
       searchPlaceholder="Search..."
-      templateColumns="1fr 1fr"
+      itemsPerPage={6}
+      templateColumns="1fr"
       autoFlow="row"
       alignItems="stretch"
       justifyContent="stretch"
       items={items || []}
-      {...getOverrideProps(overrides, "Youths")}
+      {...getOverrideProps(overrides, "RosterTableBodyCollection")}
       {...rest}
     >
       {(item, index) => (
-        <YouthVibe
-          youth={item}
-          height="100px"
-          width="250px"
-          margin="0px 10px 10px 10px"
+        <RosterTableBody
+          margin="0px 0 0px 0"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
-        ></YouthVibe>
+        ></RosterTableBody>
       )}
     </Collection>
   );

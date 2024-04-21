@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { ProgramManager, Youth } from "../models";
+import { ProgramManager } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -31,7 +31,6 @@ export declare type SiteCreateFormInputValues = {
     siteAdminEmail?: string;
     status?: string;
     ManagedBy?: ProgramManager[];
-    AttendedBy?: Youth[];
 };
 export declare type SiteCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -42,7 +41,6 @@ export declare type SiteCreateFormValidationValues = {
     siteAdminEmail?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
     ManagedBy?: ValidationFunction<ProgramManager>;
-    AttendedBy?: ValidationFunction<Youth>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type SiteCreateFormOverridesProps = {
@@ -55,7 +53,6 @@ export declare type SiteCreateFormOverridesProps = {
     siteAdminEmail?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;
     ManagedBy?: PrimitiveOverrideProps<AutocompleteProps>;
-    AttendedBy?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type SiteCreateFormProps = React.PropsWithChildren<{
     overrides?: SiteCreateFormOverridesProps | undefined | null;
