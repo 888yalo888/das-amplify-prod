@@ -38,17 +38,20 @@ export default function RosterTableBodyCollection(props) {
   }, [itemsProp, itemsDataStore]);
   return (
     <Collection
-      type="list"
+      type="grid"
       searchPlaceholder="Search..."
       itemsPerPage={6}
-      direction="column"
-      justifyContent="left"
+      templateColumns="1fr"
+      autoFlow="row"
+      alignItems="stretch"
+      justifyContent="stretch"
       items={items || []}
       {...getOverrideProps(overrides, "RosterTableBodyCollection")}
       {...rest}
     >
       {(item, index) => (
         <RosterTableBody
+          margin="0px 0 0px 0"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
         ></RosterTableBody>

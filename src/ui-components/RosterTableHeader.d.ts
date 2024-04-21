@@ -19,11 +19,8 @@ export declare type Variant = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type RosterTableHeaderOverridesProps = {
     RosterTableHeader?: PrimitiveOverrideProps<FlexProps>;
-    "Header Row"?: PrimitiveOverrideProps<FlexProps>;
     "Header Cell60731145"?: PrimitiveOverrideProps<FlexProps>;
-    "First Name"?: PrimitiveOverrideProps<TextProps>;
-    "Header Cell60731146"?: PrimitiveOverrideProps<FlexProps>;
-    "Last Name"?: PrimitiveOverrideProps<TextProps>;
+    Name?: PrimitiveOverrideProps<TextProps>;
     "Header Cell60731148"?: PrimitiveOverrideProps<FlexProps>;
     "Date of Birth"?: PrimitiveOverrideProps<TextProps>;
     "Header Cell60731150"?: PrimitiveOverrideProps<FlexProps>;

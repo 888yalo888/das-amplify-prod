@@ -5,6 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
+import { Youth } from "../models";
 import { BadgeProps, FlexProps, IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -19,11 +20,8 @@ export declare type Variant = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type RosterTableBodyOverridesProps = {
     RosterTableBody?: PrimitiveOverrideProps<FlexProps>;
-    "Roster Row"?: PrimitiveOverrideProps<FlexProps>;
     "Row Cell60731019"?: PrimitiveOverrideProps<FlexProps>;
     Cell60731018?: PrimitiveOverrideProps<TextProps>;
-    "Row Cell60731020"?: PrimitiveOverrideProps<FlexProps>;
-    Cell60731021?: PrimitiveOverrideProps<TextProps>;
     "Row Cell60731022"?: PrimitiveOverrideProps<FlexProps>;
     Cell60731023?: PrimitiveOverrideProps<TextProps>;
     "Row Cell60731024"?: PrimitiveOverrideProps<FlexProps>;
@@ -41,6 +39,10 @@ export declare type RosterTableBodyOverridesProps = {
     Vector?: PrimitiveOverrideProps<IconProps>;
 } & EscapeHatchProps;
 export declare type RosterTableBodyProps = React.PropsWithChildren<Partial<FlexProps> & {
+    youth?: Youth;
+} & {
+    property1?: "Active" | "Inactive";
+} & {
     overrides?: RosterTableBodyOverridesProps | undefined | null;
 }>;
 export default function RosterTableBody(props: RosterTableBodyProps): React.ReactElement;
