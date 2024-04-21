@@ -60,10 +60,6 @@ export default function YouthVibe(props) {
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
-  const youthVibeOnClick = useNavigateAction({
-    type: "url",
-    url: "/check-out",
-  });
   const topCardOnClick = useNavigateAction({ type: "url", url: "/vibe-check" });
   return (
     <Flex
@@ -79,9 +75,6 @@ export default function YouthVibe(props) {
       padding="23px 15px 23px 15px"
       backgroundColor="rgba(255,255,255,1)"
       display="flex"
-      onClick={() => {
-        youthVibeOnClick();
-      }}
       {...getOverrideProps(overrides, "YouthVibe")}
       {...rest}
     >
