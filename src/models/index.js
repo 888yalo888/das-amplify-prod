@@ -2,12 +2,11 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
-const Routes = {
-  "LOGIN": "LOGIN",
-  "CHECKIN": "CHECKIN",
-  "CHECKOUT": "CHECKOUT",
-  "ROSTER": "ROSTER",
-  "VIBECHECK": "VIBECHECK"
+const Vibes = {
+  "ATEASE": "ATEASE",
+  "ANGRY": "ANGRY",
+  "SAD": "SAD",
+  "HAPPY": "HAPPY"
 };
 
 const Grade = {
@@ -40,7 +39,7 @@ export {
   Site,
   YouthSite,
   ProgramManagerSite,
-  Routes,
+  Vibes,
   Grade,
   Status
 };

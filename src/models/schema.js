@@ -13,14 +13,18 @@ export const schema = {
                 "checkInVibe": {
                     "name": "checkInVibe",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "Vibes"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
                 "checkOutVibe": {
                     "name": "checkOutVibe",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "Vibes"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -696,14 +700,13 @@ export const schema = {
         }
     },
     "enums": {
-        "Routes": {
-            "name": "Routes",
+        "Vibes": {
+            "name": "Vibes",
             "values": [
-                "LOGIN",
-                "CHECKIN",
-                "CHECKOUT",
-                "ROSTER",
-                "VIBECHECK"
+                "ATEASE",
+                "ANGRY",
+                "SAD",
+                "HAPPY"
             ]
         },
         "Grade": {
@@ -734,5 +737,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "80880fb65b3b7940ee56b05b6689b098"
+    "version": "3a08d81a6f767bc2dcb66d7e961c0866"
 };

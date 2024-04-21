@@ -1,31 +1,20 @@
-// import React from 'react'
-// import { Link } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 
-// function VibeCheck() {
-//   return (
-//     <>
-//     <h1>VibeCheck</h1>
-//     <Link to="/">
-//       <button>Go Back to Check In</button>
-//     </Link>  
-//     </>
-//     )
-// }
-// export default VibeCheck
 
-import React, { useState } from 'react';
-import Modal from 'react-modal';
+function VibeCheck() {
+  const { youthID } = useParams();
 
-const VibeCheck = ({ isOpen, onClose, children }) => {
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      contentLabel="Example Modal"
-    >
-      {children}
-    </Modal>
-  );
-};
+    <>
+    <h1>VibeCheck</h1>
+    <Link to="/">
+      <button>Go Back to Check In</button>
+    </Link>  
+    </>
+    )
+}
+export default VibeCheck
 
-export default VibeCheck;
+
