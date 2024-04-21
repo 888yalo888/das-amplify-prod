@@ -10,19 +10,11 @@ import {
   getOverrideProps,
   getOverridesFromVariants,
   mergeVariantsAndOverrides,
-  useNavigateAction,
 } from "./utils";
 import { Divider, Flex, Image, Text } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function YouthVibe(props) {
-  const {
-    youth,
-    vibe,
-    grade,
-    vibes,
-    overrides: overridesProp,
-    ...rest
-  } = props;
+  const { youth, vibe, overrides: overridesProp, ...rest } = props;
   const variants = [
     {
       overrides: {
@@ -80,11 +72,6 @@ export default function YouthVibe(props) {
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
-  const youthVibeOnClick = useNavigateAction({
-    type: "url",
-    url: `${"/check-in/"}${youth?.id}`,
-  });
-  const topCardOnClick = useNavigateAction({ type: "url", url: "/vibe-check" });
   return (
     <Flex
       gap="7px"
@@ -99,9 +86,6 @@ export default function YouthVibe(props) {
       padding="23px 15px 23px 15px"
       backgroundColor="rgba(255,255,255,1)"
       display="flex"
-      onClick={() => {
-        youthVibeOnClick();
-      }}
       {...getOverrideProps(overrides, "YouthVibe")}
       {...rest}
     >
@@ -117,9 +101,6 @@ export default function YouthVibe(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         display="flex"
-        onClick={() => {
-          topCardOnClick();
-        }}
         {...getOverrideProps(overrides, "TopCard")}
       >
         <Flex
@@ -174,7 +155,7 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={youth?.grade == "first" ? "FIRST" : "TEST"}
+            children={youth?.dateOfBirth}
             {...getOverrideProps(overrides, "YouthGrade")}
           ></Text>
         </Flex>
@@ -248,7 +229,7 @@ export default function YouthVibe(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="CHECK OUT"
+          children=""
           {...getOverrideProps(overrides, "YouthStatus")}
         ></Text>
       </Flex>

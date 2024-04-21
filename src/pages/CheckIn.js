@@ -3,17 +3,12 @@ import {
   ButtonCheckIn,
   Youths,
   VibeSummary,
-  YouthVibePickedUp,
 } from "../ui-components";
 import { Link } from "react-router-dom";
 
 import { generateClient } from "aws-amplify/api";
 import { getYouthRosterForSite } from "../graphql/queries";
 
-const client = generateClient();
-
-import { generateClient } from "aws-amplify/api";
-import { getYouthRosterForSite } from "../graphql/queries";
 
 const client = generateClient();
 
@@ -86,7 +81,6 @@ const CheckIn = () => {
       </div>
       <div>
         <Youths items={roster} />
-        <YouthVibePickedUp />
       </div>
     </div>
   );
