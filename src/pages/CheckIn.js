@@ -28,10 +28,8 @@ const CheckIn = () => {
 
     const reduced = results.reduce((youths, item) => {
       youths.push(item.youth);
-      console.log(youths);
       return youths;
     }, []);
-    console.log(reduced);
     return reduced;
   }
 
