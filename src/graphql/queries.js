@@ -5,7 +5,12 @@ export const getYouthRosterForSite = /* GraphQL */ `
   query GetYouthRosterForSite($siteId: ID!, $date: String) {
     getSite(id: $siteId) {
       name
-      AttendedBy(filter: { createdAt: { le: $date } }) {
+      AttendedBy(
+        filter: {
+          createdAt: { le: $date }
+          _deleted: { attributeExists: false }
+        }
+      ) {
         items {
           youth {
             id
