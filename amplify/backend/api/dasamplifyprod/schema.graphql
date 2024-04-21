@@ -1,15 +1,14 @@
-enum Routes {
-  LOGIN
-  CHECKIN
-  CHECKOUT
-  ROSTER
-  VIBECHECK
+enum Vibes {
+  ATEASE
+  ANGRY
+  SAD
+  HAPPY
 }
 
 type Vibe @model @auth(rules: [{allow: public}]) {
   id: ID!
-  checkInVibe: String
-  checkOutVibe: String
+  checkInVibe: Vibes
+  checkOutVibe: Vibes
   checkInTime: AWSDateTime
   checkOutTime: AWSDateTime
   youthID: ID! @index(name: "byYouth")

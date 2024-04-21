@@ -7,15 +7,18 @@
 /* eslint-disable */
 import * as React from "react";
 import { Youth } from "../models";
+import { SortDirection } from "@aws-amplify/datastore";
 import { getOverrideProps, useDataStoreBinding } from "./utils";
 import YouthVibe from "./YouthVibe";
 import { Collection } from "@aws-amplify/ui-react";
 export default function Youths(props) {
   const { items: itemsProp, overrideItems, overrides, ...rest } = props;
+  const itemsPagination = { sort: (s) => s.fullName(SortDirection.ASCENDING) };
   const [items, setItems] = React.useState(undefined);
   const itemsDataStore = useDataStoreBinding({
     type: "collection",
     model: Youth,
+    pagination: itemsPagination,
   }).items;
   React.useEffect(() => {
     if (itemsProp !== undefined) {

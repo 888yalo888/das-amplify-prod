@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth } from "../models";
+import { Youth, Vibe } from "../models";
 import { DividerProps, FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
 import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
@@ -33,6 +33,9 @@ export declare type YouthVibeOverridesProps = {
 } & EscapeHatchProps;
 export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
     youth?: Youth;
+    vibe?: Vibe;
+    grade?: String;
+    vibes?: Youth;
 } & {
     youthStatus?: "CheckedIn" | "Default" | "PickedUp";
 } & {

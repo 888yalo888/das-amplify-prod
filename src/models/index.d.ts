@@ -2,12 +2,11 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
 
-export enum Routes {
-  LOGIN = "LOGIN",
-  CHECKIN = "CHECKIN",
-  CHECKOUT = "CHECKOUT",
-  ROSTER = "ROSTER",
-  VIBECHECK = "VIBECHECK"
+export enum Vibes {
+  ATEASE = "ATEASE",
+  ANGRY = "ANGRY",
+  SAD = "SAD",
+  HAPPY = "HAPPY"
 }
 
 export enum Grade {
@@ -39,8 +38,8 @@ type EagerVibe = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly checkInVibe?: string | null;
-  readonly checkOutVibe?: string | null;
+  readonly checkInVibe?: Vibes | keyof typeof Vibes | null;
+  readonly checkOutVibe?: Vibes | keyof typeof Vibes | null;
   readonly checkInTime?: string | null;
   readonly checkOutTime?: string | null;
   readonly youthID: string;
@@ -56,8 +55,8 @@ type LazyVibe = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly checkInVibe?: string | null;
-  readonly checkOutVibe?: string | null;
+  readonly checkInVibe?: Vibes | keyof typeof Vibes | null;
+  readonly checkOutVibe?: Vibes | keyof typeof Vibes | null;
   readonly checkInTime?: string | null;
   readonly checkOutTime?: string | null;
   readonly youthID: string;
