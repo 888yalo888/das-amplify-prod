@@ -8,9 +8,9 @@
 import * as React from "react";
 import { getOverrideProps, useNavigateAction } from "./utils";
 import { Button, Flex } from "@aws-amplify/ui-react";
-export default function ButtonCheckIn(props) {
+export default function ButtonHomePage(props) {
   const { overrides, ...rest } = props;
-  const buttonOnClick = useNavigateAction({ type: "url", url: "/roster" });
+  const buttonOnClick = useNavigateAction({ type: "url", url: "/check-in" });
   return (
     <Flex
       gap="0"
@@ -21,7 +21,7 @@ export default function ButtonCheckIn(props) {
       alignItems="flex-start"
       position="relative"
       padding="0px 0px 0px 0px"
-      {...getOverrideProps(overrides, "ButtonCheckIn")}
+      {...getOverrideProps(overrides, "ButtonHomePage")}
       {...rest}
     >
       <Button
@@ -31,7 +31,7 @@ export default function ButtonCheckIn(props) {
         size="large"
         isDisabled={false}
         variation="primary"
-        children="Switch to Roster"
+        children="Go to Check-in"
         onClick={() => {
           buttonOnClick();
         }}

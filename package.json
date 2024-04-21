@@ -16,6 +16,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "amplify:pull": "amplify pull --appId d12juq9as428hs",
+    "amplify:update-dev": "amplify pull --appId d12juq9as428hs --envName dev",
+    "amplify:update-stg": "amplify pull --appId d12juq9as428hs --envName staging",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
