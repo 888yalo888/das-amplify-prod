@@ -6,11 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Flex, Heading, Icon, Image, View } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function PMHeader(props) {
   const { overrides, ...rest } = props;
+  const profileBugOnClick = useNavigateAction({ type: "url", url: "" });
   return (
     <Flex
       gap="24px"
@@ -87,6 +88,9 @@ export default function PMHeader(props) {
         shrink="0"
         position="relative"
         padding="0px 0px 0px 0px"
+        onClick={() => {
+          profileBugOnClick();
+        }}
         {...getOverrideProps(overrides, "Profile Bug")}
       >
         <Icon
