@@ -12,6 +12,11 @@ import { getYouthRosterForSite } from "../graphql/queries";
 
 const client = generateClient();
 
+import { generateClient } from "aws-amplify/api";
+import { getYouthRosterForSite } from "../graphql/queries";
+
+const client = generateClient();
+
 const CheckIn = () => {
   async function getRoster() {
     const variables = {
