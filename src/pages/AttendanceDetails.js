@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
 
-function CheckOut() {
+function AttendanceDetails() {
   const { youthID } = useParams();
 
   return (
@@ -16,4 +16,4 @@ function CheckOut() {
     )
 }
 
-export default CheckOut
+export default AttendanceDetails

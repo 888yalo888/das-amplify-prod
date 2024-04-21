@@ -146,6 +146,7 @@ export default function VibeSummary(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             objectFit="cover"
+            src="src/assets/vibes/AtEase.png"
             {...getOverrideProps(overrides, "EmoteCool")}
           ></Image>
         </Flex>
@@ -193,6 +194,7 @@ export default function VibeSummary(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             objectFit="cover"
+            src="src/assets/vibes/Happy.png"
             {...getOverrideProps(overrides, "EmoteHappy")}
           ></Image>
         </Flex>
@@ -240,6 +242,7 @@ export default function VibeSummary(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             objectFit="cover"
+            src="src/assets/vibes/Sad.png"
             {...getOverrideProps(overrides, "EmoteSad")}
           ></Image>
         </Flex>
@@ -287,6 +290,7 @@ export default function VibeSummary(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             objectFit="cover"
+            src="src/assets/vibes/EmoteAngry.png"
             {...getOverrideProps(overrides, "EmoteAngry")}
           ></Image>
         </Flex>
