@@ -8,9 +8,9 @@
 import * as React from "react";
 import { Youth } from "../models";
 import { getOverrideProps, useDataStoreBinding } from "./utils";
-import YouthVibe from "./YouthVibe";
+import RosterTable from "./RosterTable";
 import { Collection } from "@aws-amplify/ui-react";
-export default function YouthCollection(props) {
+export default function YouthRoster(props) {
   const { items: itemsProp, overrideItems, overrides, ...rest } = props;
   const [items, setItems] = React.useState(undefined);
   const itemsDataStore = useDataStoreBinding({
@@ -22,31 +22,32 @@ export default function YouthCollection(props) {
       setItems(itemsProp);
       return;
     }
-    setItems(itemsDataStore);
+    async function setItemsFromDataStore() {
+      var loaded = await Promise.all(
+        itemsDataStore.map(async (item) => ({
+          ...item,
+          vibes: await item.vibes.toArray(),
+        }))
+      );
+      setItems(loaded);
+    }
+    setItemsFromDataStore();
   }, [itemsProp, itemsDataStore]);
   return (
     <Collection
-      type="grid"
-      isSearchable={true}
-      searchPlaceholder="Search..."
-      itemsPerPage={6}
-      templateColumns="1fr 1fr 1fr"
-      autoFlow="row"
-      alignItems="stretch"
-      justifyContent="stretch"
+      type="list"
+      direction="column"
+      justifyContent="left"
       items={items || []}
-      {...getOverrideProps(overrides, "YouthCollection")}
+      {...getOverrideProps(overrides, "YouthRoster")}
       {...rest}
     >
       {(item, index) => (
-        <YouthVibe
+        <RosterTable
           youth={item}
-          height="auto"
-          width="auto"
-          margin="10px 10px 10px 10px"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
-        ></YouthVibe>
+        ></RosterTable>
       )}
     </Collection>
   );
