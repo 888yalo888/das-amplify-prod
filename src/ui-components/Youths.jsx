@@ -39,6 +39,7 @@ export default function Youths(props) {
   return (
     <Collection
       type="grid"
+      isSearchable={true}
       searchPlaceholder="Search..."
       templateColumns="1fr 1fr"
       autoFlow="row"
@@ -51,9 +52,9 @@ export default function Youths(props) {
       {(item, index) => (
         <YouthVibe
           youth={item}
-          height="auto"
-          width="300px"
-          margin="5px 5px 5px 5px"
+          height="100px"
+          width="250px"
+          margin="0px 10px 10px 10px"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
         ></YouthVibe>

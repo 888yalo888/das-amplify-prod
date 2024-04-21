@@ -20,13 +20,7 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import {
-  Site,
-  ProgramManager,
-  Youth,
-  ProgramManagerSite,
-  YouthSite,
-} from "../models";
+import { Site, ProgramManager, ProgramManagerSite } from "../models";
 import {
   fetchByPath,
   getOverrideProps,
@@ -209,7 +203,6 @@ export default function SiteCreateForm(props) {
     siteAdminEmail: "",
     status: "",
     ManagedBy: [],
-    AttendedBy: [],
   };
   const [name, setName] = React.useState(initialValues.name);
   const [createdDate, setCreatedDate] = React.useState(
@@ -227,7 +220,6 @@ export default function SiteCreateForm(props) {
   );
   const [status, setStatus] = React.useState(initialValues.status);
   const [ManagedBy, setManagedBy] = React.useState(initialValues.ManagedBy);
-  const [AttendedBy, setAttendedBy] = React.useState(initialValues.AttendedBy);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -240,9 +232,6 @@ export default function SiteCreateForm(props) {
     setManagedBy(initialValues.ManagedBy);
     setCurrentManagedByValue(undefined);
     setCurrentManagedByDisplayValue("");
-    setAttendedBy(initialValues.AttendedBy);
-    setCurrentAttendedByValue(undefined);
-    setCurrentAttendedByDisplayValue("");
     setErrors({});
   };
   const [currentManagedByDisplayValue, setCurrentManagedByDisplayValue] =
@@ -250,36 +239,20 @@ export default function SiteCreateForm(props) {
   const [currentManagedByValue, setCurrentManagedByValue] =
     React.useState(undefined);
   const ManagedByRef = React.createRef();
-  const [currentAttendedByDisplayValue, setCurrentAttendedByDisplayValue] =
-    React.useState("");
-  const [currentAttendedByValue, setCurrentAttendedByValue] =
-    React.useState(undefined);
-  const AttendedByRef = React.createRef();
   const getIDValue = {
     ManagedBy: (r) => JSON.stringify({ id: r?.id }),
-    AttendedBy: (r) => JSON.stringify({ id: r?.id }),
   };
   const ManagedByIdSet = new Set(
     Array.isArray(ManagedBy)
       ? ManagedBy.map((r) => getIDValue.ManagedBy?.(r))
       : getIDValue.ManagedBy?.(ManagedBy)
   );
-  const AttendedByIdSet = new Set(
-    Array.isArray(AttendedBy)
-      ? AttendedBy.map((r) => getIDValue.AttendedBy?.(r))
-      : getIDValue.AttendedBy?.(AttendedBy)
-  );
   const programManagerRecords = useDataStoreBinding({
     type: "collection",
     model: ProgramManager,
   }).items;
-  const youthRecords = useDataStoreBinding({
-    type: "collection",
-    model: Youth,
-  }).items;
   const getDisplayValue = {
     ManagedBy: (r) => `${r?.fullName ? r?.fullName + " - " : ""}${r?.id}`,
-    AttendedBy: (r) => `${r?.fullName ? r?.fullName + " - " : ""}${r?.id}`,
   };
   const validations = {
     name: [],
@@ -290,7 +263,6 @@ export default function SiteCreateForm(props) {
     siteAdminEmail: [{ type: "Email" }],
     status: [],
     ManagedBy: [],
-    AttendedBy: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -343,7 +315,6 @@ export default function SiteCreateForm(props) {
           siteAdminEmail,
           status,
           ManagedBy,
-          AttendedBy,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -405,19 +376,6 @@ export default function SiteCreateForm(props) {
               return promises;
             }, [])
           );
-          promises.push(
-            ...AttendedBy.reduce((promises, youth) => {
-              promises.push(
-                DataStore.save(
-                  new YouthSite({
-                    site,
-                    youth,
-                  })
-                )
-              );
-              return promises;
-            }, [])
-          );
           await Promise.all(promises);
           if (onSuccess) {
             onSuccess(modelFields);
@@ -451,7 +409,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail,
               status,
               ManagedBy,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -485,7 +442,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail,
               status,
               ManagedBy,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             value = result?.createdDate ?? value;
@@ -517,7 +473,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail,
               status,
               ManagedBy,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             value = result?.address ?? value;
@@ -550,7 +505,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail,
               status,
               ManagedBy,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             value = result?.phoneNumber ?? value;
@@ -582,7 +536,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail,
               status,
               ManagedBy,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             value = result?.siteAdminName ?? value;
@@ -614,7 +567,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail: value,
               status,
               ManagedBy,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             value = result?.siteAdminEmail ?? value;
@@ -646,7 +598,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail,
               status: value,
               ManagedBy,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             value = result?.status ?? value;
@@ -685,7 +636,6 @@ export default function SiteCreateForm(props) {
               siteAdminEmail,
               status,
               ManagedBy: values,
-              AttendedBy,
             };
             const result = onChange(modelFields);
             values = result?.ManagedBy ?? values;
@@ -754,90 +704,6 @@ export default function SiteCreateForm(props) {
           ref={ManagedByRef}
           labelHidden={true}
           {...getOverrideProps(overrides, "ManagedBy")}
-        ></Autocomplete>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              name,
-              createdDate,
-              address,
-              phoneNumber,
-              siteAdminName,
-              siteAdminEmail,
-              status,
-              ManagedBy,
-              AttendedBy: values,
-            };
-            const result = onChange(modelFields);
-            values = result?.AttendedBy ?? values;
-          }
-          setAttendedBy(values);
-          setCurrentAttendedByValue(undefined);
-          setCurrentAttendedByDisplayValue("");
-        }}
-        currentFieldValue={currentAttendedByValue}
-        label={"Attended by"}
-        items={AttendedBy}
-        hasError={errors?.AttendedBy?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("AttendedBy", currentAttendedByValue)
-        }
-        errorMessage={errors?.AttendedBy?.errorMessage}
-        getBadgeText={getDisplayValue.AttendedBy}
-        setFieldValue={(model) => {
-          setCurrentAttendedByDisplayValue(
-            model ? getDisplayValue.AttendedBy(model) : ""
-          );
-          setCurrentAttendedByValue(model);
-        }}
-        inputFieldRef={AttendedByRef}
-        defaultFieldValue={""}
-      >
-        <Autocomplete
-          label="Attended by"
-          isRequired={false}
-          isReadOnly={false}
-          placeholder="Search Youth"
-          value={currentAttendedByDisplayValue}
-          options={youthRecords
-            .filter((r) => !AttendedByIdSet.has(getIDValue.AttendedBy?.(r)))
-            .map((r) => ({
-              id: getIDValue.AttendedBy?.(r),
-              label: getDisplayValue.AttendedBy?.(r),
-            }))}
-          onSelect={({ id, label }) => {
-            setCurrentAttendedByValue(
-              youthRecords.find((r) =>
-                Object.entries(JSON.parse(id)).every(
-                  ([key, value]) => r[key] === value
-                )
-              )
-            );
-            setCurrentAttendedByDisplayValue(label);
-            runValidationTasks("AttendedBy", label);
-          }}
-          onClear={() => {
-            setCurrentAttendedByDisplayValue("");
-          }}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.AttendedBy?.hasError) {
-              runValidationTasks("AttendedBy", value);
-            }
-            setCurrentAttendedByDisplayValue(value);
-            setCurrentAttendedByValue(undefined);
-          }}
-          onBlur={() =>
-            runValidationTasks("AttendedBy", currentAttendedByDisplayValue)
-          }
-          errorMessage={errors.AttendedBy?.errorMessage}
-          hasError={errors.AttendedBy?.hasError}
-          ref={AttendedByRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "AttendedBy")}
         ></Autocomplete>
       </ArrayField>
       <Flex

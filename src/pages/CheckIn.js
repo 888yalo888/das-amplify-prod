@@ -1,8 +1,14 @@
 import React from "react";
-import { ButtonCheckIn, Youths, VibeSummary } from "../ui-components";
+import {
+  ButtonCheckIn,
+  Youths,
+  VibeSummary,
+} from "../ui-components";
+import { Link } from "react-router-dom";
 
 import { generateClient } from "aws-amplify/api";
 import { getYouthRosterForSite } from "../graphql/queries";
+
 
 const client = generateClient();
 
@@ -19,7 +25,6 @@ const CheckIn = () => {
         variables,
       })
     ).data.getSite.AttendedBy.items;
-    console.log(results);
 
     const reduced = results.reduce((youths, item) => {
       youths.push(item.youth);
@@ -39,7 +44,7 @@ const CheckIn = () => {
     return now.toLocaleDateString("en-US", options);
   }
 
-  const [roster, setRoster] = React.useState(undefined);
+  const [roster, setRoster] = React.useState();
 
   React.useEffect(() => {
     const fetchRosterData = async () => {
@@ -58,7 +63,9 @@ const CheckIn = () => {
           margin: "10px 20px",
         }}
       >
-        <ButtonCheckIn>ButtonCheckIn</ButtonCheckIn>
+        <Link to="/roster" style={{ textDecoration: "none" }}>
+          <ButtonCheckIn>ButtonCheckIn</ButtonCheckIn>
+        </Link>
         <div
           style={{
             fontFamily: "var(--amplify-fonts-default-variable)",

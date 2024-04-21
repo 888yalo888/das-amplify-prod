@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { YouthVibeProps } from "./YouthVibe";
-import { CollectionProps } from "@aws-amplify/ui-react";
+import { BadgeProps, FlexProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,17 +17,13 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type YouthsOverridesProps = {
-    Youths?: PrimitiveOverrideProps<CollectionProps>;
-    YouthVibe?: YouthVibeProps;
+export declare type YouthBadgeOverridesProps = {
+    YouthBadge?: PrimitiveOverrideProps<FlexProps>;
+    Badge?: PrimitiveOverrideProps<BadgeProps>;
 } & EscapeHatchProps;
-export declare type YouthsProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
-    items?: any[];
-    overrideItems?: (collectionItem: {
-        item: any;
-        index: number;
-    }) => YouthVibeProps;
+export declare type YouthBadgeProps = React.PropsWithChildren<Partial<FlexProps> & {
+    property1?: "ActiveYouth" | "InactiveYouth";
 } & {
-    overrides?: YouthsOverridesProps | undefined | null;
+    overrides?: YouthBadgeOverridesProps | undefined | null;
 }>;
-export default function Youths(props: YouthsProps): React.ReactElement;
+export default function YouthBadge(props: YouthBadgeProps): React.ReactElement;

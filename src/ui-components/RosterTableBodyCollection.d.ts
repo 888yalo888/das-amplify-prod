@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { YouthVibeProps } from "./YouthVibe";
+import { RosterTableBodyProps } from "./RosterTableBody";
 import { CollectionProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -18,17 +18,17 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type YouthsOverridesProps = {
-    Youths?: PrimitiveOverrideProps<CollectionProps>;
-    YouthVibe?: YouthVibeProps;
+export declare type RosterTableBodyCollectionOverridesProps = {
+    RosterTableBodyCollection?: PrimitiveOverrideProps<CollectionProps>;
+    RosterTableBody?: RosterTableBodyProps;
 } & EscapeHatchProps;
-export declare type YouthsProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
+export declare type RosterTableBodyCollectionProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
     items?: any[];
     overrideItems?: (collectionItem: {
         item: any;
         index: number;
-    }) => YouthVibeProps;
+    }) => RosterTableBodyProps;
 } & {
-    overrides?: YouthsOverridesProps | undefined | null;
+    overrides?: RosterTableBodyCollectionOverridesProps | undefined | null;
 }>;
-export default function Youths(props: YouthsProps): React.ReactElement;
+export default function RosterTableBodyCollection(props: RosterTableBodyCollectionProps): React.ReactElement;
