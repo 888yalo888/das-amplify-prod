@@ -1,6 +1,11 @@
 import React from "react";
 import { ButtonCheckIn, Youths, VibeSummary } from "../ui-components";
 
+import { generateClient } from "aws-amplify/api";
+import { getYouthRosterForSite } from "../graphql/queries";
+
+const client = generateClient();
+
 const CheckIn = () => {
   async function getRoster() {
     const variables = {
