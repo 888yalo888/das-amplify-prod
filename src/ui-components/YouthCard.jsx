@@ -10,8 +10,9 @@ import { getOverrideProps, useNavigateAction } from "./utils";
 import { Card, Icon, Text, View } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function YouthCard(props) {
-  const { overrides, ...rest } = props;
+  const { youth, overrides, ...rest } = props;
   const youthCardOnClick = useNavigateAction({ type: "url", url: "" });
+  const cardOnClick = useNavigateAction({ type: "url", url: "/vibe-check" });
   return (
     <View
       width="318px"
@@ -39,6 +40,9 @@ export default function YouthCard(props) {
         right="0%"
         borderRadius="8px"
         variation="outline"
+        onClick={() => {
+          cardOnClick();
+        }}
         {...getOverrideProps(overrides, "Card")}
       ></Card>
       <Text

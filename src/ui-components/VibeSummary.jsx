@@ -7,8 +7,7 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "./utils";
-import { Flex, Icon, Text, View } from "@aws-amplify/ui-react";
-import Vibe from "./Vibe";
+import { Flex, Icon, Image, Text, View } from "@aws-amplify/ui-react";
 export default function VibeSummary(props) {
   const { overrides, ...rest } = props;
   return (
@@ -136,7 +135,7 @@ export default function VibeSummary(props) {
             children="1"
             {...getOverrideProps(overrides, "15922672")}
           ></Text>
-          <Vibe
+          <Image
             width="30px"
             height="30px"
             display="block"
@@ -146,9 +145,9 @@ export default function VibeSummary(props) {
             shrink="0"
             position="relative"
             padding="0px 0px 0px 0px"
-            vibe="AtEase"
-            {...getOverrideProps(overrides, "Vibe59551259")}
-          ></Vibe>
+            objectFit="cover"
+            {...getOverrideProps(overrides, "EmoteCool")}
+          ></Image>
         </Flex>
         <Flex
           gap="8px"
@@ -160,7 +159,7 @@ export default function VibeSummary(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Frame 444")}
+          {...getOverrideProps(overrides, "Happy")}
         >
           <Text
             fontFamily="Inter"
@@ -183,7 +182,7 @@ export default function VibeSummary(props) {
             children="1"
             {...getOverrideProps(overrides, "15922671")}
           ></Text>
-          <Vibe
+          <Image
             width="30px"
             height="30px"
             display="block"
@@ -193,9 +192,9 @@ export default function VibeSummary(props) {
             shrink="0"
             position="relative"
             padding="0px 0px 0px 0px"
-            vibe="Happy"
-            {...getOverrideProps(overrides, "Vibe59551292")}
-          ></Vibe>
+            objectFit="cover"
+            {...getOverrideProps(overrides, "EmoteHappy")}
+          ></Image>
         </Flex>
         <Flex
           gap="8px"
@@ -207,7 +206,7 @@ export default function VibeSummary(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Frame 445")}
+          {...getOverrideProps(overrides, "Sad")}
         >
           <Text
             fontFamily="Inter"
@@ -230,7 +229,7 @@ export default function VibeSummary(props) {
             children="1"
             {...getOverrideProps(overrides, "15922670")}
           ></Text>
-          <Vibe
+          <Image
             width="30px"
             height="30px"
             display="block"
@@ -240,9 +239,9 @@ export default function VibeSummary(props) {
             shrink="0"
             position="relative"
             padding="0px 0px 0px 0px"
-            vibe="Sad"
-            {...getOverrideProps(overrides, "Vibe59551334")}
-          ></Vibe>
+            objectFit="cover"
+            {...getOverrideProps(overrides, "EmoteSad")}
+          ></Image>
         </Flex>
         <Flex
           gap="8px"
@@ -254,7 +253,7 @@ export default function VibeSummary(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          {...getOverrideProps(overrides, "Frame 446")}
+          {...getOverrideProps(overrides, "Angry")}
         >
           <Text
             fontFamily="Inter"
@@ -277,7 +276,7 @@ export default function VibeSummary(props) {
             children="1"
             {...getOverrideProps(overrides, "15922669")}
           ></Text>
-          <Vibe
+          <Image
             width="30px"
             height="30px"
             display="block"
@@ -287,9 +286,9 @@ export default function VibeSummary(props) {
             shrink="0"
             position="relative"
             padding="0px 0px 0px 0px"
-            vibe="Angry"
-            {...getOverrideProps(overrides, "Vibe59551385")}
-          ></Vibe>
+            objectFit="cover"
+            {...getOverrideProps(overrides, "EmoteAngry")}
+          ></Image>
         </Flex>
       </Flex>
       <Text
