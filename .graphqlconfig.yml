@@ -13,3 +13,6 @@ projects:
         region: us-east-2
         apiId: null
         maxDepth: 6
+extensions:
+  amplify:
+    version: 3
