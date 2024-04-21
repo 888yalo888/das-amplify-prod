@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { Vibe, Site } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -41,8 +41,8 @@ export declare type VibeUpdateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type VibeUpdateFormOverridesProps = {
     VibeUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    checkInVibe?: PrimitiveOverrideProps<TextFieldProps>;
-    checkOutVibe?: PrimitiveOverrideProps<TextFieldProps>;
+    checkInVibe?: PrimitiveOverrideProps<SelectFieldProps>;
+    checkOutVibe?: PrimitiveOverrideProps<SelectFieldProps>;
     checkInTime?: PrimitiveOverrideProps<TextFieldProps>;
     checkOutTime?: PrimitiveOverrideProps<TextFieldProps>;
     youthID?: PrimitiveOverrideProps<AutocompleteProps>;

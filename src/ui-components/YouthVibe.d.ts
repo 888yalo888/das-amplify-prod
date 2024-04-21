@@ -5,9 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth, Vibe } from "../models";
-import { DividerProps, FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
-import { MyIconProps } from "./MyIcon";
+import { YouthVibeProps } from "./YouthVibe";
+import { CollectionProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -19,24 +18,17 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type YouthVibeOverridesProps = {
-    YouthVibe?: PrimitiveOverrideProps<FlexProps>;
-    TopCard?: PrimitiveOverrideProps<FlexProps>;
-    YouthInfo?: PrimitiveOverrideProps<FlexProps>;
-    YouthName?: PrimitiveOverrideProps<TextProps>;
-    YouthGrade?: PrimitiveOverrideProps<TextProps>;
-    EmoteCool?: PrimitiveOverrideProps<ImageProps>;
-    Divider?: PrimitiveOverrideProps<DividerProps>;
-    BottomCard?: PrimitiveOverrideProps<FlexProps>;
-    YouthStatusIcon?: MyIconProps;
-    YouthStatus?: PrimitiveOverrideProps<TextProps>;
+export declare type YouthsOverridesProps = {
+    Youths?: PrimitiveOverrideProps<CollectionProps>;
+    YouthVibe?: YouthVibeProps;
 } & EscapeHatchProps;
-export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
-    youth?: Youth;
-    vibe?: Vibe;
+export declare type YouthsProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
+    items?: any[];
+    overrideItems?: (collectionItem: {
+        item: any;
+        index: number;
+    }) => YouthVibeProps;
 } & {
-    youthStatus?: "CheckedIn" | "Default" | "PickedUp";
-} & {
-    overrides?: YouthVibeOverridesProps | undefined | null;
+    overrides?: YouthsOverridesProps | undefined | null;
 }>;
-export default function YouthVibe(props: YouthVibeProps): React.ReactElement;
+export default function Youths(props: YouthsProps): React.ReactElement;
