@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 // query GetYouthRosterForSite($id: ID!) {
-  export const getYouthRosterForSite = /* GraphQL */ `
+export const getYouthRosterForSite = /* GraphQL */ `
   query GetYouthRosterForSite($siteId: ID!, $date: String) {
     getSite(id: $siteId) {
       name
