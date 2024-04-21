@@ -1,14 +1,28 @@
-import React from 'react'
+import React from 'react';
+import { ButtonRoster} from '../ui-components'
 import { Link } from 'react-router-dom'
 
-function Roster() {
+
+const Roster = () => {
+
+
   return (
-    <>
-    <h1>Roster</h1>
-    <Link to="/">
-      <button>Go Back to Check In</button>
-    </Link>  
-    </>
-    )
-}
-export default Roster
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', margin: '10px 20px' }}>
+        <Link to="/" style={{ textDecoration: 'none'}}>
+          <ButtonRoster>
+            ButtonCheckIn
+          </ButtonRoster>
+        </Link>
+      <div>
+          {/* inster add youth button */}
+        </div>
+      </div>
+      <div>
+        {/* insert roster component */}
+      </div>
+    </div>
+  );
+};
+
+export default Roster;
