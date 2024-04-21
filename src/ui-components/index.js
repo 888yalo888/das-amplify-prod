@@ -6,6 +6,8 @@
 
 export { default as ActionCard } from "./ActionCard";
 export { default as Ampligram } from "./Ampligram";
+export { default as ButtonCheckIn } from "./ButtonCheckIn";
+export { default as ButtonRoster } from "./ButtonRoster";
 export { default as CTASection } from "./CTASection";
 export { default as CheckInVibe } from "./CheckInVibe";
 export { default as CheckInVibeProfileDropDown } from "./CheckInVibeProfileDropDown";

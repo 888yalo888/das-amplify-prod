@@ -13,8 +13,8 @@ export default function VibeSummary(props) {
   const { overrides, ...rest } = props;
   return (
     <View
-      width="256px"
-      height="96px"
+      width="300px"
+      height="100px"
       display="block"
       gap="unset"
       alignItems="unset"
@@ -25,8 +25,8 @@ export default function VibeSummary(props) {
       {...rest}
     >
       <View
-        width="256px"
-        height="96px"
+        width="300px"
+        height="100px"
         display="block"
         gap="unset"
         alignItems="unset"
@@ -52,8 +52,8 @@ export default function VibeSummary(props) {
         display="block"
         direction="column"
         justifyContent="unset"
-        width="128px"
-        height="27px"
+        width="150px"
+        height="28.13px"
         gap="unset"
         alignItems="unset"
         position="absolute"
@@ -76,8 +76,8 @@ export default function VibeSummary(props) {
         display="block"
         direction="column"
         justifyContent="unset"
-        width="128px"
-        height="27px"
+        width="150px"
+        height="28.13px"
         gap="unset"
         alignItems="unset"
         position="absolute"
@@ -93,13 +93,13 @@ export default function VibeSummary(props) {
       <Flex
         gap="24px"
         direction="row"
-        width="unset"
+        width="261px"
         height="unset"
         justifyContent="flex-start"
         alignItems="flex-start"
         position="absolute"
-        top="13px"
-        left="11px"
+        top="10px"
+        left="14px"
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "Frame 447")}
       >
@@ -117,10 +117,10 @@ export default function VibeSummary(props) {
         >
           <Text
             fontFamily="Inter"
-            fontSize="16px"
+            fontSize="20px"
             fontWeight="400"
             color="rgba(0,0,0,1)"
-            lineHeight="24px"
+            lineHeight="30px"
             textAlign="right"
             display="block"
             direction="column"
@@ -137,8 +137,8 @@ export default function VibeSummary(props) {
             {...getOverrideProps(overrides, "15922672")}
           ></Text>
           <Vibe
-            width="24px"
-            height="24px"
+            width="30px"
+            height="30px"
             display="block"
             gap="unset"
             alignItems="unset"
@@ -164,10 +164,10 @@ export default function VibeSummary(props) {
         >
           <Text
             fontFamily="Inter"
-            fontSize="16px"
+            fontSize="20px"
             fontWeight="400"
             color="rgba(0,0,0,1)"
-            lineHeight="24px"
+            lineHeight="30px"
             textAlign="right"
             display="block"
             direction="column"
@@ -184,8 +184,8 @@ export default function VibeSummary(props) {
             {...getOverrideProps(overrides, "15922671")}
           ></Text>
           <Vibe
-            width="24px"
-            height="24px"
+            width="30px"
+            height="30px"
             display="block"
             gap="unset"
             alignItems="unset"
@@ -211,10 +211,10 @@ export default function VibeSummary(props) {
         >
           <Text
             fontFamily="Inter"
-            fontSize="16px"
+            fontSize="20px"
             fontWeight="400"
             color="rgba(0,0,0,1)"
-            lineHeight="24px"
+            lineHeight="30px"
             textAlign="right"
             display="block"
             direction="column"
@@ -231,8 +231,8 @@ export default function VibeSummary(props) {
             {...getOverrideProps(overrides, "15922670")}
           ></Text>
           <Vibe
-            width="24px"
-            height="24px"
+            width="30px"
+            height="30px"
             display="block"
             gap="unset"
             alignItems="unset"
@@ -258,10 +258,10 @@ export default function VibeSummary(props) {
         >
           <Text
             fontFamily="Inter"
-            fontSize="16px"
+            fontSize="20px"
             fontWeight="400"
             color="rgba(0,0,0,1)"
-            lineHeight="24px"
+            lineHeight="30px"
             textAlign="right"
             display="block"
             direction="column"
@@ -278,8 +278,8 @@ export default function VibeSummary(props) {
             {...getOverrideProps(overrides, "15922669")}
           ></Text>
           <Vibe
-            width="24px"
-            height="24px"
+            width="30px"
+            height="30px"
             display="block"
             gap="unset"
             alignItems="unset"
@@ -302,8 +302,8 @@ export default function VibeSummary(props) {
         display="block"
         direction="column"
         justifyContent="unset"
-        width="80.67px"
-        height="19.64px"
+        width="94.54px"
+        height="20.45px"
         gap="unset"
         alignItems="unset"
         position="absolute"
@@ -326,8 +326,8 @@ export default function VibeSummary(props) {
         display="block"
         direction="column"
         justifyContent="unset"
-        width="68.84px"
-        height="19.64px"
+        width="80.67px"
+        height="20.45px"
         gap="unset"
         alignItems="unset"
         position="absolute"
@@ -341,17 +341,17 @@ export default function VibeSummary(props) {
         {...getOverrideProps(overrides, "PICKED UP")}
       ></Text>
       <Icon
-        width="256px"
+        width="300px"
         height="0px"
         viewBox={{
           minX: 0,
           minY: 0,
-          width: 256,
-          height: 0.000022380232621799223,
+          width: 300,
+          height: 0.000026226835075249255,
         }}
         paths={[
           {
-            d: "M0 0L256 0L256 -1L0 -1L0 0Z",
+            d: "M0 0L300 0L300 -1L0 -1L0 0Z",
             stroke: "rgba(169,169,169,1)",
             fillRule: "nonzero",
             strokeWidth: 1,
@@ -371,17 +371,17 @@ export default function VibeSummary(props) {
         {...getOverrideProps(overrides, "Line 9")}
       ></Icon>
       <Icon
-        width="48px"
+        width="50px"
         height="0px"
         viewBox={{
           minX: 0,
           minY: 0,
           width: 0.000001923301169881597,
-          height: 48,
+          height: 50,
         }}
         paths={[
           {
-            d: "M0 0L48 0L48 -1L0 -1L0 0Z",
+            d: "M0 0L50 0L50 -1L0 -1L0 0Z",
             stroke: "rgba(169,169,169,1)",
             fillRule: "nonzero",
             strokeWidth: 1,
@@ -395,7 +395,7 @@ export default function VibeSummary(props) {
         top="50%"
         bottom="50%"
         left="50%"
-        right="31.25%"
+        right="33.33%"
         transformOrigin="top left"
         transform="rotate(90deg)"
         {...getOverrideProps(overrides, "Line 10")}
