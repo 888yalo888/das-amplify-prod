@@ -1,39 +1,16 @@
 import React from "react";
 import {PickUpModal} from "../ui-components";
 
-import { generateClient } from "aws-amplify/api";
 import { useParams } from "react-router-dom";
-import { getYouth } from "../graphql/queries";
-
-
-const client = generateClient();
+import { getYouthInfo } from "../services/api.service";
 
 const CheckOut = () => {
   const { youthID } = useParams();
-  async function GetYouth() {
-    const variables = {
-      id: youthID,
-    };
-
-    const results = (
-      await client.graphql({
-        query: getYouth,
-        variables,
-      })
-    ).data.getSite.AttendedBy.items;
-
-    const reduced = results.reduce((youths, item) => {
-      youths.push(item.youth);
-      return youths;
-    }, []);
-    return reduced;
-  }
-
   const [youth, setYouth] = React.useState();
 
   React.useEffect(() => {
     const fetchYouthData = async () => {
-      const data = await GetYouth();
+      const data = await getYouthInfo(youthID);
       console.log(data);
       setYouth(data);
     };

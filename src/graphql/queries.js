@@ -22,7 +22,7 @@ export const getRosterById = /* GraphQL */ `
             gender
             guardianFullName
             status
-            vibes(filter: {createdAt:{beginsWith:"${getCurrentDate()}"}}) {
+            vibes(filter: {checkInTime:{beginsWith:"${getCurrentDate()}"}}) {
               items {
                 id
                 checkInTime
@@ -31,6 +31,22 @@ export const getRosterById = /* GraphQL */ `
                 checkOutVibe
               }
             }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const getSitesByProgramManager = /* GraphQL */ `
+  query GetSitesByProgramManager($email: String) {
+    listProgramManagers (filter: {email: {eq: $email}}) {
+      items {
+        id
+        fullName
+        AssignedTo {
+          items {
+            siteId
           }
         }
       }

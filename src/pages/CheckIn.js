@@ -1,42 +1,17 @@
 import React from "react";
 import {
   ButtonCheckIn,
-  Youths,
   VibeSummary,
-  YouthVibe,
   YouthCardCheckedIn,
   YouthCardPickedUp,
   YouthCardDefault,
 } from "../ui-components";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { generateClient } from "aws-amplify/api";
-import { getYouthRosterForSite, getRosterById, getYouth } from "../graphql/queries";
+import { getSite } from '../services/api.service';
 
-const client = generateClient();
 
 const CheckIn = () => {
-  async function getRoster() {
-    const variables = {
-      // date: new Date().toISOString().split("T")[0],
-      // siteId: "03f24a65-f53c-4447-846f-922527d48a52",
-      id: "03f24a65-f53c-4447-846f-922527d48a52",
-    };
-
-    const results = (
-      await client.graphql({
-        query: getRosterById,
-        variables,
-      })
-    ).data.getSite.AttendedBy.items;
-
-    const reduced = results.reduce((youths, item) => {
-      youths.push(item.youth);
-      return youths;
-    }, []);
-    return reduced;
-  }
-
   function getCurrentDate() {
     const now = new Date();
     const options = {
@@ -48,15 +23,15 @@ const CheckIn = () => {
     return now.toLocaleDateString("en-US", options);
   }
 
-  const [roster, setRoster] = React.useState();
+  const [site, setSite] = React.useState();
 
   React.useEffect(() => {
-    const fetchRosterData = async () => {
-      const data = await getRoster();
+    const fetchSiteData = async () => {
+      const data = await getSite('03f24a65-f53c-4447-846f-922527d48a52');
       console.log(data);
-      setRoster(data);
+      setSite(data);
     };
-    fetchRosterData();
+    fetchSiteData();
   }, []);
 
   return (
@@ -85,7 +60,7 @@ const CheckIn = () => {
         </div>
       </div>
       <div>
-        {roster?.map((item) => {
+        {site?.roster?.map((item) => {
           if (item?.grade === "SECOND") {
             return <YouthCardCheckedIn key={item?.id} youth={item} />;
           } 
