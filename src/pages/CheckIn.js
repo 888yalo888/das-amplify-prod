@@ -62,13 +62,13 @@ const CheckIn = () => {
       <div>
         {site?.roster?.map((item) => {
           if (item?.grade === "SECOND") {
-            return <YouthCardCheckedIn key={item?.id} youth={item} />;
+            return <YouthCardCheckedIn key={item?.id} youth={item} style={{margin:'25px'}}/>;
           } 
           else if (item?.grade === "THIRD") {
-            return <YouthCardPickedUp key={item?.id} youth={item} />;
+            return <YouthCardPickedUp key={item?.id} youth={item} style={{margin:'25px'}}/>;
           } 
           else {
-            return <YouthCardDefault key={item?.id} youth={item}/>;
+            return <YouthCardDefault key={item?.id} youth={item} style={{margin:'25px'}}/>;
           }
         })}
       </div>

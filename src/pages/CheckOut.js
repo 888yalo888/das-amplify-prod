@@ -1,5 +1,5 @@
 import React from "react";
-import {PickUpModal} from "../ui-components";
+import { PickUpModal } from "../ui-components";
 
 import { useParams } from "react-router-dom";
 import { getYouthInfo } from "../services/api.service";
@@ -18,10 +18,17 @@ const CheckOut = () => {
   }, []);
 
   return (
-    <div>
-      if({youth?.id}){
-        <PickUpModal key={youth?.id} />
-      }
+    <div
+    style={{
+      display: "flex",
+      flexDirection: 'column',
+      justifyContent: "center",
+      alignItems: 'center',
+      margin: "10px 20px",
+    }}>
+      <h2>Please confirm that </h2>
+      <h1>{youth?.fullName}</h1>
+      <h2>is being picked up.</h2>
     </div>
   );
 };

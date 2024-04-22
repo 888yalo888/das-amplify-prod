@@ -7,11 +7,14 @@
 export { default as ActionCard } from "./ActionCard";
 export { default as Ampligram } from "./Ampligram";
 export { default as ButtonCheckIn } from "./ButtonCheckIn";
+export { default as ButtonCheckInVibe } from "./ButtonCheckInVibe";
 export { default as ButtonHomePage } from "./ButtonHomePage";
 export { default as ButtonRoster } from "./ButtonRoster";
 export { default as CheckInModal } from "./CheckInModal";
 export { default as CheckInVibe } from "./CheckInVibe";
+export { default as CheckInVibeDefault } from "./CheckInVibeDefault";
 export { default as CheckInVibeProfileDropDown } from "./CheckInVibeProfileDropDown";
+export { default as CheckInVibesSelector } from "./CheckInVibesSelector";
 export { default as CheckoutPayment } from "./CheckoutPayment";
 export { default as CommentCard } from "./CommentCard";
 export { default as ContactUs } from "./ContactUs";

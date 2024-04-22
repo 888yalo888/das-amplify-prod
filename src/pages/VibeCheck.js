@@ -1,5 +1,5 @@
 import React from "react";
-import {CheckInModal, PickUpModal} from "../ui-components";
+import {ButtonCheckInVibe, CheckInModal, CheckInVibeDefault, PickUpModal} from "../ui-components";
 
 import { generateClient } from "aws-amplify/api";
 import { useParams } from "react-router-dom";
@@ -20,13 +20,9 @@ const VibeCheck = () => {
         query: getYouth,
         variables,
       })
-    ).data.getSite.AttendedBy.items;
-
-    const reduced = results.reduce((youths, item) => {
-      youths.push(item.youth);
-      return youths;
-    }, []);
-    return reduced;
+    ).data.getYouth;
+    console.log(results)
+    return results;
   }
 
   const [youth, setYouth] = React.useState();
@@ -41,11 +37,22 @@ const VibeCheck = () => {
   }, []);
 
   return (
-    <div>
-      if({youth?.id}){
-        <CheckInModal key={youth?.id} />
-      }
-    </div>
+    <div
+    style={{
+      display: "flex",
+      flexDirection: 'column',
+      justifyContent: "center",
+      alignItems: 'center',
+      margin: "10px 20px",
+    }}
+  >
+    <h1>{youth?.fullName.split(' ')[0]}, what's your vibe today?</h1>
+    <CheckInVibeDefault label={'Ballsy'}/>
+    <CheckInVibeDefault/>
+    <CheckInVibeDefault/>
+    <CheckInVibeDefault/>
+    <ButtonCheckInVibe/>
+  </div>
   );
 };
 
