@@ -1,20 +1,52 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useParams } from 'react-router-dom';
+import React from "react";
+import {CheckInModal, PickUpModal} from "../ui-components";
+
+import { generateClient } from "aws-amplify/api";
+import { useParams } from "react-router-dom";
+import { getYouth } from "../graphql/queries";
 
 
-function VibeCheck() {
+const client = generateClient();
+
+const VibeCheck = () => {
   const { youthID } = useParams();
+  async function GetYouth() {
+    const variables = {
+      id: youthID,
+    };
+
+    const results = (
+      await client.graphql({
+        query: getYouth,
+        variables,
+      })
+    ).data.getSite.AttendedBy.items;
+
+    const reduced = results.reduce((youths, item) => {
+      youths.push(item.youth);
+      return youths;
+    }, []);
+    return reduced;
+  }
+
+  const [youth, setYouth] = React.useState();
+
+  React.useEffect(() => {
+    const fetchYouthData = async () => {
+      const data = await GetYouth();
+      console.log(data);
+      setYouth(data);
+    };
+    fetchYouthData();
+  }, []);
 
   return (
-    <>
-    <h1>VibeCheck</h1>
-    <Link to="/">
-      <button>Go Back to Check In</button>
-    </Link>  
-    </>
-    )
-}
-export default VibeCheck
+    <div>
+      if({youth?.id}){
+        <CheckInModal key={youth?.id} />
+      }
+    </div>
+  );
+};
 
-
+export default VibeCheck;
