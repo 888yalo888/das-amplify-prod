@@ -40,8 +40,9 @@ export declare type RosterTableBodyOverridesProps = {
 } & EscapeHatchProps;
 export declare type RosterTableBodyProps = React.PropsWithChildren<Partial<FlexProps> & {
     youth?: Youth;
+    status?: String;
 } & {
-    property1?: "Active" | "Inactive";
+    status?: "Active" | "Inactive";
 } & {
     overrides?: RosterTableBodyOverridesProps | undefined | null;
 }>;
