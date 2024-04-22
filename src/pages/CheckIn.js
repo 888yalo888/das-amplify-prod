@@ -8,11 +8,14 @@ import { Link } from "react-router-dom";
 
 import { generateClient } from "aws-amplify/api";
 import { getYouthRosterForSite } from "../graphql/queries";
+import { useLocation } from 'react-router-dom';
 
 
 const client = generateClient();
 
 const CheckIn = () => {
+  const { state } = useLocation();
+  console.log('siteId', state.siteId);
   async function getRoster() {
     const variables = {
       date: new Date().toISOString().split("T")[0],
