@@ -6,7 +6,6 @@
 
 import * as React from "react";
 import { FlexProps, HeadingProps, IconProps, ImageProps, ViewProps } from "@aws-amplify/ui-react";
-import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -23,7 +22,7 @@ export declare type PMHeaderOverridesProps = {
     Logo?: PrimitiveOverrideProps<ImageProps>;
     "Site Drop Down"?: PrimitiveOverrideProps<FlexProps>;
     Heading59311361?: PrimitiveOverrideProps<HeadingProps>;
-    MyIcon?: MyIconProps;
+    "\uD83D\uDD12Icon"?: PrimitiveOverrideProps<IconProps>;
     "Profile Bug"?: PrimitiveOverrideProps<ViewProps>;
     "Ellipse 1"?: PrimitiveOverrideProps<IconProps>;
     Heading59311360?: PrimitiveOverrideProps<HeadingProps>;

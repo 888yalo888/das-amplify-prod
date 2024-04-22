@@ -27,6 +27,7 @@ export default function Filters(props) {
       <SelectField
         width="240px"
         height="unset"
+        label="Status"
         placeholder="All"
         shrink="0"
         size="small"
