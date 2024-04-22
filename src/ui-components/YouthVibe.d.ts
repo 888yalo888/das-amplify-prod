@@ -7,7 +7,6 @@
 import * as React from "react";
 import { Youth, Vibe } from "../models";
 import { DividerProps, FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
-import { VibeProps } from "./Vibe";
 import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -37,18 +36,6 @@ export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> 
     vibe?: Vibe;
 } & {
     youthStatus?: "CheckedIn" | "Default" | "PickedUp";
-    "Britt Reid"?: PrimitiveOverrideProps<TextProps>;
-    "Grade 3"?: PrimitiveOverrideProps<TextProps>;
-    Vibe?: VibeProps;
-    Divider?: PrimitiveOverrideProps<DividerProps>;
-    BottomCard?: PrimitiveOverrideProps<FlexProps>;
-    MyIcon?: MyIconProps;
-    "CHECK OUT"?: PrimitiveOverrideProps<TextProps>;
-} & EscapeHatchProps;
-export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
-    youth?: Youth;
-} & {
-    property1?: "Default" | "Variant2";
 } & {
     overrides?: YouthVibeOverridesProps | undefined | null;
 }>;

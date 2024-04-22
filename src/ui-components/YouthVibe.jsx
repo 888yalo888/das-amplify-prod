@@ -74,7 +74,6 @@ export default function YouthVibe(props) {
     overridesProp || {}
   );
   const youthVibeOnClick = useNavigateAction({ type: "url", url: "" });
-
   return (
     <Flex
       gap="7px"

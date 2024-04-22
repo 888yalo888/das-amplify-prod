@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FlexProps, IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
-import { VibeProps } from "./Vibe";
+import { FlexProps, IconProps, ImageProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -19,23 +18,23 @@ export declare type Variant = {
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type VibeSummaryOverridesProps = {
-    "4"?: PrimitiveOverrideProps<TextProps>;
-    "15922668"?: PrimitiveOverrideProps<TextProps>;
     "15922669"?: PrimitiveOverrideProps<TextProps>;
     "15922670"?: PrimitiveOverrideProps<TextProps>;
     "15922671"?: PrimitiveOverrideProps<TextProps>;
     "15922672"?: PrimitiveOverrideProps<TextProps>;
     VibeSummary?: PrimitiveOverrideProps<ViewProps>;
     "Rectangle 21"?: PrimitiveOverrideProps<ViewProps>;
+    "4/11"?: PrimitiveOverrideProps<TextProps>;
+    "1/4"?: PrimitiveOverrideProps<TextProps>;
     "Frame 447"?: PrimitiveOverrideProps<FlexProps>;
     Cool?: PrimitiveOverrideProps<FlexProps>;
-    Vibe59551259?: VibeProps;
-    "Frame 444"?: PrimitiveOverrideProps<FlexProps>;
-    Vibe59551292?: VibeProps;
-    "Frame 445"?: PrimitiveOverrideProps<FlexProps>;
-    Vibe59551334?: VibeProps;
-    "Frame 446"?: PrimitiveOverrideProps<FlexProps>;
-    Vibe59551385?: VibeProps;
+    EmoteCool?: PrimitiveOverrideProps<ImageProps>;
+    Happy?: PrimitiveOverrideProps<FlexProps>;
+    EmoteHappy?: PrimitiveOverrideProps<ImageProps>;
+    Sad?: PrimitiveOverrideProps<FlexProps>;
+    EmoteSad?: PrimitiveOverrideProps<ImageProps>;
+    Angry?: PrimitiveOverrideProps<FlexProps>;
+    EmoteAngry?: PrimitiveOverrideProps<ImageProps>;
     "CHECKED-IN"?: PrimitiveOverrideProps<TextProps>;
     "PICKED UP"?: PrimitiveOverrideProps<TextProps>;
     "Line 9"?: PrimitiveOverrideProps<IconProps>;

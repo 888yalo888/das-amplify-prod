@@ -13,7 +13,12 @@ import {
 } from "./utils";
 import { Badge, Flex, Icon, Text, View } from "@aws-amplify/ui-react";
 export default function RosterTableBody(props) {
-  const { youth, overrides: overridesProp, ...rest } = props;
+  const {
+    youth,
+    status = "Inactive",
+    overrides: overridesProp,
+    ...rest
+  } = props;
   const variants = [
     {
       overrides: {
@@ -79,7 +84,7 @@ export default function RosterTableBody(props) {
       padding="0px 0px 0px 0px"
       backgroundColor="rgba(255,255,255,1)"
       display="flex"
-      status={youth?.status == "ACTIVE" ? "Active" : "Inactive"}
+      status="Inactive"
       {...getOverrideProps(overrides, "RosterTableBody")}
       {...rest}
     >
@@ -331,7 +336,6 @@ export default function RosterTableBody(props) {
         border="1px SOLID rgba(0,0,0,1)"
         padding="11px 23px 11px 23px"
         display="flex"
-        status={youth?.status == "ACTIVE" ? "Active" : "Inactive"}
         {...getOverrideProps(overrides, "Row Cell60731034")}
       >
         <Badge
@@ -341,7 +345,6 @@ export default function RosterTableBody(props) {
           alignSelf="stretch"
           size="default"
           variation="success"
-          status={youth?.status == "ACTIVE" ? "Active" : "Inactive"}
           children="Active"
           {...getOverrideProps(overrides, "Badge")}
         ></Badge>
