@@ -15,15 +15,15 @@ export const getSite = async (siteId) => {
         },
     });
     return {
+        address: result.data.getSite.address,
+        name: result.data.getSite.name,
         phoneNumber: result.data.getSite.phoneNumber,
         roster: result.data.getSite.AttendedBy.items.map((youthWrapper) => {
             youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
             return youthWrapper.youth;
         }).filter((youth) => youth.status === EntityStatus.Active),
-        siteAddress: result.data.getSite.address,
         siteAdminEmail: result.data.getSite.siteAdminEmail,
         siteAdminName: result.data.getSite.siteAdminName,
-        siteName: result.data.getSite.name,
     };
 };
 
@@ -48,7 +48,7 @@ export const getYouthInfo = async (id) => {
             id,
         },
     });
-    return result.getYouth;
+    return result.data.getYouth;
 }
 
 export const checkInYouth = async (siteID, youthID, vibe) => {

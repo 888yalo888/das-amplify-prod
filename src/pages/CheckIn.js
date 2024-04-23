@@ -13,6 +13,7 @@ import useStore from '../store/store';
 
 
 const CheckIn = () => {
+  const store = useStore();
   function getCurrentDate() {
     const now = new Date();
     const options = {
@@ -28,9 +29,10 @@ const CheckIn = () => {
 
   React.useEffect(() => {
     const fetchSiteData = async () => {
-      const data = await getSite('03f24a65-f53c-4447-846f-922527d48a52');
+      const data = await getSite(store.currentSite.id);
       console.log(data);
       setSite(data);
+      store.setSite(data);
     };
     fetchSiteData();
   }, []);

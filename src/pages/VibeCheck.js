@@ -1,40 +1,57 @@
 import React from "react";
-import {ButtonCheckInVibe, CheckInModal, CheckInVibeDefault, PickUpModal} from "../ui-components";
+import { ButtonCheckInVibe, CheckInVibe } from "../ui-components";
 
-import { generateClient } from "aws-amplify/api";
 import { useParams } from "react-router-dom";
-import { getYouth } from "../graphql/queries";
-
-
-const client = generateClient();
+import { getYouthInfo } from "../services/api.service";
+import { Vibe } from '../enums/vibe.enum';
 
 const VibeCheck = () => {
   const { youthID } = useParams();
-  async function GetYouth() {
-    const variables = {
-      id: youthID,
-    };
-
-    const results = (
-      await client.graphql({
-        query: getYouth,
-        variables,
-      })
-    ).data.getYouth;
-    console.log(results)
-    return results;
-  }
 
   const [youth, setYouth] = React.useState();
 
   React.useEffect(() => {
     const fetchYouthData = async () => {
-      const data = await GetYouth();
-      console.log(data);
-      setYouth(data);
+      setYouth(await getYouthInfo(youthID));
     };
     fetchYouthData();
   }, []);
+
+  const [selectedVibe, setSelectedVibe] = React.useState();  
+
+  const VibeOptions = () => {
+    function onOptionClick(vibe) {
+      setSelectedVibe(vibe);
+    }
+    
+    function getOverrides(vibe) {
+      return {
+        CheckInVibe: {
+          className: `check-in-option ${selectedVibe === vibe ? 'check-in-option__selected' : ''}`,
+          onClick: () => onOptionClick(vibe),
+        },
+        'At Ease': {
+          children: vibe,
+        },
+      };
+    }
+    const vibes = Object.values(Vibe).map((vibe) => <CheckInVibe key={vibe} overrides={getOverrides(vibe)} />);
+    
+    return vibes;
+  }
+
+  function onCheckInClick() {
+    console.log('check in clicked', selectedVibe);
+  }
+
+  const checkInButtonOverrides = {
+    ButtonCheckInVibe: {
+      className: 'check-in-btn',
+    },
+    ButtonCheckInVibe6151869: {
+      isDisabled: !selectedVibe
+    },
+  };
 
   return (
     <div
@@ -47,11 +64,8 @@ const VibeCheck = () => {
     }}
   >
     <h1>{youth?.fullName.split(' ')[0]}, what's your vibe today?</h1>
-    <CheckInVibeDefault label={'Ballsy'}/>
-    <CheckInVibeDefault/>
-    <CheckInVibeDefault/>
-    <CheckInVibeDefault/>
-    <ButtonCheckInVibe/>
+    <VibeOptions></VibeOptions>
+    <ButtonCheckInVibe overrides={checkInButtonOverrides} onClick={onCheckInClick}/>
   </div>
   );
 };

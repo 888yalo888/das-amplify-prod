@@ -44,3 +44,19 @@
 [data-amplify-authenticator] {
   height: 100vh;
 }
+
+.check-in-btn {
+  margin: 16px 0px;
+}
+
+.check-in-option {
+  margin: 8px;
+}
+
+.check-in-option:hover {
+  cursor: pointer;
+}
+
+.check-in-option__selected {
+  color: red;
+}
