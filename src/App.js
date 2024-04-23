@@ -1,28 +1,35 @@
-import React from 'react';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import CheckIn from './pages/CheckIn';
-import CheckOut from './pages/CheckOut';
-import VibeCheck from './pages/VibeCheck';
-import YouthDetails from './pages/YouthDetails';
-import Roster from './pages/Roster';
-import '@aws-amplify/ui-react/styles.css';
-import { Amplify } from 'aws-amplify';
-import config from './amplifyconfiguration.json';
-import Header from './pages/Header';
-import CheckedOutDetails from './pages/AttendanceDetails';
-import SiteSelection from './pages/SiteSelection';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import CheckIn from "./pages/CheckIn";
+import CheckOut from "./pages/CheckOut";
+import VibeCheck from "./pages/VibeCheck";
+import YouthDetails from "./pages/YouthDetails";
+import Roster from "./pages/Roster";
+import "@aws-amplify/ui-react/styles.css";
+import "./App.css";
+import { Amplify } from "aws-amplify";
+import config from "./amplifyconfiguration.json";
+import CheckedOutDetails from "./pages/AttendanceDetails";
+import DASNAuthenticator from "./pages/DASNAuthenticator";
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import Header from "./pages/Header";
+import SiteSelection from "./pages/SiteSelection";
 
 Amplify.configure(config);
 
-const App = ({ signOut, user }) => {
+const App = () => {
+  const { signOut, user, authStatus } = useAuthenticator(
+    ({ signOut, user, authStatus }) => [signOut, user, authStatus]
+  );
 
   return (
-    <>
-      {/* <PMHeader width="100%" /> */}
-      {/* <h1>Hello {user?.username}</h1>
-      <button onClick={signOut}>Sign out</button> <br /> */}
+    <DASNAuthenticator>
+      <button onClick={signOut}>Sign out</button>
       <Router>
         <Header></Header>
         <Routes>
@@ -36,11 +43,14 @@ const App = ({ signOut, user }) => {
           <Route path="/roster" element={<Roster />} />
           <Route path="/vibe-check/:youthID" element={<VibeCheck />} />
           <Route path="/youth-details/:youthID" element={<YouthDetails />} />
-          <Route path="/site-selection" element={<SiteSelection user={user} />} />
+          <Route
+            path="/site-selection"
+            element={<SiteSelection user={user} />}
+          />
         </Routes>
       </Router>
-    </>
+    </DASNAuthenticator>
   );
 };
 
-export default withAuthenticator(App);
+export default App;

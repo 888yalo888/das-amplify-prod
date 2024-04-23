@@ -10,11 +10,15 @@ import {
   getOverrideProps,
   getOverridesFromVariants,
   mergeVariantsAndOverrides,
-  useNavigateAction,
 } from "./utils";
 import { Badge, Flex, Icon, Text, View } from "@aws-amplify/ui-react";
 export default function RosterTableBody(props) {
-  const { youth, overrides: overridesProp, ...rest } = props;
+  const {
+    youth,
+    status = "Inactive",
+    overrides: overridesProp,
+    ...rest
+  } = props;
   const variants = [
     {
       overrides: {
@@ -37,7 +41,7 @@ export default function RosterTableBody(props) {
         "Row Cell60731036": {},
         RosterTableBody: {},
       },
-      variantValues: { property1: "Active" },
+      variantValues: { status: "Active" },
     },
     {
       overrides: {
@@ -60,17 +64,13 @@ export default function RosterTableBody(props) {
         "Row Cell60731036": {},
         RosterTableBody: {},
       },
-      variantValues: { property1: "Inactive" },
+      variantValues: { status: "Inactive" },
     },
   ];
   const overrides = mergeVariantsAndOverrides(
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
-  const iconsEighteditOneOnClick = useNavigateAction({
-    type: "url",
-    url: "/youth/update",
-  });
   return (
     <Flex
       gap="0"
@@ -84,9 +84,7 @@ export default function RosterTableBody(props) {
       padding="0px 0px 0px 0px"
       backgroundColor="rgba(255,255,255,1)"
       display="flex"
-      variant={
-        youth?.status == "Active" ? 'variant="Active"' : 'variant="Inactive"'
-      }
+      status="Inactive"
       {...getOverrideProps(overrides, "RosterTableBody")}
       {...rest}
     >
@@ -341,9 +339,10 @@ export default function RosterTableBody(props) {
         {...getOverrideProps(overrides, "Row Cell60731034")}
       >
         <Badge
-          width="68px"
+          width="unset"
           height="unset"
           shrink="0"
+          alignSelf="stretch"
           size="default"
           variation="success"
           children="Active"
@@ -375,9 +374,6 @@ export default function RosterTableBody(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          onClick={() => {
-            iconsEighteditOneOnClick();
-          }}
           {...getOverrideProps(overrides, "icons8-edit 1")}
         >
           <Icon

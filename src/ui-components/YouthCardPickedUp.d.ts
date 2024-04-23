@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth, Vibe } from "../models";
+import { Youth } from "../models";
 import { DividerProps, FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
 import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
@@ -19,8 +19,8 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type YouthVibeOverridesProps = {
-    YouthVibe?: PrimitiveOverrideProps<FlexProps>;
+export declare type YouthCardPickedUpOverridesProps = {
+    YouthCardPickedUp?: PrimitiveOverrideProps<FlexProps>;
     TopCard?: PrimitiveOverrideProps<FlexProps>;
     YouthInfo?: PrimitiveOverrideProps<FlexProps>;
     YouthName?: PrimitiveOverrideProps<TextProps>;
@@ -31,12 +31,9 @@ export declare type YouthVibeOverridesProps = {
     YouthStatusIcon?: MyIconProps;
     YouthStatus?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
-export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
+export declare type YouthCardPickedUpProps = React.PropsWithChildren<Partial<FlexProps> & {
     youth?: Youth;
-    vibe?: Vibe;
 } & {
-    youthStatus?: "CheckedIn" | "Default" | "PickedUp";
-} & {
-    overrides?: YouthVibeOverridesProps | undefined | null;
+    overrides?: YouthCardPickedUpOverridesProps | undefined | null;
 }>;
-export default function YouthVibe(props: YouthVibeProps): React.ReactElement;
+export default function YouthCardPickedUp(props: YouthCardPickedUpProps): React.ReactElement;

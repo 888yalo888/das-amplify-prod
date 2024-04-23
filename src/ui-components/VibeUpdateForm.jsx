@@ -15,7 +15,6 @@ import {
   Grid,
   Icon,
   ScrollView,
-  SelectField,
   Text,
   TextField,
   useTheme,
@@ -392,10 +391,10 @@ export default function VibeUpdateForm(props) {
       {...getOverrideProps(overrides, "VibeUpdateForm")}
       {...rest}
     >
-      <SelectField
+      <TextField
         label="Check in vibe"
-        placeholder="Please select an option"
-        isDisabled={false}
+        isRequired={false}
+        isReadOnly={false}
         value={checkInVibe}
         onChange={(e) => {
           let { value } = e.target;
@@ -420,32 +419,11 @@ export default function VibeUpdateForm(props) {
         errorMessage={errors.checkInVibe?.errorMessage}
         hasError={errors.checkInVibe?.hasError}
         {...getOverrideProps(overrides, "checkInVibe")}
-      >
-        <option
-          children="Atease"
-          value="ATEASE"
-          {...getOverrideProps(overrides, "checkInVibeoption0")}
-        ></option>
-        <option
-          children="Angry"
-          value="ANGRY"
-          {...getOverrideProps(overrides, "checkInVibeoption1")}
-        ></option>
-        <option
-          children="Sad"
-          value="SAD"
-          {...getOverrideProps(overrides, "checkInVibeoption2")}
-        ></option>
-        <option
-          children="Happy"
-          value="HAPPY"
-          {...getOverrideProps(overrides, "checkInVibeoption3")}
-        ></option>
-      </SelectField>
-      <SelectField
+      ></TextField>
+      <TextField
         label="Check out vibe"
-        placeholder="Please select an option"
-        isDisabled={false}
+        isRequired={false}
+        isReadOnly={false}
         value={checkOutVibe}
         onChange={(e) => {
           let { value } = e.target;
@@ -470,28 +448,7 @@ export default function VibeUpdateForm(props) {
         errorMessage={errors.checkOutVibe?.errorMessage}
         hasError={errors.checkOutVibe?.hasError}
         {...getOverrideProps(overrides, "checkOutVibe")}
-      >
-        <option
-          children="Atease"
-          value="ATEASE"
-          {...getOverrideProps(overrides, "checkOutVibeoption0")}
-        ></option>
-        <option
-          children="Angry"
-          value="ANGRY"
-          {...getOverrideProps(overrides, "checkOutVibeoption1")}
-        ></option>
-        <option
-          children="Sad"
-          value="SAD"
-          {...getOverrideProps(overrides, "checkOutVibeoption2")}
-        ></option>
-        <option
-          children="Happy"
-          value="HAPPY"
-          {...getOverrideProps(overrides, "checkOutVibeoption3")}
-        ></option>
-      </SelectField>
+      ></TextField>
       <TextField
         label="Check in time"
         isRequired={false}

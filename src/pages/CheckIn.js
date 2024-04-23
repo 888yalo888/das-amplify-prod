@@ -1,15 +1,16 @@
 import React from "react";
 import {
   ButtonCheckIn,
-  Youths,
   VibeSummary,
+  YouthCardCheckedIn,
+  YouthCardPickedUp,
+  YouthCardDefault,
 } from "../ui-components";
 import { Link } from "react-router-dom";
 
 import { generateClient } from "aws-amplify/api";
-import { getYouthRosterForSite } from "../graphql/queries";
+import { getRosterById } from "../graphql/customQueries";
 import useStore from '../store/store';
-
 
 const client = generateClient();
 
@@ -18,13 +19,14 @@ const CheckIn = () => {
   console.log('store', store);
   async function getRoster() {
     const variables = {
-      date: new Date().toISOString().split("T")[0],
-      siteId: "03f24a65-f53c-4447-846f-922527d48a52",
+      // date: new Date().toISOString().split("T")[0],
+      // siteId: "03f24a65-f53c-4447-846f-922527d48a52",
+      id: "03f24a65-f53c-4447-846f-922527d48a52",
     };
 
     const results = (
       await client.graphql({
-        query: getYouthRosterForSite,
+        query: getRosterById,
         variables,
       })
     ).data.getSite.AttendedBy.items;
@@ -52,6 +54,7 @@ const CheckIn = () => {
   React.useEffect(() => {
     const fetchRosterData = async () => {
       const data = await getRoster();
+      console.log(data);
       setRoster(data);
     };
     fetchRosterData();
@@ -77,13 +80,23 @@ const CheckIn = () => {
           }}
         >
           {getCurrentDate()}
-        </div>{" "}
+        </div>
         <div>
           <VibeSummary />
         </div>
       </div>
       <div>
-        <Youths items={roster} />
+        {roster?.map((item) => {
+          if (item?.grade === "SECOND") {
+            return <YouthCardCheckedIn key={item?.id} youth={item} />;
+          } 
+          else if (item?.grade === "THIRD") {
+            return <YouthCardPickedUp key={item?.id} youth={item} />;
+          } 
+          else {
+            return <YouthCardDefault key={item?.id} youth={item}/>;
+          }
+        })}
       </div>
     </div>
   );
