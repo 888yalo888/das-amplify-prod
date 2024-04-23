@@ -3,6 +3,7 @@ import { getCurrentDate } from '../utils/date';
 export const getRosterById = /* GraphQL */ `
   query GetRoster($id: ID!) {
     getSite(id: $id) {
+      id
       address
       name
       phoneNumber

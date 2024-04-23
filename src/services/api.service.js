@@ -15,6 +15,7 @@ export const getSite = async (siteId) => {
         },
     });
     return {
+        id: result.data.getSite.id,
         address: result.data.getSite.address,
         name: result.data.getSite.name,
         phoneNumber: result.data.getSite.phoneNumber,
