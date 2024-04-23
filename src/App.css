@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+[data-amplify-authenticator] {
+  height: 100vh;
+}

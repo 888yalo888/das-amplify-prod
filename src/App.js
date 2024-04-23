@@ -1,26 +1,35 @@
-import React from 'react';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import CheckIn from './pages/CheckIn';
-import CheckOut from './pages/CheckOut';
-import VibeCheck from './pages/VibeCheck';
-import YouthDetails from './pages/YouthDetails';
-import Roster from './pages/Roster';
-import '@aws-amplify/ui-react/styles.css';
-import { Amplify } from 'aws-amplify';
-import config from './amplifyconfiguration.json';
-import { PMHeader } from './ui-components';
-import CheckedOutDetails from './pages/AttendanceDetails';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import CheckIn from "./pages/CheckIn";
+import CheckOut from "./pages/CheckOut";
+import VibeCheck from "./pages/VibeCheck";
+import YouthDetails from "./pages/YouthDetails";
+import Roster from "./pages/Roster";
+import "@aws-amplify/ui-react/styles.css";
+import "./App.css";
+import { Amplify } from "aws-amplify";
+import config from "./amplifyconfiguration.json";
+import { PMHeader } from "./ui-components";
+import CheckedOutDetails from "./pages/AttendanceDetails";
+import DASNAuthenticator from "./pages/DASNAuthenticator";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 Amplify.configure(config);
 
-const App = ({ signOut, user }) => {
+const App = () => {
+  const { signOut, user, authStatus } = useAuthenticator(
+    ({ signOut, user, authStatus }) => [signOut, user, authStatus]
+  );
 
   return (
-    <>
+    <DASNAuthenticator>
       <PMHeader width="100%" />
-      {/* <h1>Hello {user?.username}</h1>
-      <button onClick={signOut}>Sign out</button> <br /> */}
+      <button onClick={signOut}>Sign out</button>
       <Router>
         <Routes>
           <Route path="/" element={<Navigate replace to="/check-in" />} />
@@ -35,8 +44,8 @@ const App = ({ signOut, user }) => {
           <Route path="/youth-details/:youthID" element={<YouthDetails />} />
         </Routes>
       </Router>
-    </>
+    </DASNAuthenticator>
   );
 };
 
-export default withAuthenticator(App);
+export default App;
