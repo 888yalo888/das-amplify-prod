@@ -14,10 +14,12 @@ import "@aws-amplify/ui-react/styles.css";
 import "./App.css";
 import { Amplify } from "aws-amplify";
 import config from "./amplifyconfiguration.json";
-import { PMHeader } from "./ui-components";
 import CheckedOutDetails from "./pages/AttendanceDetails";
 import DASNAuthenticator from "./pages/DASNAuthenticator";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import PMHeader from "./ui-components/PMHeader";
+import CheckedOutDetails from "./pages/AttendanceDetails";
+import SiteSelection from "./pages/SiteSelection";
 
 Amplify.configure(config);
 
@@ -32,7 +34,7 @@ const App = () => {
       <button onClick={signOut}>Sign out</button>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate replace to="/check-in" />} />
+          <Route path="/" element={<Navigate replace to="/site-selection" />} />
           <Route path="/check-in" element={<CheckIn />} />
           <Route path="/check-out/:youthID" element={<CheckOut />} />
           <Route
@@ -42,6 +44,10 @@ const App = () => {
           <Route path="/roster" element={<Roster />} />
           <Route path="/vibe-check/:youthID" element={<VibeCheck />} />
           <Route path="/youth-details/:youthID" element={<YouthDetails />} />
+          <Route
+            path="/site-selection"
+            element={<SiteSelection user={user} />}
+          />
         </Routes>
       </Router>
     </DASNAuthenticator>
