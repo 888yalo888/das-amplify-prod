@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 import { getSite } from '../services/api.service';
 import useStore from '../store/store';
+import { gradeMapper } from '../utils/text';
 
 
 const CheckIn = () => {
@@ -38,13 +39,21 @@ const CheckIn = () => {
 
   const Roster = () => {
     return site?.roster?.map((youth) => {
+      const overrides = {
+        YouthName: {
+          children: youth.fullName,
+        },
+        YouthGrade: {
+          children: gradeMapper(youth.grade),
+        },
+      };
       if (youth.vibes.length > 0) {
         if (youth.vibes[0].checkOutTime) {
-          return <YouthCardPickedUp key={youth?.id} youth={youth} className={'youth-card'}/>;
+          return <YouthCardPickedUp key={youth?.id} youth={youth} className={'youth-card'} overrides={overrides}/>;
         }
-        return <YouthCardCheckedIn key={youth?.id} youth={youth} className={'youth-card'}/>
+        return <YouthCardCheckedIn key={youth?.id} youth={youth} className={'youth-card'} overrides={overrides}/>
       }
-      return <YouthCardDefault key={youth?.id} youth={youth} className={'youth-card'}/>
+      return <YouthCardDefault key={youth?.id} youth={youth} className={'youth-card'} overrides={overrides}/>
     });
   }
 
