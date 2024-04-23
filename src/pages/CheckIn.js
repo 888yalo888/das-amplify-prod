@@ -30,12 +30,23 @@ const CheckIn = () => {
   React.useEffect(() => {
     const fetchSiteData = async () => {
       const data = await getSite(store.currentSite.id);
-      console.log(data);
       setSite(data);
       store.setSite(data);
     };
     fetchSiteData();
   }, []);
+
+  const Roster = () => {
+    return site?.roster?.map((youth) => {
+      if (youth.vibes.length > 0) {
+        if (youth.vibes[0].checkOutTime) {
+          return <YouthCardPickedUp key={youth?.id} youth={youth} className={'youth-card'}/>;
+        }
+        return <YouthCardCheckedIn key={youth?.id} youth={youth} className={'youth-card'}/>
+      }
+      return <YouthCardDefault key={youth?.id} youth={youth} className={'youth-card'}/>
+    });
+  }
 
   return (
     <div>
@@ -63,17 +74,7 @@ const CheckIn = () => {
         </div>
       </div>
       <div>
-        {site?.roster?.map((item) => {
-          if (item?.grade === "SECOND") {
-            return <YouthCardCheckedIn key={item?.id} youth={item} style={{margin:'25px'}}/>;
-          } 
-          else if (item?.grade === "THIRD") {
-            return <YouthCardPickedUp key={item?.id} youth={item} style={{margin:'25px'}}/>;
-          } 
-          else {
-            return <YouthCardDefault key={item?.id} youth={item} style={{margin:'25px'}}/>;
-          }
-        })}
+        <Roster></Roster>
       </div>
     </div>
   );
