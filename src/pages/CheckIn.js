@@ -5,12 +5,14 @@ import {
   YouthCardCheckedIn,
   YouthCardPickedUp,
   YouthCardDefault,
+  Vibe,
 } from "../ui-components";
 import { Link } from "react-router-dom";
 
 import { getSite } from '../services/api.service';
 import useStore from '../store/store';
 import { gradeMapper } from '../utils/text';
+import { Vibe as VibeEnum } from '../enums/vibe.enum';
 
 
 const CheckIn = () => {
@@ -37,6 +39,14 @@ const CheckIn = () => {
     fetchSiteData();
   }, []);
 
+  function isCheckedIn(youth) {
+    return youth.vibes.length > 0;
+  }
+
+  function isCheckedOut(youth) {
+    return youth.vibes.length > 0 && youth.vibes[0].checkOutTime;
+  }
+
   const Roster = () => {
     return site?.roster?.map((youth) => {
       const overrides = {
@@ -56,6 +66,37 @@ const CheckIn = () => {
       return <YouthCardDefault key={youth?.id} youth={youth} className={'youth-card'} overrides={overrides}/>
     });
   }
+
+  const getVibeSummaryOverrides = () => {
+    const checkedIn = site?.roster.filter((youth) => isCheckedIn(youth));
+    const checkedOut = site?.roster.filter((youth) => isCheckedOut(youth));
+    const total = site?.roster;
+    const totalAtEase = checkedIn.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.AtEase).length;
+    const totalAngry = checkedIn.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Angry).length;
+    const totalSad = checkedIn.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Sad).length;
+    const totalHappy = checkedIn.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Happy).length;
+    console.log(checkedIn)
+    return {
+      '4/11': {
+        children: `${checkedIn.length}/${total.length}`,
+      },
+      '1/4': {
+        children: `${checkedOut.length}/${checkedIn.length + checkedOut.length}`,
+      },
+      15922672: {
+        children: totalAtEase,
+      },
+      15922669: {
+        children: totalAngry,
+      },
+      15922670: {
+        children: totalSad,
+      },
+      15922671: {
+        children: totalHappy,
+      },
+    };
+  };
 
   return (
     <div>
@@ -79,7 +120,7 @@ const CheckIn = () => {
           {getCurrentDate()}
         </div>
         <div>
-          <VibeSummary />
+          <VibeSummary overrides={getVibeSummaryOverrides()}/>
         </div>
       </div>
       <div>
