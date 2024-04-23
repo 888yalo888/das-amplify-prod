@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { CardProps, IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
-import { MyIconProps } from "./MyIcon";
+import { Youth } from "../models";
+import { FlexProps, TextProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,17 +18,16 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type YouthCardOverridesProps = {
-    YouthCard?: PrimitiveOverrideProps<ViewProps>;
-    Card?: PrimitiveOverrideProps<CardProps>;
-    "Britt Reid"?: PrimitiveOverrideProps<TextProps>;
-    "Grade 3"?: PrimitiveOverrideProps<TextProps>;
-    "\uD83D\uDE20"?: PrimitiveOverrideProps<TextProps>;
-    "Line 5"?: PrimitiveOverrideProps<IconProps>;
-    "CHECK OUT"?: PrimitiveOverrideProps<TextProps>;
-    MyIcon?: MyIconProps;
+export declare type YouthCardDefaultOverridesProps = {
+    YouthCardDefault?: PrimitiveOverrideProps<FlexProps>;
+    TopCard?: PrimitiveOverrideProps<FlexProps>;
+    YouthInfo?: PrimitiveOverrideProps<FlexProps>;
+    YouthName?: PrimitiveOverrideProps<TextProps>;
+    YouthGrade?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
-export declare type YouthCardProps = React.PropsWithChildren<Partial<ViewProps> & {
-    overrides?: YouthCardOverridesProps | undefined | null;
+export declare type YouthCardDefaultProps = React.PropsWithChildren<Partial<FlexProps> & {
+    youth?: Youth;
+} & {
+    overrides?: YouthCardDefaultOverridesProps | undefined | null;
 }>;
-export default function YouthCard(props: YouthCardProps): React.ReactElement;
+export default function YouthCardDefault(props: YouthCardDefaultProps): React.ReactElement;

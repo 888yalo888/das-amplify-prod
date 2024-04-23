@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { CardProps, IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
-import { MyIconProps } from "./MyIcon";
+import { RosterTableBodyProps } from "./RosterTableBody";
+import { CollectionProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,17 +18,17 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type YouthCardOverridesProps = {
-    YouthCard?: PrimitiveOverrideProps<ViewProps>;
-    Card?: PrimitiveOverrideProps<CardProps>;
-    "Britt Reid"?: PrimitiveOverrideProps<TextProps>;
-    "Grade 3"?: PrimitiveOverrideProps<TextProps>;
-    "\uD83D\uDE20"?: PrimitiveOverrideProps<TextProps>;
-    "Line 5"?: PrimitiveOverrideProps<IconProps>;
-    "CHECK OUT"?: PrimitiveOverrideProps<TextProps>;
-    MyIcon?: MyIconProps;
+export declare type RosterCollectionOverridesProps = {
+    RosterCollection?: PrimitiveOverrideProps<CollectionProps>;
+    RosterTableBody?: RosterTableBodyProps;
 } & EscapeHatchProps;
-export declare type YouthCardProps = React.PropsWithChildren<Partial<ViewProps> & {
-    overrides?: YouthCardOverridesProps | undefined | null;
+export declare type RosterCollectionProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
+    items?: any[];
+    overrideItems?: (collectionItem: {
+        item: any;
+        index: number;
+    }) => RosterTableBodyProps;
+} & {
+    overrides?: RosterCollectionOverridesProps | undefined | null;
 }>;
-export default function YouthCard(props: YouthCardProps): React.ReactElement;
+export default function RosterCollection(props: RosterCollectionProps): React.ReactElement;
