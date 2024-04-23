@@ -75,13 +75,12 @@ const CheckIn = () => {
     const totalAngry = checkedIn.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Angry).length;
     const totalSad = checkedIn.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Sad).length;
     const totalHappy = checkedIn.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Happy).length;
-    console.log(checkedIn)
     return {
       '4/11': {
         children: `${checkedIn.length}/${total.length}`,
       },
       '1/4': {
-        children: `${checkedOut.length}/${checkedIn.length + checkedOut.length}`,
+        children: `${checkedOut.length}/${checkedIn.length}`,
       },
       15922672: {
         children: totalAtEase,
