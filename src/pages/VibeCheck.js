@@ -1,12 +1,13 @@
 import React from "react";
 import { ButtonCheckInVibe, CheckInVibe } from "../ui-components";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { checkInYouth, getYouthInfo } from "../services/api.service";
 import { Vibe } from '../enums/vibe.enum';
 import useStore from "../store/store";
 
 const VibeCheck = () => {
+  const navigate = useNavigate();
   const { youthID } = useParams();
 
   const [youth, setYouth] = React.useState();
@@ -43,7 +44,8 @@ const VibeCheck = () => {
 
   const site = useStore((state) => state.currentSite);
   async function onCheckInClick() {
-    await checkInYouth(site.id, youth.id, selectedVibe).then((result) => console.log('check in result', result)).catch((error) => console.log('check in error', error));
+    await checkInYouth(site.id, youth.id, selectedVibe).catch((error) => console.log('check in error', error));
+    navigate('/check-in');
   }
 
   const checkInButtonOverrides = {
