@@ -2,28 +2,34 @@ import React from 'react';
 import { DropdownSelector } from "../ui-components";
 import { getProgramManager } from '../services/api.service';
 import { useNavigate } from 'react-router-dom';
+import useStore from '../store/store';
 
 const SiteSelection = ({user}) => {
+    const store = useStore();
     const navigate = useNavigate();
-    const email = user.signInDetails.loginId;
+
+    const [selectedSite, setSelectedSite] = React.useState((useStore((state) => state.currentSite)));
     const [pm, setPm] = React.useState();
+    
+    const email = user.signInDetails.loginId;
+    
     React.useEffect(() => {
         const fetchData = async () => {
-            setPm(await getProgramManager(email));
+            const pm = await getProgramManager(email);
+            setPm(pm);
+            store.setPm(pm);
         };
         fetchData();
-    })
-    getProgramManager(email).then(async (result) => {
-        setPm(result);
-    });
+    }, [email]);
     
-    const [selectedSite, setSelectedSite] = React.useState();
     const onSiteSelect = (event) => {
-        setSelectedSite(pm?.sites.find((site) => site.name === event.target.value)?.id);
+        setSelectedSite(pm?.sites.find((site) => site.name === event.target.value));
     };
     const onConfirmClick = () => {
-        navigate(`/check-in`, { state: { siteId: selectedSite}});
+        store.setSite(selectedSite);
+        navigate('/check-in');
     }
+
     return (<>
         <div>Site Selection</div>
         <DropdownSelector overrides={{ 

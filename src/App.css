@@ -37,6 +37,10 @@
   }
 }
 
+.header-btn:hover {
+  cursor: pointer;
+}
+
 [data-amplify-authenticator] {
   height: 100vh;
 }

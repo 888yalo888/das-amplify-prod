@@ -10,13 +10,19 @@ import config from "./aws-exports";
 import { Authenticator, ThemeProvider } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
+
 Amplify.configure(config);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ThemeProvider>
     <Authenticator.Provider>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Authenticator.Provider>
   </ThemeProvider>
 );

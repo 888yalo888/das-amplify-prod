@@ -1,24 +1,22 @@
 import React from "react";
 import {
   ButtonCheckIn,
-  Youths,
   VibeSummary,
-  YouthVibe,
   YouthCardCheckedIn,
   YouthCardPickedUp,
   YouthCardDefault,
 } from "../ui-components";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { generateClient } from "aws-amplify/api";
-import { getYouthRosterForSite, getRosterById, getYouth } from "../graphql/queries";
-import { useLocation } from 'react-router-dom';
+import { getRosterById } from "../graphql/customQueries";
+import useStore from '../store/store';
 
 const client = generateClient();
 
 const CheckIn = () => {
-  const { state } = useLocation();
-  console.log('siteId', state.siteId);
+  const store = useStore();
+  console.log('store', store);
   async function getRoster() {
     const variables = {
       // date: new Date().toISOString().split("T")[0],

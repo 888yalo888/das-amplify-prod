@@ -1,43 +1,5 @@
 /* eslint-disable */
 
-import { getCurrentDate } from '../utils/date';
-
-// query getRosterById($id:ID!) - gets roster with current date
-export const getRosterById = /* GraphQL */ `
-  query GetRoster($id: ID!) {
-    getSite(id: $id) {
-      address
-      name
-      phoneNumber
-      siteAdminName
-      siteAdminEmail
-      AttendedBy(filter: {createdAt: {attributeExists: true}}) {
-        items {
-          youth {
-            id
-            createdAt
-            dateOfBirth
-            fullName
-            grade
-            gender
-            guardianFullName
-            status
-            vibes(filter: {createdAt:{beginsWith:"${getCurrentDate()}"}}) {
-              items {
-                id
-                checkInTime
-                checkInVibe
-                checkOutTime
-                checkOutVibe
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 // query GetYouthRosterForSite($id: ID!) {
 export const getYouthRosterForSite = /* GraphQL */ `
   query GetYouthRosterForSite($siteId: ID!, $date: String) {
