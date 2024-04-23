@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 
 import { getSite } from '../services/api.service';
+import useStore from '../store/store';
 
 
 const CheckIn = () => {
