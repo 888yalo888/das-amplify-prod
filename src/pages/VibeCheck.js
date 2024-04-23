@@ -7,6 +7,7 @@ import { Vibe } from '../enums/vibe.enum';
 import useStore from "../store/store";
 
 const VibeCheck = () => {
+  const site = useStore((state) => state.currentSite);
   const navigate = useNavigate();
   const { youthID } = useParams();
 
@@ -16,7 +17,12 @@ const VibeCheck = () => {
     const fetchYouthData = async () => {
       setYouth(await getYouthInfo(youthID));
     };
-    fetchYouthData();
+    const foundYouthData = site.roster.find((youth) => youth.id === youthID);
+    if (!foundYouthData) {
+      fetchYouthData();
+    } else {
+      setYouth(foundYouthData);
+    }
   }, []);
 
   const [selectedVibe, setSelectedVibe] = React.useState();  
@@ -42,7 +48,6 @@ const VibeCheck = () => {
     return vibes;
   }
 
-  const site = useStore((state) => state.currentSite);
   async function onCheckInClick() {
     await checkInYouth(site.id, youth.id, selectedVibe).catch((error) => console.log('check in error', error));
     navigate('/check-in');
