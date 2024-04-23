@@ -9,9 +9,10 @@ import Roster from './pages/Roster';
 import '@aws-amplify/ui-react/styles.css';
 import { Amplify } from 'aws-amplify';
 import config from './amplifyconfiguration.json';
-import PMHeader from './ui-components/PMHeader';
+import Header from './pages/Header';
 import CheckedOutDetails from './pages/AttendanceDetails';
 import SiteSelection from './pages/SiteSelection';
+import './App.css';
 
 Amplify.configure(config);
 
@@ -19,10 +20,11 @@ const App = ({ signOut, user }) => {
 
   return (
     <>
-      <PMHeader width="100%" />
+      {/* <PMHeader width="100%" /> */}
       {/* <h1>Hello {user?.username}</h1>
       <button onClick={signOut}>Sign out</button> <br /> */}
       <Router>
+        <Header></Header>
         <Routes>
           <Route path="/" element={<Navigate replace to="/site-selection" />} />
           <Route path="/check-in" element={<CheckIn />} />
