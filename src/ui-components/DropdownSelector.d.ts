@@ -23,6 +23,8 @@ export declare type DropdownSelectorOverridesProps = {
     SelectField?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type DropdownSelectorProps = React.PropsWithChildren<Partial<FlexProps> & {
+    dropdownSelector6031537?: React.ReactNode;
+} & {
     overrides?: DropdownSelectorOverridesProps | undefined | null;
 }>;
 export default function DropdownSelector(props: DropdownSelectorProps): React.ReactElement;

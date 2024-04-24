@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { VibeProps } from "./Vibe";
-import { FlexProps, TextProps } from "@aws-amplify/ui-react";
+import { ButtonProps, FlexProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,19 +17,11 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type CheckInVibeOverridesProps = {
-    CheckInVibe?: PrimitiveOverrideProps<FlexProps>;
-    Contents?: PrimitiveOverrideProps<FlexProps>;
-    Vibe?: VibeProps;
-    Label?: PrimitiveOverrideProps<TextProps>;
+export declare type AddYouthButtonOverridesProps = {
+    AddYouthButton?: PrimitiveOverrideProps<FlexProps>;
+    Button?: PrimitiveOverrideProps<ButtonProps>;
 } & EscapeHatchProps;
-export declare type CheckInVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
-    src?: String;
-    label?: String;
-    default?: String;
-} & {
-    isSelected?: "False" | "True";
-} & {
-    overrides?: CheckInVibeOverridesProps | undefined | null;
+export declare type AddYouthButtonProps = React.PropsWithChildren<Partial<FlexProps> & {
+    overrides?: AddYouthButtonOverridesProps | undefined | null;
 }>;
-export default function CheckInVibe(props: CheckInVibeProps): React.ReactElement;
+export default function AddYouthButton(props: AddYouthButtonProps): React.ReactElement;
