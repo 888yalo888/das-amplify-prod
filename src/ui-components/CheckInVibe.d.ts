@@ -5,7 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
+import { VibeProps } from "./Vibe";
+import { FlexProps, TextProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -20,7 +21,7 @@ export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes
 export declare type CheckInVibeOverridesProps = {
     CheckInVibe?: PrimitiveOverrideProps<FlexProps>;
     Contents?: PrimitiveOverrideProps<FlexProps>;
-    Emote?: PrimitiveOverrideProps<ImageProps>;
+    Vibe?: VibeProps;
     Label?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type CheckInVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
