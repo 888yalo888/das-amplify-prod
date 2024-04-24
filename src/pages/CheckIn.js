@@ -5,6 +5,7 @@ import {
   YouthCardCheckedIn,
   YouthCardPickedUp,
   YouthCardDefault,
+  Vibe,
 } from "../ui-components";
 import { Link } from "react-router-dom";
 
@@ -30,21 +31,18 @@ const CheckIn = () => {
     return now.toLocaleDateString("en-US", options);
   }
 
-  const emoteCoolImage = React.createElement("img", {
-    src: "../assets/EmoteAtEase.png",
-    alt: "",
-  });
-
   const [site, setSite] = React.useState();
 
   React.useEffect(() => {
     const fetchSiteData = async () => {
-      const data = await getSite(store.currentSite.id);
+      const data = await getSite(store?.currentSite?.id);
       setSite(data);
       store.setSite(data);
     };
-    fetchSiteData();
-  }, []);
+    if (store.currentSite) {
+      fetchSiteData();
+    }
+  }, [store.currentSite?.id]);
 
   function isCheckedIn(youth) {
     return youth.vibes.length > 0;
