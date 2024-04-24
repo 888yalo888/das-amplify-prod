@@ -72,7 +72,7 @@ const VibeCheck = () => {
       margin: "10px 20px",
     }}
   >
-    <h1>{youth?.fullName.split(' ')[0]}, what's your vibe today?</h1>
+    <h1>Hey {youth?.fullName.split(' ')[0]}, what's your vibe today?</h1>
     <VibeOptions></VibeOptions>
     <ButtonCheckInVibe overrides={checkInButtonOverrides} onClick={onCheckInClick}/>
   </div>

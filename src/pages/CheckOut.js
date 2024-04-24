@@ -53,7 +53,8 @@ const CheckOut = () => {
       className: 'check-in-btn',
     },
     ButtonCheckInVibe6151869: {
-      isDisabled: !selectedVibe
+      isDisabled: !selectedVibe,
+      children: 'Check Out',
     },
   };
 
@@ -72,6 +73,7 @@ const CheckOut = () => {
       alignItems: 'center',
       margin: "10px 20px",
     }}>
+      <h1>Hey {youth?.fullName.split(' ')[0]}, before you go, what's your vibe now?</h1>
       <VibeOptions></VibeOptions>
       <h2>Please confirm that </h2>
       <h1>{youth?.fullName}</h1>
