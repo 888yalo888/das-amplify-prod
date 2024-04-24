@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.header-btn:hover {
+  cursor: pointer;
+}
+
+[data-amplify-authenticator] {
+  height: 100vh;
+}
