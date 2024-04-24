@@ -13,12 +13,7 @@ import {
 } from "./utils";
 import { Badge, Flex, Icon, Text, View } from "@aws-amplify/ui-react";
 export default function RosterTableBody(props) {
-  const {
-    youth,
-    status = "Inactive",
-    overrides: overridesProp,
-    ...rest
-  } = props;
+  const { youth, overrides: overridesProp, ...rest } = props;
   const variants = [
     {
       overrides: {
@@ -106,10 +101,10 @@ export default function RosterTableBody(props) {
       >
         <Text
           fontFamily="Inter"
-          fontSize="12px"
-          fontWeight="400"
+          fontSize="14px"
+          fontWeight="700"
           color="rgba(0,0,0,1)"
-          lineHeight="14.522727012634277px"
+          lineHeight="16.94318199157715px"
           textAlign="center"
           display="block"
           direction="column"
@@ -145,10 +140,10 @@ export default function RosterTableBody(props) {
       >
         <Text
           fontFamily="Inter"
-          fontSize="12px"
-          fontWeight="400"
+          fontSize="14px"
+          fontWeight="700"
           color="rgba(0,0,0,1)"
-          lineHeight="14.522727012634277px"
+          lineHeight="16.94318199157715px"
           textAlign="center"
           display="block"
           direction="column"
@@ -184,10 +179,10 @@ export default function RosterTableBody(props) {
       >
         <Text
           fontFamily="Inter"
-          fontSize="12px"
-          fontWeight="400"
+          fontSize="14px"
+          fontWeight="700"
           color="rgba(0,0,0,1)"
-          lineHeight="14.522727012634277px"
+          lineHeight="16.94318199157715px"
           textAlign="center"
           display="block"
           direction="column"
@@ -223,10 +218,10 @@ export default function RosterTableBody(props) {
       >
         <Text
           fontFamily="Inter"
-          fontSize="12px"
-          fontWeight="400"
+          fontSize="14px"
+          fontWeight="700"
           color="rgba(0,0,0,1)"
-          lineHeight="14.522727012634277px"
+          lineHeight="16.94318199157715px"
           textAlign="center"
           display="block"
           direction="column"
@@ -262,10 +257,10 @@ export default function RosterTableBody(props) {
       >
         <Text
           fontFamily="Inter"
-          fontSize="12px"
-          fontWeight="400"
+          fontSize="14px"
+          fontWeight="700"
           color="rgba(0,0,0,1)"
-          lineHeight="14.522727012634277px"
+          lineHeight="16.94318199157715px"
           textAlign="center"
           display="block"
           direction="column"
@@ -279,7 +274,7 @@ export default function RosterTableBody(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Cell"
+          children=""
           {...getOverrideProps(overrides, "Cell60731029")}
         ></Text>
       </Flex>
@@ -301,10 +296,10 @@ export default function RosterTableBody(props) {
       >
         <Text
           fontFamily="Inter"
-          fontSize="12px"
-          fontWeight="400"
+          fontSize="14px"
+          fontWeight="700"
           color="rgba(0,0,0,1)"
-          lineHeight="14.522727012634277px"
+          lineHeight="16.94318199157715px"
           textAlign="center"
           display="block"
           direction="column"

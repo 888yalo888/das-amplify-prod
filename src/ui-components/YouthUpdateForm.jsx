@@ -197,7 +197,6 @@ export default function YouthUpdateForm(props) {
   } = props;
   const initialValues = {
     fullName: "",
-    createdDate: "",
     dateOfBirth: "",
     guardianFullName: "",
     guardianPhoneNumber: "",
@@ -207,9 +206,6 @@ export default function YouthUpdateForm(props) {
     site: [],
   };
   const [fullName, setFullName] = React.useState(initialValues.fullName);
-  const [createdDate, setCreatedDate] = React.useState(
-    initialValues.createdDate
-  );
   const [dateOfBirth, setDateOfBirth] = React.useState(
     initialValues.dateOfBirth
   );
@@ -229,7 +225,6 @@ export default function YouthUpdateForm(props) {
       ? { ...initialValues, ...youthRecord, site: linkedSite }
       : initialValues;
     setFullName(cleanValues.fullName);
-    setCreatedDate(cleanValues.createdDate);
     setDateOfBirth(cleanValues.dateOfBirth);
     setGuardianFullName(cleanValues.guardianFullName);
     setGuardianPhoneNumber(cleanValues.guardianPhoneNumber);
@@ -281,11 +276,10 @@ export default function YouthUpdateForm(props) {
     model: Site,
   }).items;
   const getDisplayValue = {
-    site: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
+    site: (r) => `${r?.name}`,
   };
   const validations = {
     fullName: [],
-    createdDate: [],
     dateOfBirth: [],
     guardianFullName: [],
     guardianPhoneNumber: [{ type: "Phone" }],
@@ -311,23 +305,6 @@ export default function YouthUpdateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
-  const convertToLocal = (date) => {
-    const df = new Intl.DateTimeFormat("default", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      calendar: "iso8601",
-      numberingSystem: "latn",
-      hourCycle: "h23",
-    });
-    const parts = df.formatToParts(date).reduce((acc, part) => {
-      acc[part.type] = part.value;
-      return acc;
-    }, {});
-    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
-  };
   return (
     <Grid
       as="form"
@@ -338,7 +315,6 @@ export default function YouthUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           fullName,
-          createdDate,
           dateOfBirth,
           guardianFullName,
           guardianPhoneNumber,
@@ -453,7 +429,6 @@ export default function YouthUpdateForm(props) {
           });
           const modelFieldsToSave = {
             fullName: modelFields.fullName,
-            createdDate: modelFields.createdDate,
             dateOfBirth: modelFields.dateOfBirth,
             guardianFullName: modelFields.guardianFullName,
             guardianPhoneNumber: modelFields.guardianPhoneNumber,
@@ -491,7 +466,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName: value,
-              createdDate,
               dateOfBirth,
               guardianFullName,
               guardianPhoneNumber,
@@ -514,40 +488,6 @@ export default function YouthUpdateForm(props) {
         {...getOverrideProps(overrides, "fullName")}
       ></TextField>
       <TextField
-        label="Created date"
-        isRequired={false}
-        isReadOnly={false}
-        type="datetime-local"
-        value={createdDate && convertToLocal(new Date(createdDate))}
-        onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
-          if (onChange) {
-            const modelFields = {
-              fullName,
-              createdDate: value,
-              dateOfBirth,
-              guardianFullName,
-              guardianPhoneNumber,
-              grade,
-              gender,
-              status,
-              site,
-            };
-            const result = onChange(modelFields);
-            value = result?.createdDate ?? value;
-          }
-          if (errors.createdDate?.hasError) {
-            runValidationTasks("createdDate", value);
-          }
-          setCreatedDate(value);
-        }}
-        onBlur={() => runValidationTasks("createdDate", createdDate)}
-        errorMessage={errors.createdDate?.errorMessage}
-        hasError={errors.createdDate?.hasError}
-        {...getOverrideProps(overrides, "createdDate")}
-      ></TextField>
-      <TextField
         label="Date of birth"
         isRequired={false}
         isReadOnly={false}
@@ -558,7 +498,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName,
-              createdDate,
               dateOfBirth: value,
               guardianFullName,
               guardianPhoneNumber,
@@ -590,7 +529,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName,
-              createdDate,
               dateOfBirth,
               guardianFullName: value,
               guardianPhoneNumber,
@@ -623,7 +561,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName,
-              createdDate,
               dateOfBirth,
               guardianFullName,
               guardianPhoneNumber: value,
@@ -657,7 +594,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName,
-              createdDate,
               dateOfBirth,
               guardianFullName,
               guardianPhoneNumber,
@@ -755,7 +691,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName,
-              createdDate,
               dateOfBirth,
               guardianFullName,
               guardianPhoneNumber,
@@ -787,7 +722,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName,
-              createdDate,
               dateOfBirth,
               guardianFullName,
               guardianPhoneNumber,
@@ -826,7 +760,6 @@ export default function YouthUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               fullName,
-              createdDate,
               dateOfBirth,
               guardianFullName,
               guardianPhoneNumber,

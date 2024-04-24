@@ -5,15 +5,17 @@ import {
   YouthCardCheckedIn,
   YouthCardPickedUp,
   YouthCardDefault,
-  Vibe,
 } from "../ui-components";
 import { Link } from "react-router-dom";
 
-import { getSite } from '../services/api.service';
-import useStore from '../store/store';
-import { gradeMapper } from '../utils/text';
-import { Vibe as VibeEnum } from '../enums/vibe.enum';
-
+import { getSite } from "../services/api.service";
+import useStore from "../store/store";
+import { gradeMapper } from "../utils/text";
+import { Vibe as VibeEnum } from "../enums/vibe.enum";
+import EmoteAngry from "../assets/EmoteAngry.png";
+import EmoteAtEase from "../assets/EmoteAtEase.png"
+import EmoteHappy from "../assets/EmoteHappy.png"
+import EmoteSad from "../assets/EmoteSad.png"
 
 const CheckIn = () => {
   const store = useStore();
@@ -27,6 +29,11 @@ const CheckIn = () => {
     };
     return now.toLocaleDateString("en-US", options);
   }
+
+  const emoteCoolImage = React.createElement("img", {
+    src: "../assets/EmoteAtEase.png",
+    alt: "",
+  });
 
   const [site, setSite] = React.useState();
 
@@ -59,27 +66,56 @@ const CheckIn = () => {
       };
       if (youth.vibes.length > 0) {
         if (youth.vibes[0].checkOutTime) {
-          return <YouthCardPickedUp key={youth?.id} youth={youth} className={'youth-card'} overrides={overrides}/>;
+          return (
+            <YouthCardPickedUp
+              key={youth?.id}
+              youth={youth}
+              className={"youth-card"}
+              overrides={overrides}
+            />
+          );
         }
-        return <YouthCardCheckedIn key={youth?.id} youth={youth} className={'youth-card'} overrides={overrides}/>
+        return (
+          <YouthCardCheckedIn
+            key={youth?.id}
+            youth={youth}
+            className={"youth-card"}
+            overrides={overrides}
+          />
+        );
       }
-      return <YouthCardDefault key={youth?.id} youth={youth} className={'youth-card'} overrides={overrides}/>
+      return (
+        <YouthCardDefault
+          key={youth?.id}
+          youth={youth}
+          className={"youth-card"}
+          overrides={overrides}
+        />
+      );
     });
-  }
+  };
 
   const getVibeSummaryOverrides = () => {
     const checkedIn = site?.roster.filter((youth) => isCheckedIn(youth));
     const checkedOut = site?.roster.filter((youth) => isCheckedOut(youth));
     const total = site?.roster;
-    const totalAtEase = checkedIn?.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.AtEase).length;
-    const totalAngry = checkedIn?.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Angry).length;
-    const totalSad = checkedIn?.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Sad).length;
-    const totalHappy = checkedIn?.filter((youth) => youth.vibes[0].checkInVibe === VibeEnum.Happy).length;
+    const totalAtEase = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.AtEase
+    ).length;
+    const totalAngry = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Angry
+    ).length;
+    const totalSad = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Sad
+    ).length;
+    const totalHappy = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Happy
+    ).length;
     return {
-      '4/11': {
+      "4/11": {
         children: `${checkedIn?.length}/${total?.length}`,
       },
-      '1/4': {
+      "1/4": {
         children: `${checkedOut?.length}/${checkedIn?.length}`,
       },
       15922672: {
@@ -93,6 +129,18 @@ const CheckIn = () => {
       },
       15922671: {
         children: totalHappy,
+      },
+      EmoteCool: {
+        src: EmoteAtEase,
+      },
+      EmoteHappy: {
+        src: EmoteHappy,
+      },
+      EmoteSad: {
+        src: EmoteSad,
+      },
+      EmoteAngry: {
+        src: EmoteAngry,
       },
     };
   };
@@ -119,7 +167,7 @@ const CheckIn = () => {
           {getCurrentDate()}
         </div>
         <div>
-          <VibeSummary overrides={getVibeSummaryOverrides()}/>
+          <VibeSummary overrides={getVibeSummaryOverrides()} />
         </div>
       </div>
       <div>
