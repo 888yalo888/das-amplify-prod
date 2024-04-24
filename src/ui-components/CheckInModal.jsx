@@ -55,7 +55,7 @@ export default function CheckInModal(props) {
         shrink="0"
         position="relative"
         padding="0px 0px 0px 0px"
-        {...getOverrideProps(overrides, "Frame 444")}
+        {...getOverrideProps(overrides, "CheckInVibesSelector")}
       >
         <CheckInVibe
           display="flex"
@@ -71,7 +71,7 @@ export default function CheckInModal(props) {
           borderRadius="8px"
           padding="15px 15px 15px 15px"
           isSelected="True"
-          {...getOverrideProps(overrides, "CheckInVibe59421853")}
+          {...getOverrideProps(overrides, "CheckInVibeAtEase")}
         ></CheckInVibe>
         <CheckInVibe
           display="flex"
@@ -89,7 +89,7 @@ export default function CheckInModal(props) {
           padding="15px 15px 15px 15px"
           backgroundColor="rgba(250,250,250,1)"
           isSelected="False"
-          {...getOverrideProps(overrides, "CheckInVibe59421865")}
+          {...getOverrideProps(overrides, "CheckInVibeAngry")}
         ></CheckInVibe>
         <CheckInVibe
           display="flex"
@@ -107,7 +107,7 @@ export default function CheckInModal(props) {
           padding="15px 15px 15px 15px"
           backgroundColor="rgba(250,250,250,1)"
           isSelected="False"
-          {...getOverrideProps(overrides, "CheckInVibe59421877")}
+          {...getOverrideProps(overrides, "CheckInVibeHappy")}
         ></CheckInVibe>
         <CheckInVibe
           display="flex"
@@ -125,7 +125,7 @@ export default function CheckInModal(props) {
           padding="15px 15px 15px 15px"
           backgroundColor="rgba(250,250,250,1)"
           isSelected="False"
-          {...getOverrideProps(overrides, "CheckInVibe59421889")}
+          {...getOverrideProps(overrides, "CheckInVibeSad")}
         ></CheckInVibe>
       </Flex>
       <Button
