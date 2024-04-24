@@ -20,11 +20,15 @@ export declare type Variant = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CheckInVibeOverridesProps = {
     CheckInVibe?: PrimitiveOverrideProps<FlexProps>;
-    "Frame 443"?: PrimitiveOverrideProps<FlexProps>;
+    Contents?: PrimitiveOverrideProps<FlexProps>;
     Vibe?: VibeProps;
-    "At Ease"?: PrimitiveOverrideProps<TextProps>;
+    Label?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type CheckInVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
+    src?: String;
+    label?: String;
+    default?: String;
+} & {
     isSelected?: "False" | "True";
 } & {
     overrides?: CheckInVibeOverridesProps | undefined | null;

@@ -6,10 +6,14 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Button, Flex } from "@aws-amplify/ui-react";
 export default function ButtonCheckInVibe(props) {
   const { overrides, ...rest } = props;
+  const buttonCheckInVibeSixOneFiveOneEightSixNineOnClick = useNavigateAction({
+    type: "url",
+    url: "/check-in",
+  });
   return (
     <Flex
       gap="0"
@@ -30,7 +34,11 @@ export default function ButtonCheckInVibe(props) {
         size="large"
         isDisabled={false}
         variation="primary"
+        disabled={false}
         children="Check In"
+        onClick={() => {
+          buttonCheckInVibeSixOneFiveOneEightSixNineOnClick();
+        }}
         {...getOverrideProps(overrides, "ButtonCheckInVibe6151869")}
       ></Button>
     </Flex>

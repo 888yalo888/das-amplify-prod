@@ -14,17 +14,23 @@ import {
 import Vibe from "./Vibe";
 import { Flex, Text } from "@aws-amplify/ui-react";
 export default function CheckInVibe(props) {
-  const { overrides: overridesProp, ...rest } = props;
+  const {
+    src,
+    label,
+    default: defaultProp,
+    overrides: overridesProp,
+    ...rest
+  } = props;
   const variants = [
     {
-      overrides: { Vibe: {}, "At Ease": {}, "Frame 443": {}, CheckInVibe: {} },
+      overrides: { Vibe: {}, Label: {}, Contents: {}, CheckInVibe: {} },
       variantValues: { isSelected: "False" },
     },
     {
       overrides: {
         Vibe: {},
-        "At Ease": {},
-        "Frame 443": {},
+        Label: {},
+        Contents: {},
         CheckInVibe: {
           border: "1px SOLID rgba(64,170,191,1)",
           backgroundColor: "rgba(184,206,249,1)",
@@ -52,6 +58,7 @@ export default function CheckInVibe(props) {
       padding="15px 15px 15px 15px"
       backgroundColor="rgba(250,250,250,1)"
       display="flex"
+      aria-label={label}
       {...getOverrideProps(overrides, "CheckInVibe")}
       {...rest}
     >
@@ -66,7 +73,7 @@ export default function CheckInVibe(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         display="flex"
-        {...getOverrideProps(overrides, "Frame 443")}
+        {...getOverrideProps(overrides, "Contents")}
       >
         <Vibe
           width="48px"
@@ -78,7 +85,7 @@ export default function CheckInVibe(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          vibe="AtEase"
+          vibe="' '"
           {...getOverrideProps(overrides, "Vibe")}
         ></Vibe>
         <Text
@@ -99,8 +106,8 @@ export default function CheckInVibe(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="At Ease"
-          {...getOverrideProps(overrides, "At Ease")}
+          children={defaultProp}
+          {...getOverrideProps(overrides, "Label")}
         ></Text>
       </Flex>
     </Flex>
