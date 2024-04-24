@@ -32,12 +32,14 @@ const CheckIn = () => {
 
   React.useEffect(() => {
     const fetchSiteData = async () => {
-      const data = await getSite(store.currentSite.id);
+      const data = await getSite(store?.currentSite?.id);
       setSite(data);
       store.setSite(data);
     };
-    fetchSiteData();
-  }, []);
+    if (store.currentSite) {
+      fetchSiteData();
+    }
+  }, [store.currentSite?.id]);
 
   function isCheckedIn(youth) {
     return youth.vibes.length > 0;
