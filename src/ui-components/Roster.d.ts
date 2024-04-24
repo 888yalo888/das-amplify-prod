@@ -18,17 +18,17 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type RosterTableBodyCollectionOverridesProps = {
-    RosterTableBodyCollection?: PrimitiveOverrideProps<CollectionProps>;
+export declare type RosterOverridesProps = {
+    Roster?: PrimitiveOverrideProps<CollectionProps>;
     RosterTableBody?: RosterTableBodyProps;
 } & EscapeHatchProps;
-export declare type RosterTableBodyCollectionProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
+export declare type RosterProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
     items?: any[];
     overrideItems?: (collectionItem: {
         item: any;
         index: number;
     }) => RosterTableBodyProps;
 } & {
-    overrides?: RosterTableBodyCollectionOverridesProps | undefined | null;
+    overrides?: RosterOverridesProps | undefined | null;
 }>;
-export default function RosterTableBodyCollection(props: RosterTableBodyCollectionProps): React.ReactElement;
+export default function Roster(props: RosterProps): React.ReactElement;
