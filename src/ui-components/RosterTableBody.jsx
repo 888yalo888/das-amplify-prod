@@ -14,12 +14,7 @@ import {
 import { Badge, Flex, Icon, Text, View } from "@aws-amplify/ui-react";
 import UpdateYouth from "../components/UpdateYouth";
 export default function RosterTableBody(props) {
-  const {
-    youth,
-    status = "Inactive",
-    overrides: overridesProp,
-    ...rest
-  } = props;
+  const { youth, overrides: overridesProp, ...rest } = props;
   const variants = [
     {
       overrides: {
@@ -280,7 +275,7 @@ export default function RosterTableBody(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Cell"
+          children=""
           {...getOverrideProps(overrides, "Cell60731029")}
         ></Text>
       </Flex>

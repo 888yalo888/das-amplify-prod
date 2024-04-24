@@ -8,36 +8,17 @@ import {
 } from "../ui-components";
 import { Link } from "react-router-dom";
 
-import { generateClient } from "aws-amplify/api";
-import { getRosterById } from "../graphql/customQueries";
-import useStore from '../store/store';
-
-const client = generateClient();
+import { getSite } from "../services/api.service";
+import useStore from "../store/store";
+import { gradeMapper } from "../utils/text";
+import { Vibe as VibeEnum } from "../enums/vibe.enum";
+import EmoteAngry from "../assets/EmoteAngry.png";
+import EmoteAtEase from "../assets/EmoteAtEase.png"
+import EmoteHappy from "../assets/EmoteHappy.png"
+import EmoteSad from "../assets/EmoteSad.png"
 
 const CheckIn = () => {
   const store = useStore();
-  console.log('store', store);
-  async function getRoster() {
-    const variables = {
-      // date: new Date().toISOString().split("T")[0],
-      // siteId: "03f24a65-f53c-4447-846f-922527d48a52",
-      id: "03f24a65-f53c-4447-846f-922527d48a52",
-    };
-
-    const results = (
-      await client.graphql({
-        query: getRosterById,
-        variables,
-      })
-    ).data.getSite.AttendedBy.items;
-
-    const reduced = results.reduce((youths, item) => {
-      youths.push(item.youth);
-      return youths;
-    }, []);
-    return reduced;
-  }
-
   function getCurrentDate() {
     const now = new Date();
     const options = {
@@ -49,16 +30,120 @@ const CheckIn = () => {
     return now.toLocaleDateString("en-US", options);
   }
 
-  const [roster, setRoster] = React.useState();
+  const emoteCoolImage = React.createElement("img", {
+    src: "../assets/EmoteAtEase.png",
+    alt: "",
+  });
+
+  const [site, setSite] = React.useState();
 
   React.useEffect(() => {
-    const fetchRosterData = async () => {
-      const data = await getRoster();
-      console.log(data);
-      setRoster(data);
+    const fetchSiteData = async () => {
+      const data = await getSite(store.currentSite.id);
+      setSite(data);
+      store.setSite(data);
     };
-    fetchRosterData();
+    fetchSiteData();
   }, []);
+
+  function isCheckedIn(youth) {
+    return youth.vibes.length > 0;
+  }
+
+  function isCheckedOut(youth) {
+    return youth.vibes.length > 0 && youth.vibes[0].checkOutTime;
+  }
+
+  const Roster = () => {
+    return site?.roster?.map((youth) => {
+      const overrides = {
+        YouthName: {
+          children: youth.fullName,
+        },
+        YouthGrade: {
+          children: gradeMapper(youth.grade),
+        },
+      };
+      if (youth.vibes.length > 0) {
+        if (youth.vibes[0].checkOutTime) {
+          return (
+            <YouthCardPickedUp
+              key={youth?.id}
+              youth={youth}
+              className={"youth-card"}
+              overrides={overrides}
+            />
+          );
+        }
+        return (
+          <YouthCardCheckedIn
+            key={youth?.id}
+            youth={youth}
+            className={"youth-card"}
+            overrides={overrides}
+          />
+        );
+      }
+      return (
+        <YouthCardDefault
+          key={youth?.id}
+          youth={youth}
+          className={"youth-card"}
+          overrides={overrides}
+        />
+      );
+    });
+  };
+
+  const getVibeSummaryOverrides = () => {
+    const checkedIn = site?.roster.filter((youth) => isCheckedIn(youth));
+    const checkedOut = site?.roster.filter((youth) => isCheckedOut(youth));
+    const total = site?.roster;
+    const totalAtEase = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.AtEase
+    ).length;
+    const totalAngry = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Angry
+    ).length;
+    const totalSad = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Sad
+    ).length;
+    const totalHappy = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Happy
+    ).length;
+    return {
+      "4/11": {
+        children: `${checkedIn?.length}/${total?.length}`,
+      },
+      "1/4": {
+        children: `${checkedOut?.length}/${checkedIn?.length}`,
+      },
+      15922672: {
+        children: totalAtEase,
+      },
+      15922669: {
+        children: totalAngry,
+      },
+      15922670: {
+        children: totalSad,
+      },
+      15922671: {
+        children: totalHappy,
+      },
+      EmoteCool: {
+        src: EmoteAtEase,
+      },
+      EmoteHappy: {
+        src: EmoteHappy,
+      },
+      EmoteSad: {
+        src: EmoteSad,
+      },
+      EmoteAngry: {
+        src: EmoteAngry,
+      },
+    };
+  };
 
   return (
     <div>
@@ -82,21 +167,11 @@ const CheckIn = () => {
           {getCurrentDate()}
         </div>
         <div>
-          <VibeSummary />
+          <VibeSummary overrides={getVibeSummaryOverrides()} />
         </div>
       </div>
       <div>
-        {roster?.map((item) => {
-          if (item?.grade === "SECOND") {
-            return <YouthCardCheckedIn key={item?.id} youth={item} />;
-          } 
-          else if (item?.grade === "THIRD") {
-            return <YouthCardPickedUp key={item?.id} youth={item} />;
-          } 
-          else {
-            return <YouthCardDefault key={item?.id} youth={item}/>;
-          }
-        })}
+        <Roster></Roster>
       </div>
     </div>
   );

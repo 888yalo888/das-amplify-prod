@@ -1,5 +1,6 @@
 import { generateClient } from 'aws-amplify/api';
 import { createYouth, createVibe, updateVibe, updateYouth, updateSite, updateProgramManager } from '../graphql/mutations';
+import { getYouth } from '../graphql/queries';
 import { getRosterById, getSitesByProgramManager } from '../graphql/customQueries';
 import { EntityType } from '../enums/entity.enum';
 import { EntityStatus } from '../enums/entity-status.enum';
@@ -14,15 +15,16 @@ export const getSite = async (siteId) => {
         },
     });
     return {
+        id: result.data.getSite.id,
+        address: result.data.getSite.address,
+        name: result.data.getSite.name,
         phoneNumber: result.data.getSite.phoneNumber,
         roster: result.data.getSite.AttendedBy.items.map((youthWrapper) => {
             youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
             return youthWrapper.youth;
         }).filter((youth) => youth.status === EntityStatus.Active),
-        siteAddress: result.data.getSite.address,
         siteAdminEmail: result.data.getSite.siteAdminEmail,
         siteAdminName: result.data.getSite.siteAdminName,
-        siteName: result.data.getSite.name,
     };
 };
 
@@ -39,6 +41,16 @@ export const getProgramManager = async (email) => {
         sites: result.data.listProgramManagers.items[0].AssignedTo.items.map((siteWrapper) => siteWrapper.site),
     };
 };
+
+export const getYouthInfo = async (id) => {
+    const result = await client.graphql({
+        query: getYouth,
+        variables: {
+            id,
+        },
+    });
+    return result.data.getYouth;
+}
 
 export const checkInYouth = async (siteID, youthID, vibe) => {
     await client.graphql({
