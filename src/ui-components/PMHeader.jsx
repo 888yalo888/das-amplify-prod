@@ -6,11 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Flex, Heading, Icon, Image, View } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function PMHeader(props) {
   const { overrides, ...rest } = props;
+  const profileBugOnClick = useNavigateAction({ type: "url", url: "" });
   return (
     <Flex
       gap="24px"
@@ -37,6 +38,7 @@ export default function PMHeader(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         objectFit="cover"
+        src="https://mbxe81.p3cdn1.secureserver.net/wp-content/uploads/2019/08/cropped-DAS-logo-for-web.png"
         {...getOverrideProps(overrides, "Logo")}
       ></Image>
       <Flex
@@ -72,10 +74,9 @@ export default function PMHeader(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          type="chevron_down"
-          fontSize="24px"
-          {...getOverrideProps(overrides, "\uD83D\uDD12Icon")}
-        ></Icon>
+          type="more_horiz"
+          {...getOverrideProps(overrides, "MyIcon")}
+        ></MyIcon>
       </Flex>
       <View
         width="40px"

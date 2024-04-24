@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { VibeProps } from "./Vibe";
-import { FlexProps, TextProps } from "@aws-amplify/ui-react";
+import { RosterTableBodyProps } from "./RosterTableBody";
+import { CollectionProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,19 +18,17 @@ export declare type Variant = {
     overrides: EscapeHatchProps;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type CheckInVibeOverridesProps = {
-    CheckInVibe?: PrimitiveOverrideProps<FlexProps>;
-    Contents?: PrimitiveOverrideProps<FlexProps>;
-    Vibe?: VibeProps;
-    Label?: PrimitiveOverrideProps<TextProps>;
+export declare type RosterCollectionOverridesProps = {
+    RosterCollection?: PrimitiveOverrideProps<CollectionProps>;
+    RosterTableBody?: RosterTableBodyProps;
 } & EscapeHatchProps;
-export declare type CheckInVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
-    src?: String;
-    label?: String;
-    default?: String;
+export declare type RosterCollectionProps = React.PropsWithChildren<Partial<CollectionProps<any>> & {
+    items?: any[];
+    overrideItems?: (collectionItem: {
+        item: any;
+        index: number;
+    }) => RosterTableBodyProps;
 } & {
-    isSelected?: "False" | "True";
-} & {
-    overrides?: CheckInVibeOverridesProps | undefined | null;
+    overrides?: RosterCollectionOverridesProps | undefined | null;
 }>;
-export default function CheckInVibe(props: CheckInVibeProps): React.ReactElement;
+export default function RosterCollection(props: RosterCollectionProps): React.ReactElement;
