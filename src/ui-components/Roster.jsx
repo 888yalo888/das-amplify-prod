@@ -7,18 +7,15 @@
 /* eslint-disable */
 import * as React from "react";
 import { Youth } from "../models";
-import { SortDirection } from "@aws-amplify/datastore";
 import { getOverrideProps, useDataStoreBinding } from "./utils";
 import RosterTableBody from "./RosterTableBody";
 import { Collection } from "@aws-amplify/ui-react";
-export default function RosterTableBodyCollection(props) {
+export default function Roster(props) {
   const { items: itemsProp, overrideItems, overrides, ...rest } = props;
-  const itemsPagination = { sort: (s) => s.fullName(SortDirection.ASCENDING) };
   const [items, setItems] = React.useState(undefined);
   const itemsDataStore = useDataStoreBinding({
     type: "collection",
     model: Youth,
-    pagination: itemsPagination,
   }).items;
   React.useEffect(() => {
     if (itemsProp !== undefined) {
@@ -40,18 +37,17 @@ export default function RosterTableBodyCollection(props) {
     <Collection
       type="grid"
       searchPlaceholder="Search..."
-      itemsPerPage={6}
       templateColumns="1fr"
       autoFlow="row"
       alignItems="stretch"
       justifyContent="stretch"
       items={items || []}
-      {...getOverrideProps(overrides, "RosterTableBodyCollection")}
+      {...getOverrideProps(overrides, "Roster")}
       {...rest}
     >
       {(item, index) => (
         <RosterTableBody
-          margin="0px 0 0px 0"
+          youth={item}
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
         ></RosterTableBody>
