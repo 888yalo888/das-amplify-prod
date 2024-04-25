@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Youth, Site } from "../models";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { Youth } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -30,7 +30,6 @@ export declare type YouthUpdateFormInputValues = {
     grade?: string;
     gender?: string;
     status?: string;
-    site?: Site[];
 };
 export declare type YouthUpdateFormValidationValues = {
     fullName?: ValidationFunction<string>;
@@ -40,7 +39,6 @@ export declare type YouthUpdateFormValidationValues = {
     grade?: ValidationFunction<string>;
     gender?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
-    site?: ValidationFunction<Site>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type YouthUpdateFormOverridesProps = {
@@ -52,7 +50,6 @@ export declare type YouthUpdateFormOverridesProps = {
     grade?: PrimitiveOverrideProps<SelectFieldProps>;
     gender?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;
-    site?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type YouthUpdateFormProps = React.PropsWithChildren<{
     overrides?: YouthUpdateFormOverridesProps | undefined | null;

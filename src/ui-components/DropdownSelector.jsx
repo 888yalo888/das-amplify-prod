@@ -46,6 +46,7 @@ export default function DropdownSelector(props) {
           isDisabled={false}
           labelHidden={false}
           variation="default"
+          defaultValue=""
           {...getOverrideProps(overrides, "SelectField")}
         ></SelectField>
       </Flex>

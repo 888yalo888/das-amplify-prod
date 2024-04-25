@@ -30,6 +30,11 @@ export const getRosterById = /* GraphQL */ `
                 checkOutVibe
               }
             }
+            site {
+              items {
+                id
+              }
+            }
           }
         }
       }

@@ -7,182 +7,15 @@
 /* eslint-disable */
 import * as React from "react";
 import {
-  Autocomplete,
-  Badge,
   Button,
-  Divider,
   Flex,
   Grid,
-  Icon,
-  ScrollView,
   SelectField,
-  Text,
   TextField,
-  useTheme,
 } from "@aws-amplify/ui-react";
-import { Youth, Site, YouthSite } from "../models";
-import {
-  fetchByPath,
-  getOverrideProps,
-  useDataStoreBinding,
-  validateField,
-} from "./utils";
+import { Youth } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify/datastore";
-function ArrayField({
-  items = [],
-  onChange,
-  label,
-  inputFieldRef,
-  children,
-  hasError,
-  setFieldValue,
-  currentFieldValue,
-  defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
-  runValidationTasks,
-  errorMessage,
-}) {
-  const labelElement = <Text>{label}</Text>;
-  const {
-    tokens: {
-      components: {
-        fieldmessages: { error: errorStyles },
-      },
-    },
-  } = useTheme();
-  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
-  const [isEditing, setIsEditing] = React.useState();
-  React.useEffect(() => {
-    if (isEditing) {
-      inputFieldRef?.current?.focus();
-    }
-  }, [isEditing]);
-  const removeItem = async (removeIndex) => {
-    const newItems = items.filter((value, index) => index !== removeIndex);
-    await onChange(newItems);
-    setSelectedBadgeIndex(undefined);
-  };
-  const addItem = async () => {
-    const { hasError } = runValidationTasks();
-    if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
-      !hasError
-    ) {
-      const newItems = [...items];
-      if (selectedBadgeIndex !== undefined) {
-        newItems[selectedBadgeIndex] = currentFieldValue;
-        setSelectedBadgeIndex(undefined);
-      } else {
-        newItems.push(currentFieldValue);
-      }
-      await onChange(newItems);
-      setIsEditing(false);
-    }
-  };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
-  return (
-    <React.Fragment>
-      {labelElement}
-      {isEditing && children}
-      {!isEditing ? (
-        <>
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-            }}
-          >
-            Add item
-          </Button>
-          {errorMessage && hasError && (
-            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
-              {errorMessage}
-            </Text>
-          )}
-        </>
-      ) : (
-        <Flex justifyContent="flex-end">
-          {(currentFieldValue || isEditing) && (
-            <Button
-              children="Cancel"
-              type="button"
-              size="small"
-              onClick={() => {
-                setFieldValue(defaultFieldValue);
-                setIsEditing(false);
-                setSelectedBadgeIndex(undefined);
-              }}
-            ></Button>
-          )}
-          <Button size="small" variation="link" onClick={addItem}>
-            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
-          </Button>
-        </Flex>
-      )}
-      {arraySection}
-    </React.Fragment>
-  );
-}
 export default function YouthCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -202,8 +35,6 @@ export default function YouthCreateForm(props) {
     guardianPhoneNumber: "",
     grade: "",
     gender: "",
-    status: "",
-    site: [],
   };
   const [fullName, setFullName] = React.useState(initialValues.fullName);
   const [dateOfBirth, setDateOfBirth] = React.useState(
@@ -217,8 +48,6 @@ export default function YouthCreateForm(props) {
   );
   const [grade, setGrade] = React.useState(initialValues.grade);
   const [gender, setGender] = React.useState(initialValues.gender);
-  const [status, setStatus] = React.useState(initialValues.status);
-  const [site, setSite] = React.useState(initialValues.site);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFullName(initialValues.fullName);
@@ -227,40 +56,15 @@ export default function YouthCreateForm(props) {
     setGuardianPhoneNumber(initialValues.guardianPhoneNumber);
     setGrade(initialValues.grade);
     setGender(initialValues.gender);
-    setStatus(initialValues.status);
-    setSite(initialValues.site);
-    setCurrentSiteValue(undefined);
-    setCurrentSiteDisplayValue("");
     setErrors({});
   };
-  const [currentSiteDisplayValue, setCurrentSiteDisplayValue] =
-    React.useState("");
-  const [currentSiteValue, setCurrentSiteValue] = React.useState(undefined);
-  const siteRef = React.createRef();
-  const getIDValue = {
-    site: (r) => JSON.stringify({ id: r?.id }),
-  };
-  const siteIdSet = new Set(
-    Array.isArray(site)
-      ? site.map((r) => getIDValue.site?.(r))
-      : getIDValue.site?.(site)
-  );
-  const siteRecords = useDataStoreBinding({
-    type: "collection",
-    model: Site,
-  }).items;
-  const getDisplayValue = {
-    site: (r) => `${r?.name}`,
-  };
   const validations = {
-    fullName: [],
-    dateOfBirth: [],
-    guardianFullName: [],
-    guardianPhoneNumber: [{ type: "Phone" }],
+    fullName: [{ type: "Required" }],
+    dateOfBirth: [{ type: "Required" }],
+    guardianFullName: [{ type: "Required" }],
+    guardianPhoneNumber: [{ type: "Required" }, { type: "Phone" }],
     grade: [],
-    gender: [],
-    status: [],
-    site: [{ type: "Required", validationMessage: "Site is required." }],
+    gender: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -294,29 +98,19 @@ export default function YouthCreateForm(props) {
           guardianPhoneNumber,
           grade,
           gender,
-          status,
-          site,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
               promises.push(
                 ...modelFields[fieldName].map((item) =>
-                  runValidationTasks(
-                    fieldName,
-                    item,
-                    getDisplayValue[fieldName]
-                  )
+                  runValidationTasks(fieldName, item)
                 )
               );
               return promises;
             }
             promises.push(
-              runValidationTasks(
-                fieldName,
-                modelFields[fieldName],
-                getDisplayValue[fieldName]
-              )
+              runValidationTasks(fieldName, modelFields[fieldName])
             );
             return promises;
           }, [])
@@ -333,31 +127,7 @@ export default function YouthCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          const modelFieldsToSave = {
-            fullName: modelFields.fullName,
-            dateOfBirth: modelFields.dateOfBirth,
-            guardianFullName: modelFields.guardianFullName,
-            guardianPhoneNumber: modelFields.guardianPhoneNumber,
-            grade: modelFields.grade,
-            gender: modelFields.gender,
-            status: modelFields.status,
-          };
-          const youth = await DataStore.save(new Youth(modelFieldsToSave));
-          const promises = [];
-          promises.push(
-            ...site.reduce((promises, site) => {
-              promises.push(
-                DataStore.save(
-                  new YouthSite({
-                    youth,
-                    site,
-                  })
-                )
-              );
-              return promises;
-            }, [])
-          );
-          await Promise.all(promises);
+          await DataStore.save(new Youth(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -374,8 +144,13 @@ export default function YouthCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Full name"
-        isRequired={false}
+        label={
+          <span style={{ display: "inline-flex" }}>
+            <span>Full name</span>
+            <span style={{ color: "red" }}>*</span>
+          </span>
+        }
+        isRequired={true}
         isReadOnly={false}
         value={fullName}
         onChange={(e) => {
@@ -388,8 +163,6 @@ export default function YouthCreateForm(props) {
               guardianPhoneNumber,
               grade,
               gender,
-              status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.fullName ?? value;
@@ -405,8 +178,13 @@ export default function YouthCreateForm(props) {
         {...getOverrideProps(overrides, "fullName")}
       ></TextField>
       <TextField
-        label="Date of birth"
-        isRequired={false}
+        label={
+          <span style={{ display: "inline-flex" }}>
+            <span>Date of birth</span>
+            <span style={{ color: "red" }}>*</span>
+          </span>
+        }
+        isRequired={true}
         isReadOnly={false}
         type="date"
         value={dateOfBirth}
@@ -420,8 +198,6 @@ export default function YouthCreateForm(props) {
               guardianPhoneNumber,
               grade,
               gender,
-              status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.dateOfBirth ?? value;
@@ -437,8 +213,13 @@ export default function YouthCreateForm(props) {
         {...getOverrideProps(overrides, "dateOfBirth")}
       ></TextField>
       <TextField
-        label="Guardian full name"
-        isRequired={false}
+        label={
+          <span style={{ display: "inline-flex" }}>
+            <span>Guardian full name</span>
+            <span style={{ color: "red" }}>*</span>
+          </span>
+        }
+        isRequired={true}
         isReadOnly={false}
         value={guardianFullName}
         onChange={(e) => {
@@ -451,8 +232,6 @@ export default function YouthCreateForm(props) {
               guardianPhoneNumber,
               grade,
               gender,
-              status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.guardianFullName ?? value;
@@ -468,8 +247,13 @@ export default function YouthCreateForm(props) {
         {...getOverrideProps(overrides, "guardianFullName")}
       ></TextField>
       <TextField
-        label="Guardian phone number"
-        isRequired={false}
+        label={
+          <span style={{ display: "inline-flex" }}>
+            <span>Guardian phone number</span>
+            <span style={{ color: "red" }}>*</span>
+          </span>
+        }
+        isRequired={true}
         isReadOnly={false}
         type="tel"
         value={guardianPhoneNumber}
@@ -483,8 +267,6 @@ export default function YouthCreateForm(props) {
               guardianPhoneNumber: value,
               grade,
               gender,
-              status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.guardianPhoneNumber ?? value;
@@ -516,8 +298,6 @@ export default function YouthCreateForm(props) {
               guardianPhoneNumber,
               grade: value,
               gender,
-              status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.grade ?? value;
@@ -599,8 +379,13 @@ export default function YouthCreateForm(props) {
         ></option>
       </SelectField>
       <TextField
-        label="Gender"
-        isRequired={false}
+        label={
+          <span style={{ display: "inline-flex" }}>
+            <span>Gender</span>
+            <span style={{ color: "red" }}>*</span>
+          </span>
+        }
+        isRequired={true}
         isReadOnly={false}
         value={gender}
         onChange={(e) => {
@@ -613,8 +398,6 @@ export default function YouthCreateForm(props) {
               guardianPhoneNumber,
               grade,
               gender: value,
-              status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.gender ?? value;
@@ -629,127 +412,6 @@ export default function YouthCreateForm(props) {
         hasError={errors.gender?.hasError}
         {...getOverrideProps(overrides, "gender")}
       ></TextField>
-      <SelectField
-        label="Status"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={status}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              fullName,
-              dateOfBirth,
-              guardianFullName,
-              guardianPhoneNumber,
-              grade,
-              gender,
-              status: value,
-              site,
-            };
-            const result = onChange(modelFields);
-            value = result?.status ?? value;
-          }
-          if (errors.status?.hasError) {
-            runValidationTasks("status", value);
-          }
-          setStatus(value);
-        }}
-        onBlur={() => runValidationTasks("status", status)}
-        errorMessage={errors.status?.errorMessage}
-        hasError={errors.status?.hasError}
-        {...getOverrideProps(overrides, "status")}
-      >
-        <option
-          children="Active"
-          value="ACTIVE"
-          {...getOverrideProps(overrides, "statusoption0")}
-        ></option>
-        <option
-          children="Archived"
-          value="ARCHIVED"
-          {...getOverrideProps(overrides, "statusoption1")}
-        ></option>
-      </SelectField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              fullName,
-              dateOfBirth,
-              guardianFullName,
-              guardianPhoneNumber,
-              grade,
-              gender,
-              status,
-              site: values,
-            };
-            const result = onChange(modelFields);
-            values = result?.site ?? values;
-          }
-          setSite(values);
-          setCurrentSiteValue(undefined);
-          setCurrentSiteDisplayValue("");
-        }}
-        currentFieldValue={currentSiteValue}
-        label={"Site"}
-        items={site}
-        hasError={errors?.site?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("site", currentSiteValue)
-        }
-        errorMessage={errors?.site?.errorMessage}
-        getBadgeText={getDisplayValue.site}
-        setFieldValue={(model) => {
-          setCurrentSiteDisplayValue(model ? getDisplayValue.site(model) : "");
-          setCurrentSiteValue(model);
-        }}
-        inputFieldRef={siteRef}
-        defaultFieldValue={""}
-      >
-        <Autocomplete
-          label="Site"
-          isRequired={true}
-          isReadOnly={false}
-          placeholder="Search Site"
-          value={currentSiteDisplayValue}
-          options={siteRecords
-            .filter((r) => !siteIdSet.has(getIDValue.site?.(r)))
-            .map((r) => ({
-              id: getIDValue.site?.(r),
-              label: getDisplayValue.site?.(r),
-            }))}
-          onSelect={({ id, label }) => {
-            setCurrentSiteValue(
-              siteRecords.find((r) =>
-                Object.entries(JSON.parse(id)).every(
-                  ([key, value]) => r[key] === value
-                )
-              )
-            );
-            setCurrentSiteDisplayValue(label);
-            runValidationTasks("site", label);
-          }}
-          onClear={() => {
-            setCurrentSiteDisplayValue("");
-          }}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.site?.hasError) {
-              runValidationTasks("site", value);
-            }
-            setCurrentSiteDisplayValue(value);
-            setCurrentSiteValue(undefined);
-          }}
-          onBlur={() => runValidationTasks("site", currentSiteDisplayValue)}
-          errorMessage={errors.site?.errorMessage}
-          hasError={errors.site?.hasError}
-          ref={siteRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "site")}
-        ></Autocomplete>
-      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

@@ -27,7 +27,6 @@ const Roster = () => {
 
   const RosterTable = () => {
     const ActiveBadge = ({status}) => {
-      console.log('status', status);
       if (status === EntityStatus.Active) {
         return (<span className="custom-badge active-badge">Active</span>);
       }

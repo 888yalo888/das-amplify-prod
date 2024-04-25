@@ -16,6 +16,7 @@ export const getSite = async (siteId, activeOnly = true) => {
     });
     const roster = result.data.getSite.AttendedBy.items.map((youthWrapper) => {
         youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
+        youthWrapper.youth.site = youthWrapper.youth.site.items.map((site) => site.id);
         return youthWrapper.youth;
     });
     return {
