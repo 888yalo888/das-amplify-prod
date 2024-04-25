@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Site } from "../models";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -29,8 +28,6 @@ export declare type YouthCreateFormInputValues = {
     guardianPhoneNumber?: string;
     grade?: string;
     gender?: string;
-    status?: string;
-    site?: Site[];
 };
 export declare type YouthCreateFormValidationValues = {
     fullName?: ValidationFunction<string>;
@@ -39,8 +36,6 @@ export declare type YouthCreateFormValidationValues = {
     guardianPhoneNumber?: ValidationFunction<string>;
     grade?: ValidationFunction<string>;
     gender?: ValidationFunction<string>;
-    status?: ValidationFunction<string>;
-    site?: ValidationFunction<Site>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type YouthCreateFormOverridesProps = {
@@ -51,8 +46,6 @@ export declare type YouthCreateFormOverridesProps = {
     guardianPhoneNumber?: PrimitiveOverrideProps<TextFieldProps>;
     grade?: PrimitiveOverrideProps<SelectFieldProps>;
     gender?: PrimitiveOverrideProps<TextFieldProps>;
-    status?: PrimitiveOverrideProps<SelectFieldProps>;
-    site?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type YouthCreateFormProps = React.PropsWithChildren<{
     overrides?: YouthCreateFormOverridesProps | undefined | null;

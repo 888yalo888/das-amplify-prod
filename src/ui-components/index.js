@@ -14,7 +14,6 @@ export { default as ButtonHomePage } from "./ButtonHomePage";
 export { default as ButtonRoster } from "./ButtonRoster";
 export { default as CheckInModal } from "./CheckInModal";
 export { default as CheckInVibe } from "./CheckInVibe";
-export { default as CheckInVibeDefault } from "./CheckInVibeDefault";
 export { default as CheckInVibeProfileDropDown } from "./CheckInVibeProfileDropDown";
 export { default as CheckInVibesSelector } from "./CheckInVibesSelector";
 export { default as CheckoutPayment } from "./CheckoutPayment";

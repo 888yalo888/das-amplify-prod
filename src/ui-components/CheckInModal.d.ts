@@ -21,11 +21,11 @@ export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes
 export declare type CheckInModalOverridesProps = {
     CheckInModal?: PrimitiveOverrideProps<FlexProps>;
     "Ty, What\u2019s your vibe today?"?: PrimitiveOverrideProps<TextProps>;
-    CheckInVibesSelector?: PrimitiveOverrideProps<FlexProps>;
-    CheckInVibeAtEase?: CheckInVibeProps;
-    CheckInVibeAngry?: CheckInVibeProps;
-    CheckInVibeHappy?: CheckInVibeProps;
-    CheckInVibeSad?: CheckInVibeProps;
+    "Frame 444"?: PrimitiveOverrideProps<FlexProps>;
+    CheckInVibe59421853?: CheckInVibeProps;
+    CheckInVibe59421865?: CheckInVibeProps;
+    CheckInVibe59421877?: CheckInVibeProps;
+    CheckInVibe59421889?: CheckInVibeProps;
     ButtonCheckInVibe?: PrimitiveOverrideProps<ButtonProps>;
 } & EscapeHatchProps;
 export declare type CheckInModalProps = React.PropsWithChildren<Partial<FlexProps> & {
