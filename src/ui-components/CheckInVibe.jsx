@@ -11,8 +11,7 @@ import {
   getOverridesFromVariants,
   mergeVariantsAndOverrides,
 } from "./utils";
-import Vibe from "./Vibe";
-import { Flex, Text } from "@aws-amplify/ui-react";
+import { Flex, Image, Text } from "@aws-amplify/ui-react";
 export default function CheckInVibe(props) {
   const {
     src,
@@ -23,12 +22,12 @@ export default function CheckInVibe(props) {
   } = props;
   const variants = [
     {
-      overrides: { Vibe: {}, Label: {}, Contents: {}, CheckInVibe: {} },
+      overrides: { Emote: {}, Label: {}, Contents: {}, CheckInVibe: {} },
       variantValues: { isSelected: "False" },
     },
     {
       overrides: {
-        Vibe: {},
+        Emote: {},
         Label: {},
         Contents: {},
         CheckInVibe: {
@@ -75,7 +74,7 @@ export default function CheckInVibe(props) {
         display="flex"
         {...getOverrideProps(overrides, "Contents")}
       >
-        <Vibe
+        <Image
           width="48px"
           height="48px"
           display="block"
@@ -85,9 +84,9 @@ export default function CheckInVibe(props) {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
-          vibe="' '"
-          {...getOverrideProps(overrides, "Vibe")}
-        ></Vibe>
+          objectFit="cover"
+          {...getOverrideProps(overrides, "Emote")}
+        ></Image>
         <Text
           fontFamily="Inter"
           fontSize="24px"

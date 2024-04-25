@@ -53,14 +53,39 @@
   margin: 8px;
 }
 
-.check-in-option:hover {
+.check-in-option:hover, .youth-card:hover {
   cursor: pointer;
+  background: rgb(112, 187, 187,25%) !important;
+
 }
 
 .check-in-option__selected {
-  color: red;
+  background: rgb(112, 187, 187) !important;
 }
+.check-in-option__selected:hover {
+  background: rgb(112, 187, 187) !important;
+}
+
 
 .youth-card {
   margin: 25px;
+}
+
+.site-selection-tooltip {
+  z-index: 1;
+}
+
+.site-selection-page {
+  .site-selection-header {
+    font-size: 24px;
+  }
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.profile-icon:hover {
+  cursor: pointer;
 }

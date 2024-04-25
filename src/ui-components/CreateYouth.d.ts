@@ -5,7 +5,6 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth } from "../models";
 import { FlexProps, PhoneNumberFieldProps, SelectFieldProps, TextFieldProps, TextProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -33,7 +32,7 @@ export declare type CreateYouthOverridesProps = {
     label?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type CreateYouthProps = React.PropsWithChildren<Partial<FlexProps> & {
-    youth?: Youth;
+    youth?: any;
 } & {
     overrides?: CreateYouthOverridesProps | undefined | null;
 }>;

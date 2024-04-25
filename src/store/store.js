@@ -7,6 +7,7 @@ const useStore = create(
         currentSite: null,
         setPm: (pm) => set(() => ({ pm })),
         setSite: (site) => set(() => ({ currentSite: site })),
+        clearAll: () => set({pm: null, currentSite: null}),
     }),
     {
         name: 'das-storage',

@@ -162,7 +162,7 @@ export const schema = {
                 "guardianPhoneNumber": {
                     "name": "guardianPhoneNumber",
                     "isArray": false,
-                    "type": "AWSPhone",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },

@@ -1,5 +1,20 @@
 import { getCurrentDate } from '../utils/date';
 
+export const updateYouthCustom = /* GraphQL */ `
+  mutation UpdateYouth($input: UpdateYouthInput!) {
+    updateYouth(input: $input) {
+      id
+      fullName
+      dateOfBirth
+      guardianFullName
+      guardianPhoneNumber
+      grade
+      gender
+      status
+    }
+  }
+`;
+
 export const getRosterById = /* GraphQL */ `
   query GetRoster($id: ID!) {
     getSite(id: $id) {
@@ -19,6 +34,7 @@ export const getRosterById = /* GraphQL */ `
             grade
             gender
             guardianFullName
+            guardianPhoneNumber
             status
             vibes(filter: {createdAt:{beginsWith:"${getCurrentDate()}"}}) {
               items {
@@ -27,6 +43,11 @@ export const getRosterById = /* GraphQL */ `
                 checkInVibe
                 checkOutTime
                 checkOutVibe
+              }
+            }
+            site {
+              items {
+                id
               }
             }
           }

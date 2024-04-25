@@ -18,7 +18,7 @@ export default function YouthCardDefault(props) {
     <Flex
       gap="7px"
       direction="column"
-      width="304px"
+      width="350px"
       height="104px"
       justifyContent="flex-start"
       alignItems="flex-start"

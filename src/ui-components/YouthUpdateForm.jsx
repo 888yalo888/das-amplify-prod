@@ -7,182 +7,17 @@
 /* eslint-disable */
 import * as React from "react";
 import {
-  Autocomplete,
-  Badge,
   Button,
-  Divider,
   Flex,
   Grid,
-  Icon,
-  ScrollView,
   SelectField,
-  Text,
   TextField,
-  useTheme,
 } from "@aws-amplify/ui-react";
-import { Youth, Site, YouthSite } from "../models";
-import {
-  fetchByPath,
-  getOverrideProps,
-  useDataStoreBinding,
-  validateField,
-} from "./utils";
-import { DataStore } from "aws-amplify/datastore";
-function ArrayField({
-  items = [],
-  onChange,
-  label,
-  inputFieldRef,
-  children,
-  hasError,
-  setFieldValue,
-  currentFieldValue,
-  defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
-  runValidationTasks,
-  errorMessage,
-}) {
-  const labelElement = <Text>{label}</Text>;
-  const {
-    tokens: {
-      components: {
-        fieldmessages: { error: errorStyles },
-      },
-    },
-  } = useTheme();
-  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
-  const [isEditing, setIsEditing] = React.useState();
-  React.useEffect(() => {
-    if (isEditing) {
-      inputFieldRef?.current?.focus();
-    }
-  }, [isEditing]);
-  const removeItem = async (removeIndex) => {
-    const newItems = items.filter((value, index) => index !== removeIndex);
-    await onChange(newItems);
-    setSelectedBadgeIndex(undefined);
-  };
-  const addItem = async () => {
-    const { hasError } = runValidationTasks();
-    if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
-      !hasError
-    ) {
-      const newItems = [...items];
-      if (selectedBadgeIndex !== undefined) {
-        newItems[selectedBadgeIndex] = currentFieldValue;
-        setSelectedBadgeIndex(undefined);
-      } else {
-        newItems.push(currentFieldValue);
-      }
-      await onChange(newItems);
-      setIsEditing(false);
-    }
-  };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
-  return (
-    <React.Fragment>
-      {labelElement}
-      {isEditing && children}
-      {!isEditing ? (
-        <>
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-            }}
-          >
-            Add item
-          </Button>
-          {errorMessage && hasError && (
-            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
-              {errorMessage}
-            </Text>
-          )}
-        </>
-      ) : (
-        <Flex justifyContent="flex-end">
-          {(currentFieldValue || isEditing) && (
-            <Button
-              children="Cancel"
-              type="button"
-              size="small"
-              onClick={() => {
-                setFieldValue(defaultFieldValue);
-                setIsEditing(false);
-                setSelectedBadgeIndex(undefined);
-              }}
-            ></Button>
-          )}
-          <Button size="small" variation="link" onClick={addItem}>
-            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
-          </Button>
-        </Flex>
-      )}
-      {arraySection}
-    </React.Fragment>
-  );
-}
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { generateClient } from "aws-amplify/api";
+import { getYouth } from "../graphql/queries";
+import { updateYouth } from "../graphql/mutations";
+const client = generateClient();
 export default function YouthUpdateForm(props) {
   const {
     id: idProp,
@@ -203,7 +38,6 @@ export default function YouthUpdateForm(props) {
     grade: "",
     gender: "",
     status: "",
-    site: [],
   };
   const [fullName, setFullName] = React.useState(initialValues.fullName);
   const [dateOfBirth, setDateOfBirth] = React.useState(
@@ -218,11 +52,10 @@ export default function YouthUpdateForm(props) {
   const [grade, setGrade] = React.useState(initialValues.grade);
   const [gender, setGender] = React.useState(initialValues.gender);
   const [status, setStatus] = React.useState(initialValues.status);
-  const [site, setSite] = React.useState(initialValues.site);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = youthRecord
-      ? { ...initialValues, ...youthRecord, site: linkedSite }
+      ? { ...initialValues, ...youthRecord }
       : initialValues;
     setFullName(cleanValues.fullName);
     setDateOfBirth(cleanValues.dateOfBirth);
@@ -231,62 +64,32 @@ export default function YouthUpdateForm(props) {
     setGrade(cleanValues.grade);
     setGender(cleanValues.gender);
     setStatus(cleanValues.status);
-    setSite(cleanValues.site ?? []);
-    setCurrentSiteValue(undefined);
-    setCurrentSiteDisplayValue("");
     setErrors({});
   };
   const [youthRecord, setYouthRecord] = React.useState(youthModelProp);
-  const [linkedSite, setLinkedSite] = React.useState([]);
-  const canUnlinkSite = false;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(Youth, idProp)
+        ? (
+            await client.graphql({
+              query: getYouth.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getYouth
         : youthModelProp;
       setYouthRecord(record);
-      const linkedSite = record
-        ? await Promise.all(
-            (
-              await record.site.toArray()
-            ).map((r) => {
-              return r.site;
-            })
-          )
-        : [];
-      setLinkedSite(linkedSite);
     };
     queryData();
   }, [idProp, youthModelProp]);
-  React.useEffect(resetStateValues, [youthRecord, linkedSite]);
-  const [currentSiteDisplayValue, setCurrentSiteDisplayValue] =
-    React.useState("");
-  const [currentSiteValue, setCurrentSiteValue] = React.useState(undefined);
-  const siteRef = React.createRef();
-  const getIDValue = {
-    site: (r) => JSON.stringify({ id: r?.id }),
-  };
-  const siteIdSet = new Set(
-    Array.isArray(site)
-      ? site.map((r) => getIDValue.site?.(r))
-      : getIDValue.site?.(site)
-  );
-  const siteRecords = useDataStoreBinding({
-    type: "collection",
-    model: Site,
-  }).items;
-  const getDisplayValue = {
-    site: (r) => `${r?.name}`,
-  };
+  React.useEffect(resetStateValues, [youthRecord]);
   const validations = {
-    fullName: [],
-    dateOfBirth: [],
-    guardianFullName: [],
-    guardianPhoneNumber: [{ type: "Phone" }],
+    fullName: [{ type: "Required" }],
+    dateOfBirth: [{ type: "Required" }],
+    guardianFullName: [{ type: "Required" }],
+    guardianPhoneNumber: [{ type: "Required" }, { type: "Phone" }],
     grade: [],
-    gender: [],
+    gender: [{ type: "Required" }],
     status: [],
-    site: [{ type: "Required", validationMessage: "Site is required." }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -318,31 +121,22 @@ export default function YouthUpdateForm(props) {
           dateOfBirth,
           guardianFullName,
           guardianPhoneNumber,
-          grade,
+          grade: grade ?? null,
           gender,
-          status,
-          site,
+          status: status ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
               promises.push(
                 ...modelFields[fieldName].map((item) =>
-                  runValidationTasks(
-                    fieldName,
-                    item,
-                    getDisplayValue[fieldName]
-                  )
+                  runValidationTasks(fieldName, item)
                 )
               );
               return promises;
             }
             promises.push(
-              runValidationTasks(
-                fieldName,
-                modelFields[fieldName],
-                getDisplayValue[fieldName]
-              )
+              runValidationTasks(fieldName, modelFields[fieldName])
             );
             return promises;
           }, [])
@@ -359,97 +153,22 @@ export default function YouthUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          const promises = [];
-          const siteToLinkMap = new Map();
-          const siteToUnLinkMap = new Map();
-          const siteMap = new Map();
-          const linkedSiteMap = new Map();
-          site.forEach((r) => {
-            const count = siteMap.get(getIDValue.site?.(r));
-            const newCount = count ? count + 1 : 1;
-            siteMap.set(getIDValue.site?.(r), newCount);
+          await client.graphql({
+            query: updateYouth.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: youthRecord.id,
+                ...modelFields,
+              },
+            },
           });
-          linkedSite.forEach((r) => {
-            const count = linkedSiteMap.get(getIDValue.site?.(r));
-            const newCount = count ? count + 1 : 1;
-            linkedSiteMap.set(getIDValue.site?.(r), newCount);
-          });
-          linkedSiteMap.forEach((count, id) => {
-            const newCount = siteMap.get(id);
-            if (newCount) {
-              const diffCount = count - newCount;
-              if (diffCount > 0) {
-                siteToUnLinkMap.set(id, diffCount);
-              }
-            } else {
-              siteToUnLinkMap.set(id, count);
-            }
-          });
-          siteMap.forEach((count, id) => {
-            const originalCount = linkedSiteMap.get(id);
-            if (originalCount) {
-              const diffCount = count - originalCount;
-              if (diffCount > 0) {
-                siteToLinkMap.set(id, diffCount);
-              }
-            } else {
-              siteToLinkMap.set(id, count);
-            }
-          });
-          siteToUnLinkMap.forEach(async (count, id) => {
-            const recordKeys = JSON.parse(id);
-            const youthSiteRecords = await DataStore.query(YouthSite, (r) =>
-              r.and((r) => {
-                return [
-                  r.siteId.eq(recordKeys.id),
-                  r.youthId.eq(youthRecord.id),
-                ];
-              })
-            );
-            for (let i = 0; i < count; i++) {
-              promises.push(DataStore.delete(youthSiteRecords[i]));
-            }
-          });
-          siteToLinkMap.forEach((count, id) => {
-            const siteToLink = siteRecords.find((r) =>
-              Object.entries(JSON.parse(id)).every(
-                ([key, value]) => r[key] === value
-              )
-            );
-            for (let i = count; i > 0; i--) {
-              promises.push(
-                DataStore.save(
-                  new YouthSite({
-                    youth: youthRecord,
-                    site: siteToLink,
-                  })
-                )
-              );
-            }
-          });
-          const modelFieldsToSave = {
-            fullName: modelFields.fullName,
-            dateOfBirth: modelFields.dateOfBirth,
-            guardianFullName: modelFields.guardianFullName,
-            guardianPhoneNumber: modelFields.guardianPhoneNumber,
-            grade: modelFields.grade,
-            gender: modelFields.gender,
-            status: modelFields.status,
-          };
-          promises.push(
-            DataStore.save(
-              Youth.copyOf(youthRecord, (updated) => {
-                Object.assign(updated, modelFieldsToSave);
-              })
-            )
-          );
-          await Promise.all(promises);
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -458,7 +177,7 @@ export default function YouthUpdateForm(props) {
     >
       <TextField
         label="Full name"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={fullName}
         onChange={(e) => {
@@ -472,7 +191,6 @@ export default function YouthUpdateForm(props) {
               grade,
               gender,
               status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.fullName ?? value;
@@ -489,7 +207,7 @@ export default function YouthUpdateForm(props) {
       ></TextField>
       <TextField
         label="Date of birth"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="date"
         value={dateOfBirth}
@@ -504,7 +222,6 @@ export default function YouthUpdateForm(props) {
               grade,
               gender,
               status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.dateOfBirth ?? value;
@@ -521,7 +238,7 @@ export default function YouthUpdateForm(props) {
       ></TextField>
       <TextField
         label="Guardian full name"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={guardianFullName}
         onChange={(e) => {
@@ -535,7 +252,6 @@ export default function YouthUpdateForm(props) {
               grade,
               gender,
               status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.guardianFullName ?? value;
@@ -552,7 +268,7 @@ export default function YouthUpdateForm(props) {
       ></TextField>
       <TextField
         label="Guardian phone number"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="tel"
         value={guardianPhoneNumber}
@@ -567,7 +283,6 @@ export default function YouthUpdateForm(props) {
               grade,
               gender,
               status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.guardianPhoneNumber ?? value;
@@ -600,7 +315,6 @@ export default function YouthUpdateForm(props) {
               grade: value,
               gender,
               status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.grade ?? value;
@@ -683,7 +397,7 @@ export default function YouthUpdateForm(props) {
       </SelectField>
       <TextField
         label="Gender"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={gender}
         onChange={(e) => {
@@ -697,7 +411,6 @@ export default function YouthUpdateForm(props) {
               grade,
               gender: value,
               status,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.gender ?? value;
@@ -728,7 +441,6 @@ export default function YouthUpdateForm(props) {
               grade,
               gender,
               status: value,
-              site,
             };
             const result = onChange(modelFields);
             value = result?.status ?? value;
@@ -754,85 +466,6 @@ export default function YouthUpdateForm(props) {
           {...getOverrideProps(overrides, "statusoption1")}
         ></option>
       </SelectField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              fullName,
-              dateOfBirth,
-              guardianFullName,
-              guardianPhoneNumber,
-              grade,
-              gender,
-              status,
-              site: values,
-            };
-            const result = onChange(modelFields);
-            values = result?.site ?? values;
-          }
-          setSite(values);
-          setCurrentSiteValue(undefined);
-          setCurrentSiteDisplayValue("");
-        }}
-        currentFieldValue={currentSiteValue}
-        label={"Site"}
-        items={site}
-        hasError={errors?.site?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("site", currentSiteValue)
-        }
-        errorMessage={errors?.site?.errorMessage}
-        getBadgeText={getDisplayValue.site}
-        setFieldValue={(model) => {
-          setCurrentSiteDisplayValue(model ? getDisplayValue.site(model) : "");
-          setCurrentSiteValue(model);
-        }}
-        inputFieldRef={siteRef}
-        defaultFieldValue={""}
-      >
-        <Autocomplete
-          label="Site"
-          isRequired={true}
-          isReadOnly={false}
-          placeholder="Search Site"
-          value={currentSiteDisplayValue}
-          options={siteRecords
-            .filter((r) => !siteIdSet.has(getIDValue.site?.(r)))
-            .map((r) => ({
-              id: getIDValue.site?.(r),
-              label: getDisplayValue.site?.(r),
-            }))}
-          onSelect={({ id, label }) => {
-            setCurrentSiteValue(
-              siteRecords.find((r) =>
-                Object.entries(JSON.parse(id)).every(
-                  ([key, value]) => r[key] === value
-                )
-              )
-            );
-            setCurrentSiteDisplayValue(label);
-            runValidationTasks("site", label);
-          }}
-          onClear={() => {
-            setCurrentSiteDisplayValue("");
-          }}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.site?.hasError) {
-              runValidationTasks("site", value);
-            }
-            setCurrentSiteDisplayValue(value);
-            setCurrentSiteValue(undefined);
-          }}
-          onBlur={() => runValidationTasks("site", currentSiteDisplayValue)}
-          errorMessage={errors.site?.errorMessage}
-          hasError={errors.site?.hasError}
-          ref={siteRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "site")}
-        ></Autocomplete>
-      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

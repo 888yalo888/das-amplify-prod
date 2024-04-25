@@ -38,7 +38,7 @@ type Youth @model @auth(rules: [{allow: public}]) {
   createdDate: AWSDateTime
   dateOfBirth: AWSDate
   guardianFullName: String
-  guardianPhoneNumber: AWSPhone
+  guardianPhoneNumber: String
   grade: Grade
   gender: String
   status: Status

@@ -5,7 +5,6 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth } from "../models";
 import { DividerProps, FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
 import { MyIconProps } from "./MyIcon";
 export declare type EscapeHatchProps = {
@@ -32,7 +31,7 @@ export declare type YouthCardCheckedInOverridesProps = {
     YouthStatus?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type YouthCardCheckedInProps = React.PropsWithChildren<Partial<FlexProps> & {
-    youth?: Youth;
+    youth?: any;
 } & {
     overrides?: YouthCardCheckedInOverridesProps | undefined | null;
 }>;
