@@ -32,7 +32,11 @@ const SiteSelection = ({user}) => {
     };
     const onConfirmClick = () => {
         store.setSite(selectedSite);
-        navigate('/check-in');
+        if (isOnSiteSelectionPage()) {
+            navigate('/check-in');
+        } else {
+            navigate(location.pathname);
+        }
     }
 
     const dropdownOverrides = { 
