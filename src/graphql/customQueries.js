@@ -19,6 +19,7 @@ export const getRosterById = /* GraphQL */ `
             grade
             gender
             guardianFullName
+            guardianPhoneNumber
             status
             vibes(filter: {createdAt:{beginsWith:"${getCurrentDate()}"}}) {
               items {

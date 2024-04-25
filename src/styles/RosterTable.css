@@ -1,0 +1,62 @@
+.roster-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+  
+.roster-table tr {
+    text-align: center;
+}
+  
+.roster-table tr th {
+    background: #F4F4F4;
+    border-top: 1px solid #C2C2C2;
+}
+
+.roster-table th:first-child, .roster-table td:first-child {
+    border-left: 1px solid #C2C2C2;
+}
+
+.roster-table th:last-child, .roster-table td:last-child {
+    border-right: 1px solid #C2C2C2;
+}
+
+.roster-table tr:first-child th:first-child {
+    border-top-left-radius: 4px;
+}
+.roster-table tr:first-child th:last-child {
+    border-top-right-radius: 4px;
+}
+.roster-table tr:last-child td:first-child {
+    border-bottom-left-radius: 4px;
+}
+.roster-table tr:last-child td:last-child {
+    border-bottom-right-radius: 4px;
+}
+
+.roster-table .edit-icon:hover {
+    cursor: pointer;
+}
+
+.table-data {
+    border-bottom: 1px solid #C2C2C2;
+    font-size: 16px;
+    padding: 16px 0px;
+}
+
+.custom-badge {
+    border-radius: 50rem;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 0.5em 0.65em;
+}
+
+.active-badge {
+    background-color: #D6F5DB;
+    color: #365E3D;
+}
+
+.inactive-badge {
+    background-color: #F5D9BC;
+    --bs-badge-color: #663300;
+}

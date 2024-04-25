@@ -5,11 +5,35 @@ import { YouthUpdateForm } from '../ui-components';
 import { Badge, Flex, Icon, Text, View } from "@aws-amplify/ui-react";
 
 
-function UpdateYouth() {
+function UpdateYouth(youth) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  // Copy object
+  const youthCopy = JSON.parse(JSON.stringify(youth));
+
+  const formOverrides = {
+    // fullName: {
+    //   value: youthCopy.fullName,
+    // },
+    // dateOfBirth: {
+    //   value: youthCopy.dateOfBirth,
+    // },
+    // guardianFullName: {
+    //   value: youthCopy.guardianFullName,
+    // },
+    // guardianPhoneNumber: {
+    //   value: youthCopy.guardianPhoneNumber,
+    // },
+    // grade: {
+    //   value: youthCopy.grade,
+    // },
+    // gender: {
+    //   value: youthCopy.gender,
+    // },
+  };
 
   return (
     <>
@@ -24,6 +48,7 @@ function UpdateYouth() {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
+          className="edit-icon"
         >
           <Icon
             width="22.09px"

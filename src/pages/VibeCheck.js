@@ -5,6 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { checkInYouth, getYouthInfo } from "../services/api.service";
 import { Vibe } from '../enums/vibe.enum';
 import useStore from "../store/store";
+import EmoteAngry from "../assets/EmoteAngry.png";
+import EmoteAtEase from "../assets/EmoteAtEase.png"
+import EmoteHappy from "../assets/EmoteHappy.png"
+import EmoteSad from "../assets/EmoteSad.png"
 
 const VibeCheck = () => {
   const site = useStore((state) => state.currentSite);
@@ -38,8 +42,11 @@ const VibeCheck = () => {
           className: `check-in-option ${selectedVibe === vibe ? 'check-in-option__selected' : ''}`,
           onClick: () => onOptionClick(vibe),
         },
-        'At Ease': {
+        Label: {
           children: vibe,
+        },
+        Vibe: {
+          vibe: vibe,
         },
       };
     }
