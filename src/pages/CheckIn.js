@@ -163,9 +163,9 @@ const CheckIn = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           alignItems: "center",
-          margin: "10px 20px",
+          margin: "10px 30px",
           flexDirection: isTabletOrMobile ? "column" : "row",
         }}
       >
@@ -209,6 +209,7 @@ const CheckIn = () => {
           flexDirection: isTabletOrMobile ? "column" : "row",
           alignItems: isTabletOrMobile ? "center" : "",
           flexWrap: "wrap",
+          justifyContent: "center"
         }}
       >
         <Roster></Roster>
