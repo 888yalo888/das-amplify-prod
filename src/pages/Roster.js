@@ -5,7 +5,7 @@ import AddYouth from '../components/AddYouth';
 import UpdateYouth from '../components/UpdateYouth';
 import useStore from '../store/store';
 import { getSite } from '../services/api.service';
-import SortArrow from '../assets/down-arrow.svg';
+// import SortArrow from '../assets/down-arrow.svg';
 import { gradeMapper } from '../utils/text';
 import '../styles/RosterTable.css';
 import { EntityStatus } from '../enums/entity-status.enum';
@@ -83,7 +83,7 @@ const Roster = () => {
           <Link to="/check-in" style={{ textDecoration: "none"}}>
             <ButtonRoster overrides={{ ButtonRoster: { display: "flex-start" }}}></ButtonRoster>
           </Link>
-          <AddYouth></AddYouth>
+          <AddYouth refreshData={fetchSiteData}></AddYouth>
       </div>
       <div style={{ margin: '10px 20px' }}>
         <RosterTable></RosterTable>

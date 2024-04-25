@@ -1,7 +1,7 @@
 import { generateClient } from 'aws-amplify/api';
-import { createYouth, createVibe, updateVibe, updateYouth, updateSite, updateProgramManager } from '../graphql/mutations';
+import { createVibe, updateVibe, updateSite, updateProgramManager } from '../graphql/mutations';
 import { getYouth } from '../graphql/queries';
-import { getRosterById, getSitesByProgramManager, updateYouthCustom } from '../graphql/customQueries';
+import { getRosterById, getSitesByProgramManager, updateYouth, createYouth, createYouthSite } from '../graphql/customQueries';
 import { EntityType } from '../enums/entity.enum';
 import { EntityStatus } from '../enums/entity-status.enum';
 
@@ -81,13 +81,22 @@ export const checkOutYouth = async (vibeID, vibe) => {
     });
 };
 
-export const addYouths = async (youthDataArr) => {
-    const results = await Promise.allSettled(youthDataArr.map((youthData) => {
-        return client.graphql({
+export const addYouths = async (youthDataArr, site) => {
+    const results = await Promise.allSettled(youthDataArr.map(async (youthData) => {
+        const createYouthResult = await client.graphql({
             query: createYouth,
             variables: {
                 input: {
                     ...youthData,
+                },
+            },
+        });
+        return client.graphql({
+            query: createYouthSite,
+            variables: {
+                input: {
+                    siteId: site,
+                    youthId: createYouthResult.data.createYouth.id,
                 },
             },
         });
@@ -101,7 +110,7 @@ export const addYouths = async (youthDataArr) => {
 
 const updateYouthInfo = async (updatedFields) => {
     await client.graphql({
-        query: updateYouthCustom,
+        query: updateYouth,
         variables: {
             input: {
                 ...updatedFields,
