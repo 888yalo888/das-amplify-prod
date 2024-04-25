@@ -1,5 +1,21 @@
 import { getCurrentDate } from '../utils/date';
 
+export const createVibe = /* GraphQL */ `
+  mutation CreateVibe($input: CreateVibeInput!) {
+    createVibe(input: $input) {
+      id
+    }
+  }
+`;
+
+export const updateVibe = /* GraphQL */ `
+  mutation UpdateVibe($input: UpdateVibeInput!) {
+    updateVibe(input: $input) {
+      id
+    }
+  }
+`;
+
 export const createYouth = /* GraphQL */ `
   mutation CreateYouth($input: CreateYouthInput!) {
     createYouth(input: $input) {

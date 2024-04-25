@@ -83,7 +83,8 @@ const VibeCheck = () => {
     ButtonCheckInVibe6151869: {
       isDisabled: !selectedVibe,
       margin: "auto",
-      width: isTabletOrMobile ? "350px": "400px"
+      width: isTabletOrMobile ? "350px": "400px",
+      onClick: onCheckInClick,
     },
   };
 

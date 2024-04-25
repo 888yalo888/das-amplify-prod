@@ -5,6 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { checkOutYouth, getYouthInfo } from "../services/api.service";
 import { Vibe } from '../enums/vibe.enum';
 import useStore from "../store/store";
+import EmoteAngry from "../assets/EmoteAngry.png";
+import EmoteAtEase from "../assets/EmoteAtEase.png";
+import EmoteHappy from "../assets/EmoteHappy.png";
+import EmoteSad from "../assets/EmoteSad.png";
 
 const CheckOut = () => {
   const site = useStore((state) => state.currentSite);
@@ -35,11 +39,25 @@ const CheckOut = () => {
     function getOverrides(vibe) {
       return {
         CheckInVibe: {
-          className: `check-in-option ${selectedVibe === vibe ? 'check-in-option__selected' : ''}`,
+          className: `check-in-option ${
+            selectedVibe === vibe ? "check-in-option__selected" : ""
+          }`,
           onClick: () => onOptionClick(vibe),
         },
-        'At Ease': {
+        Content: vibe,
+        Emote: {
+          src: vibe === Vibe.Angry ? EmoteAngry
+          : vibe === Vibe.AtEase ? EmoteAtEase
+          : vibe === Vibe.Sad ? EmoteSad
+          : vibe === Vibe.Happy ? EmoteHappy
+          : null,
+          alt: vibe,
+        },
+        Label: {
           children: vibe,
+        },
+        Vibe: {
+          vibe: vibe,
         },
       };
     }
@@ -55,11 +73,11 @@ const CheckOut = () => {
     ButtonCheckInVibe6151869: {
       isDisabled: !selectedVibe,
       children: 'Check Out',
+      onClick: onCheckOutClick,
     },
   };
 
   async function onCheckOutClick() {
-    console.log(youth.vibes);
     await checkOutYouth(youth.vibes[0].id, selectedVibe).catch((error) => console.log('check in error', error));
     navigate('/check-in');
   }
@@ -78,7 +96,7 @@ const CheckOut = () => {
       <h2>Please confirm that </h2>
       <h1>{youth?.fullName}</h1>
       <h2>is being picked up.</h2>
-      <ButtonCheckInVibe overrides={checkOutButtonOverrides} onClick={onCheckOutClick}/>
+      <ButtonCheckInVibe overrides={checkOutButtonOverrides} />
     </div>
   );
 };
