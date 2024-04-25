@@ -18,6 +18,7 @@ import EmoteAtEase from "../assets/EmoteAtEase.png";
 import EmoteHappy from "../assets/EmoteHappy.png";
 import EmoteSad from "../assets/EmoteSad.png";
 import { useMediaQuery } from "react-responsive";
+import { VibeImageMap } from "../utils/image";
 
 const CheckIn = () => {
   const store = useStore();
@@ -62,6 +63,9 @@ const CheckIn = () => {
         YouthGrade: {
           children: gradeMapper(youth.grade),
         },
+        EmoteCool: {
+          src: VibeImageMap[youth.vibes?.[0]?.checkOutVibe] || VibeImageMap[youth.vibes?.[0]?.checkInVibe] || '',
+        },
       };
       if (youth.vibes.length > 0) {
         if (youth.vibes[0].checkOutTime) {
@@ -99,25 +103,25 @@ const CheckIn = () => {
     const checkedOut = site?.roster.filter((youth) => isCheckedOut(youth));
     const total = site?.roster;
     const totalAtEase = checkedIn?.filter(
-      (youth) => youth.vibes[0].checkInVibe === VibeEnum.AtEase
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.AtEase || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.AtEase)
     ).length;
     const totalAngry = checkedIn?.filter(
-      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Angry
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.Angry || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.Angry)
     ).length;
     const totalSad = checkedIn?.filter(
-      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Sad
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.Sad || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.Sad)
     ).length;
     const totalHappy = checkedIn?.filter(
-      (youth) => youth.vibes[0].checkInVibe === VibeEnum.Happy
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.Happy || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.Happy)
     ).length;
     return {
       "4/11": {
-        children: `${checkedIn?.length}/${total?.length}`,
+        children: `${checkedIn?.length || 0}/${total?.length || 0}`,
         fontFamily: "fantasy",
         fontWeight: "900",
       },
       "1/4": {
-        children: `${checkedOut?.length}/${checkedIn?.length}`,
+        children: `${checkedOut?.length || 0}/${checkedIn?.length || 0}`,
         fontFamily: "fantasy",
         fontWeight: "900",
       },
