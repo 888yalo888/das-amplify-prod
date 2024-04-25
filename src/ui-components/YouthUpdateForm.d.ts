@@ -6,7 +6,6 @@
 
 import * as React from "react";
 import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Youth } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -55,7 +54,7 @@ export declare type YouthUpdateFormProps = React.PropsWithChildren<{
     overrides?: YouthUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    youth?: Youth;
+    youth?: any;
     onSubmit?: (fields: YouthUpdateFormInputValues) => YouthUpdateFormInputValues;
     onSuccess?: (fields: YouthUpdateFormInputValues) => void;
     onError?: (fields: YouthUpdateFormInputValues, errorMessage: string) => void;

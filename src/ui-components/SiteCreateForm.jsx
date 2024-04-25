@@ -20,14 +20,11 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { Site, ProgramManager, ProgramManagerSite } from "../models";
-import {
-  fetchByPath,
-  getOverrideProps,
-  useDataStoreBinding,
-  validateField,
-} from "./utils";
-import { DataStore } from "aws-amplify/datastore";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { generateClient } from "aws-amplify/api";
+import { listProgramManagers } from "../graphql/queries";
+import { createProgramManagerSite, createSite } from "../graphql/mutations";
+const client = generateClient();
 function ArrayField({
   items = [],
   onChange,
@@ -220,6 +217,9 @@ export default function SiteCreateForm(props) {
   );
   const [status, setStatus] = React.useState(initialValues.status);
   const [ManagedBy, setManagedBy] = React.useState(initialValues.ManagedBy);
+  const [ManagedByLoading, setManagedByLoading] = React.useState(false);
+  const [managedByRecords, setManagedByRecords] = React.useState([]);
+  const autocompleteLength = 10;
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -247,10 +247,6 @@ export default function SiteCreateForm(props) {
       ? ManagedBy.map((r) => getIDValue.ManagedBy?.(r))
       : getIDValue.ManagedBy?.(ManagedBy)
   );
-  const programManagerRecords = useDataStoreBinding({
-    type: "collection",
-    model: ProgramManager,
-  }).items;
   const getDisplayValue = {
     ManagedBy: (r) => `${r?.fullName ? r?.fullName + " - " : ""}${r?.id}`,
   };
@@ -298,6 +294,38 @@ export default function SiteCreateForm(props) {
     }, {});
     return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
   };
+  const fetchManagedByRecords = async (value) => {
+    setManagedByLoading(true);
+    const newOptions = [];
+    let newNext = "";
+    while (newOptions.length < autocompleteLength && newNext != null) {
+      const variables = {
+        limit: autocompleteLength * 5,
+        filter: {
+          or: [{ fullName: { contains: value } }, { id: { contains: value } }],
+        },
+      };
+      if (newNext) {
+        variables["nextToken"] = newNext;
+      }
+      const result = (
+        await client.graphql({
+          query: listProgramManagers.replaceAll("__typename", ""),
+          variables,
+        })
+      )?.data?.listProgramManagers?.items;
+      var loaded = result.filter(
+        (item) => !ManagedByIdSet.has(getIDValue.ManagedBy?.(item))
+      );
+      newOptions.push(...loaded);
+      newNext = result.nextToken;
+    }
+    setManagedByRecords(newOptions.slice(0, autocompleteLength));
+    setManagedByLoading(false);
+  };
+  React.useEffect(() => {
+    fetchManagedByRecords("");
+  }, []);
   return (
     <Grid
       as="form"
@@ -361,17 +389,29 @@ export default function SiteCreateForm(props) {
             siteAdminEmail: modelFields.siteAdminEmail,
             status: modelFields.status,
           };
-          const site = await DataStore.save(new Site(modelFieldsToSave));
+          const site = (
+            await client.graphql({
+              query: createSite.replaceAll("__typename", ""),
+              variables: {
+                input: {
+                  ...modelFieldsToSave,
+                },
+              },
+            })
+          )?.data?.createSite;
           const promises = [];
           promises.push(
             ...ManagedBy.reduce((promises, programManager) => {
               promises.push(
-                DataStore.save(
-                  new ProgramManagerSite({
-                    site,
-                    programManager,
-                  })
-                )
+                client.graphql({
+                  query: createProgramManagerSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      siteId: site.id,
+                      programManagerId: programManager.id,
+                    },
+                  },
+                })
               );
               return promises;
             }, [])
@@ -385,7 +425,8 @@ export default function SiteCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -668,15 +709,14 @@ export default function SiteCreateForm(props) {
           isReadOnly={false}
           placeholder="Search ProgramManager"
           value={currentManagedByDisplayValue}
-          options={programManagerRecords
-            .filter((r) => !ManagedByIdSet.has(getIDValue.ManagedBy?.(r)))
-            .map((r) => ({
-              id: getIDValue.ManagedBy?.(r),
-              label: getDisplayValue.ManagedBy?.(r),
-            }))}
+          options={managedByRecords.map((r) => ({
+            id: getIDValue.ManagedBy?.(r),
+            label: getDisplayValue.ManagedBy?.(r),
+          }))}
+          isLoading={ManagedByLoading}
           onSelect={({ id, label }) => {
             setCurrentManagedByValue(
-              programManagerRecords.find((r) =>
+              managedByRecords.find((r) =>
                 Object.entries(JSON.parse(id)).every(
                   ([key, value]) => r[key] === value
                 )
@@ -690,6 +730,7 @@ export default function SiteCreateForm(props) {
           }}
           onChange={(e) => {
             let { value } = e.target;
+            fetchManagedByRecords(value);
             if (errors.ManagedBy?.hasError) {
               runValidationTasks("ManagedBy", value);
             }

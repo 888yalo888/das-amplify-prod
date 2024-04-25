@@ -13,9 +13,10 @@ import {
   SelectField,
   TextField,
 } from "@aws-amplify/ui-react";
-import { Youth } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { DataStore } from "aws-amplify/datastore";
+import { generateClient } from "aws-amplify/api";
+import { createYouth } from "../graphql/mutations";
+const client = generateClient();
 export default function YouthCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -127,7 +128,14 @@ export default function YouthCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(new Youth(modelFields));
+          await client.graphql({
+            query: createYouth.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -136,7 +144,8 @@ export default function YouthCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

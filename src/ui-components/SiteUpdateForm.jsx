@@ -20,20 +20,25 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import {
-  Site,
-  ProgramManager,
-  Youth,
-  ProgramManagerSite,
-  YouthSite,
-} from "../models";
+  getSite,
+  listProgramManagerSites,
+  listProgramManagers,
+  listYouthSites,
+  listYouths,
+  programManagerSitesBySiteId,
+  youthSitesBySiteId,
+} from "../graphql/queries";
+import { generateClient } from "aws-amplify/api";
 import {
-  fetchByPath,
-  getOverrideProps,
-  useDataStoreBinding,
-  validateField,
-} from "./utils";
-import { DataStore } from "aws-amplify/datastore";
+  createProgramManagerSite,
+  createYouthSite,
+  deleteProgramManagerSite,
+  deleteYouthSite,
+  updateSite,
+} from "../graphql/mutations";
+const client = generateClient();
 function ArrayField({
   items = [],
   onChange,
@@ -228,7 +233,12 @@ export default function SiteUpdateForm(props) {
   );
   const [status, setStatus] = React.useState(initialValues.status);
   const [ManagedBy, setManagedBy] = React.useState(initialValues.ManagedBy);
+  const [ManagedByLoading, setManagedByLoading] = React.useState(false);
+  const [managedByRecords, setManagedByRecords] = React.useState([]);
   const [AttendedBy, setAttendedBy] = React.useState(initialValues.AttendedBy);
+  const [AttendedByLoading, setAttendedByLoading] = React.useState(false);
+  const [attendedByRecords, setAttendedByRecords] = React.useState([]);
+  const autocompleteLength = 10;
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = siteRecord
@@ -262,29 +272,36 @@ export default function SiteUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(Site, idProp)
-        : siteModelProp;
-      setSiteRecord(record);
-      const linkedManagedBy = record
-        ? await Promise.all(
-            (
-              await record.ManagedBy.toArray()
-            ).map((r) => {
-              return r.programManager;
+        ? (
+            await client.graphql({
+              query: getSite.replaceAll("__typename", ""),
+              variables: { id: idProp },
             })
-          )
+          )?.data?.getSite
+        : siteModelProp;
+      const linkedManagedBy = record
+        ? (
+            await client.graphql({
+              query: programManagerSitesBySiteId.replaceAll("__typename", ""),
+              variables: {
+                siteId: record.id,
+              },
+            })
+          ).data.programManagerSitesBySiteId.items.map((t) => t.programManager)
         : [];
       setLinkedManagedBy(linkedManagedBy);
       const linkedAttendedBy = record
-        ? await Promise.all(
-            (
-              await record.AttendedBy.toArray()
-            ).map((r) => {
-              return r.youth;
+        ? (
+            await client.graphql({
+              query: youthSitesBySiteId.replaceAll("__typename", ""),
+              variables: {
+                siteId: record.id,
+              },
             })
-          )
+          ).data.youthSitesBySiteId.items.map((t) => t.youth)
         : [];
       setLinkedAttendedBy(linkedAttendedBy);
+      setSiteRecord(record);
     };
     queryData();
   }, [idProp, siteModelProp]);
@@ -317,14 +334,6 @@ export default function SiteUpdateForm(props) {
       ? AttendedBy.map((r) => getIDValue.AttendedBy?.(r))
       : getIDValue.AttendedBy?.(AttendedBy)
   );
-  const programManagerRecords = useDataStoreBinding({
-    type: "collection",
-    model: ProgramManager,
-  }).items;
-  const youthRecords = useDataStoreBinding({
-    type: "collection",
-    model: Youth,
-  }).items;
   const getDisplayValue = {
     ManagedBy: (r) => `${r?.fullName ? r?.fullName + " - " : ""}${r?.id}`,
     AttendedBy: (r) => `${r?.fullName ? r?.fullName + " - " : ""}${r?.id}`,
@@ -374,6 +383,68 @@ export default function SiteUpdateForm(props) {
     }, {});
     return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
   };
+  const fetchManagedByRecords = async (value) => {
+    setManagedByLoading(true);
+    const newOptions = [];
+    let newNext = "";
+    while (newOptions.length < autocompleteLength && newNext != null) {
+      const variables = {
+        limit: autocompleteLength * 5,
+        filter: {
+          or: [{ fullName: { contains: value } }, { id: { contains: value } }],
+        },
+      };
+      if (newNext) {
+        variables["nextToken"] = newNext;
+      }
+      const result = (
+        await client.graphql({
+          query: listProgramManagers.replaceAll("__typename", ""),
+          variables,
+        })
+      )?.data?.listProgramManagers?.items;
+      var loaded = result.filter(
+        (item) => !ManagedByIdSet.has(getIDValue.ManagedBy?.(item))
+      );
+      newOptions.push(...loaded);
+      newNext = result.nextToken;
+    }
+    setManagedByRecords(newOptions.slice(0, autocompleteLength));
+    setManagedByLoading(false);
+  };
+  const fetchAttendedByRecords = async (value) => {
+    setAttendedByLoading(true);
+    const newOptions = [];
+    let newNext = "";
+    while (newOptions.length < autocompleteLength && newNext != null) {
+      const variables = {
+        limit: autocompleteLength * 5,
+        filter: {
+          or: [{ fullName: { contains: value } }, { id: { contains: value } }],
+        },
+      };
+      if (newNext) {
+        variables["nextToken"] = newNext;
+      }
+      const result = (
+        await client.graphql({
+          query: listYouths.replaceAll("__typename", ""),
+          variables,
+        })
+      )?.data?.listYouths?.items;
+      var loaded = result.filter(
+        (item) => !AttendedByIdSet.has(getIDValue.AttendedBy?.(item))
+      );
+      newOptions.push(...loaded);
+      newNext = result.nextToken;
+    }
+    setAttendedByRecords(newOptions.slice(0, autocompleteLength));
+    setAttendedByLoading(false);
+  };
+  React.useEffect(() => {
+    fetchManagedByRecords("");
+    fetchAttendedByRecords("");
+  }, []);
   return (
     <Grid
       as="form"
@@ -383,15 +454,15 @@ export default function SiteUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          createdDate,
-          address,
-          phoneNumber,
-          siteAdminName,
-          siteAdminEmail,
-          status,
-          ManagedBy,
-          AttendedBy,
+          name: name ?? null,
+          createdDate: createdDate ?? null,
+          address: address ?? null,
+          phoneNumber: phoneNumber ?? null,
+          siteAdminName: siteAdminName ?? null,
+          siteAdminEmail: siteAdminEmail ?? null,
+          status: status ?? null,
+          ManagedBy: ManagedBy ?? null,
+          AttendedBy: AttendedBy ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -468,34 +539,49 @@ export default function SiteUpdateForm(props) {
           });
           managedByToUnLinkMap.forEach(async (count, id) => {
             const recordKeys = JSON.parse(id);
-            const programManagerSiteRecords = await DataStore.query(
-              ProgramManagerSite,
-              (r) =>
-                r.and((r) => {
-                  return [
-                    r.programManagerId.eq(recordKeys.id),
-                    r.siteId.eq(siteRecord.id),
-                  ];
-                })
-            );
+            const programManagerSiteRecords = (
+              await client.graphql({
+                query: listProgramManagerSites.replaceAll("__typename", ""),
+                variables: {
+                  filter: {
+                    and: [
+                      { programManagerId: { eq: recordKeys.id } },
+                      { siteId: { eq: siteRecord.id } },
+                    ],
+                  },
+                },
+              })
+            )?.data?.listProgramManagerSites?.items;
             for (let i = 0; i < count; i++) {
-              promises.push(DataStore.delete(programManagerSiteRecords[i]));
+              promises.push(
+                client.graphql({
+                  query: deleteProgramManagerSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      id: programManagerSiteRecords[i].id,
+                    },
+                  },
+                })
+              );
             }
           });
           managedByToLinkMap.forEach((count, id) => {
-            const programManagerToLink = programManagerRecords.find((r) =>
+            const programManagerToLink = managedByRecords.find((r) =>
               Object.entries(JSON.parse(id)).every(
                 ([key, value]) => r[key] === value
               )
             );
             for (let i = count; i > 0; i--) {
               promises.push(
-                DataStore.save(
-                  new ProgramManagerSite({
-                    site: siteRecord,
-                    programManager: programManagerToLink,
-                  })
-                )
+                client.graphql({
+                  query: createProgramManagerSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      siteId: siteRecord.id,
+                      programManagerId: programManagerToLink.id,
+                    },
+                  },
+                })
               );
             }
           });
@@ -537,50 +623,71 @@ export default function SiteUpdateForm(props) {
           });
           attendedByToUnLinkMap.forEach(async (count, id) => {
             const recordKeys = JSON.parse(id);
-            const youthSiteRecords = await DataStore.query(YouthSite, (r) =>
-              r.and((r) => {
-                return [
-                  r.youthId.eq(recordKeys.id),
-                  r.siteId.eq(siteRecord.id),
-                ];
+            const youthSiteRecords = (
+              await client.graphql({
+                query: listYouthSites.replaceAll("__typename", ""),
+                variables: {
+                  filter: {
+                    and: [
+                      { youthId: { eq: recordKeys.id } },
+                      { siteId: { eq: siteRecord.id } },
+                    ],
+                  },
+                },
               })
-            );
+            )?.data?.listYouthSites?.items;
             for (let i = 0; i < count; i++) {
-              promises.push(DataStore.delete(youthSiteRecords[i]));
+              promises.push(
+                client.graphql({
+                  query: deleteYouthSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      id: youthSiteRecords[i].id,
+                    },
+                  },
+                })
+              );
             }
           });
           attendedByToLinkMap.forEach((count, id) => {
-            const youthToLink = youthRecords.find((r) =>
+            const youthToLink = attendedByRecords.find((r) =>
               Object.entries(JSON.parse(id)).every(
                 ([key, value]) => r[key] === value
               )
             );
             for (let i = count; i > 0; i--) {
               promises.push(
-                DataStore.save(
-                  new YouthSite({
-                    site: siteRecord,
-                    youth: youthToLink,
-                  })
-                )
+                client.graphql({
+                  query: createYouthSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      siteId: siteRecord.id,
+                      youthId: youthToLink.id,
+                    },
+                  },
+                })
               );
             }
           });
           const modelFieldsToSave = {
-            name: modelFields.name,
-            createdDate: modelFields.createdDate,
-            address: modelFields.address,
-            phoneNumber: modelFields.phoneNumber,
-            siteAdminName: modelFields.siteAdminName,
-            siteAdminEmail: modelFields.siteAdminEmail,
-            status: modelFields.status,
+            name: modelFields.name ?? null,
+            createdDate: modelFields.createdDate ?? null,
+            address: modelFields.address ?? null,
+            phoneNumber: modelFields.phoneNumber ?? null,
+            siteAdminName: modelFields.siteAdminName ?? null,
+            siteAdminEmail: modelFields.siteAdminEmail ?? null,
+            status: modelFields.status ?? null,
           };
           promises.push(
-            DataStore.save(
-              Site.copyOf(siteRecord, (updated) => {
-                Object.assign(updated, modelFieldsToSave);
-              })
-            )
+            client.graphql({
+              query: updateSite.replaceAll("__typename", ""),
+              variables: {
+                input: {
+                  id: siteRecord.id,
+                  ...modelFieldsToSave,
+                },
+              },
+            })
           );
           await Promise.all(promises);
           if (onSuccess) {
@@ -588,7 +695,8 @@ export default function SiteUpdateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -879,15 +987,14 @@ export default function SiteUpdateForm(props) {
           isReadOnly={false}
           placeholder="Search ProgramManager"
           value={currentManagedByDisplayValue}
-          options={programManagerRecords
-            .filter((r) => !ManagedByIdSet.has(getIDValue.ManagedBy?.(r)))
-            .map((r) => ({
-              id: getIDValue.ManagedBy?.(r),
-              label: getDisplayValue.ManagedBy?.(r),
-            }))}
+          options={managedByRecords.map((r) => ({
+            id: getIDValue.ManagedBy?.(r),
+            label: getDisplayValue.ManagedBy?.(r),
+          }))}
+          isLoading={ManagedByLoading}
           onSelect={({ id, label }) => {
             setCurrentManagedByValue(
-              programManagerRecords.find((r) =>
+              managedByRecords.find((r) =>
                 Object.entries(JSON.parse(id)).every(
                   ([key, value]) => r[key] === value
                 )
@@ -901,6 +1008,7 @@ export default function SiteUpdateForm(props) {
           }}
           onChange={(e) => {
             let { value } = e.target;
+            fetchManagedByRecords(value);
             if (errors.ManagedBy?.hasError) {
               runValidationTasks("ManagedBy", value);
             }
@@ -963,15 +1071,14 @@ export default function SiteUpdateForm(props) {
           isReadOnly={false}
           placeholder="Search Youth"
           value={currentAttendedByDisplayValue}
-          options={youthRecords
-            .filter((r) => !AttendedByIdSet.has(getIDValue.AttendedBy?.(r)))
-            .map((r) => ({
-              id: getIDValue.AttendedBy?.(r),
-              label: getDisplayValue.AttendedBy?.(r),
-            }))}
+          options={attendedByRecords.map((r) => ({
+            id: getIDValue.AttendedBy?.(r),
+            label: getDisplayValue.AttendedBy?.(r),
+          }))}
+          isLoading={AttendedByLoading}
           onSelect={({ id, label }) => {
             setCurrentAttendedByValue(
-              youthRecords.find((r) =>
+              attendedByRecords.find((r) =>
                 Object.entries(JSON.parse(id)).every(
                   ([key, value]) => r[key] === value
                 )
@@ -985,6 +1092,7 @@ export default function SiteUpdateForm(props) {
           }}
           onChange={(e) => {
             let { value } = e.target;
+            fetchAttendedByRecords(value);
             if (errors.AttendedBy?.hasError) {
               runValidationTasks("AttendedBy", value);
             }

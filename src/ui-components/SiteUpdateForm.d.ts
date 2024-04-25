@@ -6,7 +6,6 @@
 
 import * as React from "react";
 import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Site, ProgramManager, Youth } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -30,8 +29,8 @@ export declare type SiteUpdateFormInputValues = {
     siteAdminName?: string;
     siteAdminEmail?: string;
     status?: string;
-    ManagedBy?: ProgramManager[];
-    AttendedBy?: Youth[];
+    ManagedBy?: any[];
+    AttendedBy?: any[];
 };
 export declare type SiteUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -41,8 +40,8 @@ export declare type SiteUpdateFormValidationValues = {
     siteAdminName?: ValidationFunction<string>;
     siteAdminEmail?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
-    ManagedBy?: ValidationFunction<ProgramManager>;
-    AttendedBy?: ValidationFunction<Youth>;
+    ManagedBy?: ValidationFunction<any>;
+    AttendedBy?: ValidationFunction<any>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type SiteUpdateFormOverridesProps = {
@@ -61,7 +60,7 @@ export declare type SiteUpdateFormProps = React.PropsWithChildren<{
     overrides?: SiteUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    site?: Site;
+    site?: any;
     onSubmit?: (fields: SiteUpdateFormInputValues) => SiteUpdateFormInputValues;
     onSuccess?: (fields: SiteUpdateFormInputValues) => void;
     onError?: (fields: SiteUpdateFormInputValues, errorMessage: string) => void;

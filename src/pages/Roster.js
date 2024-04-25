@@ -13,13 +13,13 @@ import { EntityStatus } from '../enums/entity-status.enum';
 
 const Roster = () => {
   const store = useStore();
-  const [site, setSite] = React.useState(store.currentSite);
+  const [site, setSite] = React.useState();
 
+  const fetchSiteData = async () => {
+    const data = await getSite(store?.currentSite?.id, false);
+    setSite(data);
+  };
   React.useEffect(() => {
-    const fetchSiteData = async () => {
-      const data = await getSite(store?.currentSite?.id, false);
-      setSite(data);
-    };
     if (store.currentSite?.id) {
       fetchSiteData();
     }
@@ -45,7 +45,7 @@ const Roster = () => {
             <ActiveBadge status={youth?.status}></ActiveBadge>
           </td>
           <td className='table-data' style={{maxWidth: '30px'}}>
-            <UpdateYouth youth={youth}></UpdateYouth>
+            <UpdateYouth youth={youth} refreshData={fetchSiteData}></UpdateYouth>
           </td>
         </tr>
       ));

@@ -1,7 +1,7 @@
 import { generateClient } from 'aws-amplify/api';
 import { createYouth, createVibe, updateVibe, updateYouth, updateSite, updateProgramManager } from '../graphql/mutations';
 import { getYouth } from '../graphql/queries';
-import { getRosterById, getSitesByProgramManager } from '../graphql/customQueries';
+import { getRosterById, getSitesByProgramManager, updateYouthCustom } from '../graphql/customQueries';
 import { EntityType } from '../enums/entity.enum';
 import { EntityStatus } from '../enums/entity-status.enum';
 
@@ -100,9 +100,8 @@ export const addYouths = async (youthDataArr) => {
 };
 
 const updateYouthInfo = async (updatedFields) => {
-    console.log('updatedFields', updatedFields);
     await client.graphql({
-        query: updateYouth,
+        query: updateYouthCustom,
         variables: {
             input: {
                 ...updatedFields,

@@ -1,5 +1,20 @@
 import { getCurrentDate } from '../utils/date';
 
+export const updateYouthCustom = /* GraphQL */ `
+  mutation UpdateYouth($input: UpdateYouthInput!) {
+    updateYouth(input: $input) {
+      id
+      fullName
+      dateOfBirth
+      guardianFullName
+      guardianPhoneNumber
+      grade
+      gender
+      status
+    }
+  }
+`;
+
 export const getRosterById = /* GraphQL */ `
   query GetRoster($id: ID!) {
     getSite(id: $id) {
