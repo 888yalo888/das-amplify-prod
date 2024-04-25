@@ -53,13 +53,19 @@
   margin: 8px;
 }
 
-.check-in-option:hover {
+.check-in-option:hover, .youth-card:hover {
   cursor: pointer;
+  background: rgb(112, 187, 187,25%) !important;
+
 }
 
 .check-in-option__selected {
-  color: red;
+  background: rgb(112, 187, 187) !important;
 }
+.check-in-option__selected:hover {
+  background: rgb(112, 187, 187) !important;
+}
+
 
 .youth-card {
   margin: 25px;
