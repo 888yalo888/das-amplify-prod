@@ -199,7 +199,6 @@ const CheckIn = () => {
         </div>
         <div>
           <VibeSummary
-            className=".vibe-summary"
             overrides={getVibeSummaryOverrides()}
           />
         </div>
