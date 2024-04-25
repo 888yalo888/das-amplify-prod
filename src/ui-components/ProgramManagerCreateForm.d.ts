@@ -6,7 +6,6 @@
 
 import * as React from "react";
 import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Site } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -27,14 +26,14 @@ export declare type ProgramManagerCreateFormInputValues = {
     createdDate?: string;
     email?: string;
     status?: string;
-    AssignedTo?: Site[];
+    AssignedTo?: any[];
 };
 export declare type ProgramManagerCreateFormValidationValues = {
     fullName?: ValidationFunction<string>;
     createdDate?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
-    AssignedTo?: ValidationFunction<Site>;
+    AssignedTo?: ValidationFunction<any>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ProgramManagerCreateFormOverridesProps = {

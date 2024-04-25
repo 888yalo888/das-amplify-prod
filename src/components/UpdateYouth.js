@@ -1,15 +1,38 @@
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { YouthUpdateForm } from '../ui-components';
-import { Badge, Flex, Icon, Text, View } from "@aws-amplify/ui-react";
+import { Icon, View } from "@aws-amplify/ui-react";
+import { updateItem } from '../services/api.service';
+import { EntityType } from '../enums/entity.enum';
 
 
-function UpdateYouth() {
-  const [show, setShow] = useState(false);
+function UpdateYouth({youth, refreshData}) {
+  const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [updatedFields, setUpdatedFields] = React.useState(); 
+
+  const onSubmitClick = async () => {
+    const youthData = {
+      id: youth.id,
+      ...updatedFields,
+    };
+    await updateItem(EntityType.Youth, youthData);
+    await refreshData();
+    setShow(false);
+  }
+
+  const onFieldUpdate = (event) => {
+    setUpdatedFields(event);
+  }
+
+  const formOverrides = {
+    SubmitButton: {
+      type: 'button',
+      onClick: onSubmitClick,
+    },
+  };
 
   return (
     <>
@@ -24,6 +47,7 @@ function UpdateYouth() {
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
+          className="edit-icon"
         >
           <Icon
             width="22.09px"
@@ -59,7 +83,7 @@ function UpdateYouth() {
           <Modal.Title>Update Youth</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <YouthUpdateForm></YouthUpdateForm>
+            <YouthUpdateForm youth={youth} overrides={formOverrides} onChange={onFieldUpdate}></YouthUpdateForm>
         </Modal.Body>
       </Modal>
     </>

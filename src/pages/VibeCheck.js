@@ -59,6 +59,9 @@ const VibeCheck = () => {
         Label: {
           children: vibe,
         },
+        Vibe: {
+          vibe: vibe,
+        },
       };
     }
     const vibes = Object.values(Vibe).map((vibe) => <CheckInVibe key={vibe} overrides={getOverrides(vibe)}/>);

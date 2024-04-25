@@ -1,28 +1,30 @@
 import { generateClient } from 'aws-amplify/api';
 import { createYouth, createVibe, updateVibe, updateYouth, updateSite, updateProgramManager } from '../graphql/mutations';
 import { getYouth } from '../graphql/queries';
-import { getRosterById, getSitesByProgramManager } from '../graphql/customQueries';
+import { getRosterById, getSitesByProgramManager, updateYouthCustom } from '../graphql/customQueries';
 import { EntityType } from '../enums/entity.enum';
 import { EntityStatus } from '../enums/entity-status.enum';
 
 const client = generateClient();
 
-export const getSite = async (siteId) => {
+export const getSite = async (siteId, activeOnly = true) => {
     const result = await client.graphql({
         query: getRosterById,
         variables: {
             id: siteId,
         },
     });
+    const roster = result.data.getSite.AttendedBy.items.map((youthWrapper) => {
+        youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
+        youthWrapper.youth.site = youthWrapper.youth.site.items.map((site) => site.id);
+        return youthWrapper.youth;
+    });
     return {
         id: result.data.getSite.id,
         address: result.data.getSite.address,
         name: result.data.getSite.name,
         phoneNumber: result.data.getSite.phoneNumber,
-        roster: result.data.getSite.AttendedBy.items.map((youthWrapper) => {
-            youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
-            return youthWrapper.youth;
-        }).filter((youth) => youth.status === EntityStatus.Active),
+        roster: activeOnly ? roster.filter((youth) => youth.status === EntityStatus.Active) : roster,
         siteAdminEmail: result.data.getSite.siteAdminEmail,
         siteAdminName: result.data.getSite.siteAdminName,
     };
@@ -98,9 +100,8 @@ export const addYouths = async (youthDataArr) => {
 };
 
 const updateYouthInfo = async (updatedFields) => {
-    console.log('updatedFields', updatedFields);
     await client.graphql({
-        query: updateYouth,
+        query: updateYouthCustom,
         variables: {
             input: {
                 ...updatedFields,

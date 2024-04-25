@@ -20,14 +20,14 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { ProgramManager, Site, ProgramManagerSite } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { generateClient } from "aws-amplify/api";
+import { listSites } from "../graphql/queries";
 import {
-  fetchByPath,
-  getOverrideProps,
-  useDataStoreBinding,
-  validateField,
-} from "./utils";
-import { DataStore } from "aws-amplify/datastore";
+  createProgramManager,
+  createProgramManagerSite,
+} from "../graphql/mutations";
+const client = generateClient();
 function ArrayField({
   items = [],
   onChange,
@@ -208,6 +208,9 @@ export default function ProgramManagerCreateForm(props) {
   const [email, setEmail] = React.useState(initialValues.email);
   const [status, setStatus] = React.useState(initialValues.status);
   const [AssignedTo, setAssignedTo] = React.useState(initialValues.AssignedTo);
+  const [AssignedToLoading, setAssignedToLoading] = React.useState(false);
+  const [assignedToRecords, setAssignedToRecords] = React.useState([]);
+  const autocompleteLength = 10;
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFullName(initialValues.fullName);
@@ -232,10 +235,6 @@ export default function ProgramManagerCreateForm(props) {
       ? AssignedTo.map((r) => getIDValue.AssignedTo?.(r))
       : getIDValue.AssignedTo?.(AssignedTo)
   );
-  const siteRecords = useDataStoreBinding({
-    type: "collection",
-    model: Site,
-  }).items;
   const getDisplayValue = {
     AssignedTo: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
   };
@@ -280,6 +279,38 @@ export default function ProgramManagerCreateForm(props) {
     }, {});
     return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
   };
+  const fetchAssignedToRecords = async (value) => {
+    setAssignedToLoading(true);
+    const newOptions = [];
+    let newNext = "";
+    while (newOptions.length < autocompleteLength && newNext != null) {
+      const variables = {
+        limit: autocompleteLength * 5,
+        filter: {
+          or: [{ name: { contains: value } }, { id: { contains: value } }],
+        },
+      };
+      if (newNext) {
+        variables["nextToken"] = newNext;
+      }
+      const result = (
+        await client.graphql({
+          query: listSites.replaceAll("__typename", ""),
+          variables,
+        })
+      )?.data?.listSites?.items;
+      var loaded = result.filter(
+        (item) => !AssignedToIdSet.has(getIDValue.AssignedTo?.(item))
+      );
+      newOptions.push(...loaded);
+      newNext = result.nextToken;
+    }
+    setAssignedToRecords(newOptions.slice(0, autocompleteLength));
+    setAssignedToLoading(false);
+  };
+  React.useEffect(() => {
+    fetchAssignedToRecords("");
+  }, []);
   return (
     <Grid
       as="form"
@@ -337,19 +368,29 @@ export default function ProgramManagerCreateForm(props) {
             email: modelFields.email,
             status: modelFields.status,
           };
-          const programManager = await DataStore.save(
-            new ProgramManager(modelFieldsToSave)
-          );
+          const programManager = (
+            await client.graphql({
+              query: createProgramManager.replaceAll("__typename", ""),
+              variables: {
+                input: {
+                  ...modelFieldsToSave,
+                },
+              },
+            })
+          )?.data?.createProgramManager;
           const promises = [];
           promises.push(
             ...AssignedTo.reduce((promises, site) => {
               promises.push(
-                DataStore.save(
-                  new ProgramManagerSite({
-                    programManager,
-                    site,
-                  })
-                )
+                client.graphql({
+                  query: createProgramManagerSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      programManagerId: programManager.id,
+                      siteId: site.id,
+                    },
+                  },
+                })
               );
               return promises;
             }, [])
@@ -363,7 +404,8 @@ export default function ProgramManagerCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -537,15 +579,14 @@ export default function ProgramManagerCreateForm(props) {
           isReadOnly={false}
           placeholder="Search Site"
           value={currentAssignedToDisplayValue}
-          options={siteRecords
-            .filter((r) => !AssignedToIdSet.has(getIDValue.AssignedTo?.(r)))
-            .map((r) => ({
-              id: getIDValue.AssignedTo?.(r),
-              label: getDisplayValue.AssignedTo?.(r),
-            }))}
+          options={assignedToRecords.map((r) => ({
+            id: getIDValue.AssignedTo?.(r),
+            label: getDisplayValue.AssignedTo?.(r),
+          }))}
+          isLoading={AssignedToLoading}
           onSelect={({ id, label }) => {
             setCurrentAssignedToValue(
-              siteRecords.find((r) =>
+              assignedToRecords.find((r) =>
                 Object.entries(JSON.parse(id)).every(
                   ([key, value]) => r[key] === value
                 )
@@ -559,6 +600,7 @@ export default function ProgramManagerCreateForm(props) {
           }}
           onChange={(e) => {
             let { value } = e.target;
+            fetchAssignedToRecords(value);
             if (errors.AssignedTo?.hasError) {
               runValidationTasks("AssignedTo", value);
             }

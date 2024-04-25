@@ -40,7 +40,7 @@ const CheckIn = () => {
       setSite(data);
       store.setSite(data);
     };
-    if (store.currentSite) {
+    if (store.currentSite?.id) {
       fetchSiteData();
     }
   }, [store.currentSite?.id]);
