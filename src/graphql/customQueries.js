@@ -1,6 +1,22 @@
 import { getCurrentDate } from '../utils/date';
 
-export const updateYouthCustom = /* GraphQL */ `
+export const createYouth = /* GraphQL */ `
+  mutation CreateYouth($input: CreateYouthInput!) {
+    createYouth(input: $input) {
+      id
+    }
+  }
+`;
+
+export const createYouthSite = /* GraphQL */ `
+  mutation CreateYouthSite($input: CreateYouthSiteInput!) {
+    createYouthSite(input: $input) {
+      id
+    }
+  }
+`;
+
+export const updateYouth = /* GraphQL */ `
   mutation UpdateYouth($input: UpdateYouthInput!) {
     updateYouth(input: $input) {
       id

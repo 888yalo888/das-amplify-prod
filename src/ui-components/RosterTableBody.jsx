@@ -12,6 +12,7 @@ import {
   mergeVariantsAndOverrides,
 } from "./utils";
 import { Badge, Flex, Icon, Text, View } from "@aws-amplify/ui-react";
+import UpdateYouth from "../components/UpdateYouth";
 export default function RosterTableBody(props) {
   const { youth, overrides: overridesProp, ...rest } = props;
   const variants = [
@@ -358,7 +359,8 @@ export default function RosterTableBody(props) {
         display="flex"
         {...getOverrideProps(overrides, "Row Cell60731036")}
       >
-        <View
+        <UpdateYouth></UpdateYouth>
+        {/* <View
           width="24px"
           height="24px"
           display="block"
@@ -397,8 +399,8 @@ export default function RosterTableBody(props) {
             left="4%"
             right="3.97%"
             {...getOverrideProps(overrides, "Vector")}
-          ></Icon>
-        </View>
+          ></Icon> */}
+        {/* </View> */}
       </Flex>
     </Flex>
   );
