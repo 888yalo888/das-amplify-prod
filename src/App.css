@@ -56,6 +56,12 @@
 .check-in-option:hover, .youth-card:hover {
   cursor: pointer;
   background: rgb(112, 187, 187,25%) !important;
+}
+
+/* TODO remove after attendance details routing added back */
+.picked-up:hover{
+  cursor: initial;
+  background: rgb(214, 245, 219) !important;
 
 }
 

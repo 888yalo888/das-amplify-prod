@@ -75,7 +75,9 @@ export default function YouthCardCheckedIn(props) {
             shrink="0"
             position="relative"
             padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            text-overflow="ellipse"
             children="Britt Reifffffffffd"
             {...getOverrideProps(overrides, "YouthName")}
           ></Text>

@@ -12,8 +12,8 @@ export default function EmoteAtEase(props) {
   const { overrides, ...rest } = props;
   return (
     <View
-      width="60px"
-      height="60px"
+      width="50px"
+      height="50px"
       display="block"
       gap="unset"
       alignItems="unset"

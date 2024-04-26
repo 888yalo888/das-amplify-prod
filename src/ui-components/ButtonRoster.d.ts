@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { FlexProps, TextProps } from "@aws-amplify/ui-react";
+import { ButtonProps, FlexProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -19,8 +19,7 @@ export declare type Variant = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ButtonRosterOverridesProps = {
     ButtonRoster?: PrimitiveOverrideProps<FlexProps>;
-    Button?: PrimitiveOverrideProps<FlexProps>;
-    label?: PrimitiveOverrideProps<TextProps>;
+    Button?: PrimitiveOverrideProps<ButtonProps>;
 } & EscapeHatchProps;
 export declare type ButtonRosterProps = React.PropsWithChildren<Partial<FlexProps> & {
     overrides?: ButtonRosterOverridesProps | undefined | null;

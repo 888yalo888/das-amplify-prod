@@ -73,7 +73,7 @@ const CheckIn = () => {
             <YouthCardPickedUp
               key={youth?.id}
               youth={youth}
-              className={"youth-card"}
+              className={["youth-card","picked-up"]}
               overrides={overrides}
             />
           );
@@ -183,7 +183,7 @@ const CheckIn = () => {
             style={{
               width: "auto",
               minWidth: "190px",
-              maxWidth: "225px",
+              maxWidth: "300px",
               padding: 0,
             }}
           >
