@@ -4,7 +4,7 @@ import AddYouth from '../components/AddYouth';
 import UpdateYouth from '../components/UpdateYouth';
 import useStore from '../store/store';
 import { getSite } from '../services/api.service';
-// import SortArrow from '../assets/down-arrow.svg';
+import SortArrow from '../assets/down-arrow.svg';
 import { gradeMapper } from '../utils/text';
 import '../styles/RosterTable.css';
 import { EntityStatus } from '../enums/entity-status.enum';
@@ -14,6 +14,9 @@ import { ButtonRoster } from '../ui-components';
 const Roster = () => {
   const store = useStore();
   const [site, setSite] = React.useState();
+  const [sortedSite, setSortedSite] = React.useState();
+  const [sortField, setSortField] = React.useState('fullName');
+  const [sortAsc, setSortAsc] = React.useState(true);
 
   const fetchSiteData = async () => {
     const data = await getSite(store?.currentSite?.id, false);
@@ -25,6 +28,40 @@ const Roster = () => {
     }
   }, [store.currentSite?.id]);
 
+  React.useEffect(() => {
+    if (site) {
+      sortRoster();
+    }
+  }, [site, sortAsc, sortField])
+
+  function onHeaderClick(field) {
+    // Only sort on full name for now
+    if (field !== 'fullName') return;
+    if (field === sortField) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field)
+      setSortAsc(true);
+    }
+  }
+
+  function sortRoster() {
+    const siteCopy = JSON.parse(JSON.stringify(site));
+    const sortedRoster = siteCopy?.roster.toSorted((a, b) => {
+      let comparison = 0;
+      const aField = a[sortField]?.toUpperCase();
+      const bField = b[sortField]?.toUpperCase();
+      if (aField > bField) {
+        comparison = 1;
+      } else if (aField < bField) {
+        comparison = -1;
+      }
+      return sortAsc ? comparison : comparison * -1;
+    });
+    siteCopy.roster = sortedRoster;
+    setSortedSite(siteCopy);
+  }
+
   const RosterTable = () => {
     const ActiveBadge = ({status}) => {
       if (status === EntityStatus.Active) {
@@ -33,7 +70,7 @@ const Roster = () => {
       return (<span className="custom-badge inactive-badge">Inactive</span>)
     }
     const RosterRows = () => {
-      return site?.roster?.map((youth) => (
+      return sortedSite?.roster?.map((youth) => (
         <tr key={youth.id}>
           <td className='table-data'>{youth?.fullName}</td>
           <td className='table-data'>{youth?.dateOfBirth}</td>
@@ -54,13 +91,34 @@ const Roster = () => {
       <table className='roster-table'>
         <thead>
           <tr>
-            <th className='table-data'>Name</th>
-            <th className='table-data'>Date of Birth</th>
-            <th className='table-data'>Guardian Name</th>
-            <th className='table-data'>Guardian Phone</th>
-            <th className='table-data'>Grade</th>
-            <th className='table-data'>Gender</th>
-            <th className='table-data'>Status</th>
+            <th className='table-data' onClick={() => onHeaderClick('fullName')}>
+              Name
+              <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'fullName' ? SortArrow : ''} />
+            </th>
+            <th className='table-data' onClick={() => onHeaderClick('dateOfBirth')}>
+              Date of Birth
+              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'dateOfBirth' ? SortArrow : ''} /> */}
+            </th>
+            <th className='table-data' onClick={() => onHeaderClick('guardianName')}>
+              Guardian Name
+              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'guardianName' ? SortArrow : ''} /> */}
+            </th>
+            <th className='table-data' onClick={() => onHeaderClick('guardianPhone')}>
+              Guardian Phone
+              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'guardianPhone' ? SortArrow : ''} /> */}
+            </th>
+            <th className='table-data' onClick={() => onHeaderClick('grade')}>
+              Grade
+              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'grade' ? SortArrow : ''} /> */}
+            </th>
+            <th className='table-data' onClick={() => onHeaderClick('gender')}>
+              Gender
+              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'gender' ? SortArrow : ''} /> */}
+            </th>
+            <th className='table-data' onClick={() => onHeaderClick('status')}>
+              Status
+              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'status' ? SortArrow : ''} /> */}
+            </th>
             <th className='table-data'></th>
           </tr>
         </thead>
