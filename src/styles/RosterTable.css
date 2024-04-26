@@ -14,6 +14,10 @@
     border-top: 1px solid #C2C2C2;
 }
 
+.roster-table tr th:first-child {
+    cursor: pointer;
+}
+
 .roster-table th:first-child, .roster-table td:first-child {
     border-left: 1px solid #C2C2C2;
 }
@@ -60,4 +64,8 @@
 .inactive-badge {
     background-color: #F5D9BC;
     --bs-badge-color: #663300;
+}
+
+.sort-asc {
+    transform: rotate(180deg);
 }
