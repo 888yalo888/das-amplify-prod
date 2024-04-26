@@ -78,6 +78,9 @@ export default function YouthCardPickedUp(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
+            overflow="hidden"
+            white-space="nowrap"
+            text-overflow="ellipse"
             children="Britt Reifffffffffd"
             {...getOverrideProps(overrides, "YouthName")}
           ></Text>

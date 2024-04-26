@@ -7,10 +7,10 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps, useNavigateAction } from "./utils";
-import { Flex, Text } from "@aws-amplify/ui-react";
+import { Button, Flex } from "@aws-amplify/ui-react";
 export default function ButtonRoster(props) {
   const { overrides, ...rest } = props;
-  const labelOnClick = useNavigateAction({ type: "url", url: "/check-in" });
+  const buttonOnClick = useNavigateAction({ type: "url", url: "/check-in" });
   return (
     <Flex
       gap="0"
@@ -24,46 +24,19 @@ export default function ButtonRoster(props) {
       {...getOverrideProps(overrides, "ButtonRoster")}
       {...rest}
     >
-      <Flex
-        gap="0"
-        direction="row"
+      <Button
         width="225px"
         height="60px"
-        justifyContent="center"
-        alignItems="center"
         shrink="0"
-        position="relative"
-        border="1px SOLID rgba(0,0,0,0)"
-        borderRadius="4px"
-        padding="7px 15px 7px 15px"
-        backgroundColor="rgba(4,125,149,1)"
+        size="large"
+        isDisabled={false}
+        variation="primary"
+        children="Switch to Check-in"
+        onClick={() => {
+          buttonOnClick();
+        }}
         {...getOverrideProps(overrides, "Button")}
-      >
-        <Text
-          fontFamily="Inter"
-          fontSize="20px"
-          fontWeight="700"
-          color="rgba(255,255,255,1)"
-          lineHeight="30px"
-          textAlign="left"
-          display="block"
-          direction="column"
-          justifyContent="unset"
-          width="unset"
-          height="unset"
-          gap="unset"
-          alignItems="unset"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          whiteSpace="pre-wrap"
-          children="Switch to Check-In"
-          onClick={() => {
-            labelOnClick();
-          }}
-          {...getOverrideProps(overrides, "label")}
-        ></Text>
-      </Flex>
+      ></Button>
     </Flex>
   );
 }

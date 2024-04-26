@@ -33,6 +33,8 @@ export declare type YouthVibeOverridesProps = {
 export declare type YouthVibeProps = React.PropsWithChildren<Partial<FlexProps> & {
     youth?: any;
     vibe?: any;
+    nowrap?: String;
+    hidden?: String;
 } & {
     youthStatus?: "CheckedIn" | "Default" | "PickedUp";
 } & {
