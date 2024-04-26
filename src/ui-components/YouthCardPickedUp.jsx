@@ -6,15 +6,11 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps, useNavigateAction } from "./utils";
+import { getOverrideProps } from "./utils";
 import { Divider, Flex, Image, Text } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function YouthCardPickedUp(props) {
   const { youth, overrides, ...rest } = props;
-  const youthCardPickedUpOnClick = useNavigateAction({
-    type: "url",
-    url: `${"/attendance-details/"}${youth?.id}`,
-  });
   return (
     <Flex
       gap="7px"
@@ -28,9 +24,6 @@ export default function YouthCardPickedUp(props) {
       borderRadius="8px"
       padding="7px 15px 7px 15px"
       backgroundColor="rgba(214,245,219,1)"
-      onClick={() => {
-        youthCardPickedUpOnClick();
-      }}
       {...getOverrideProps(overrides, "YouthCardPickedUp")}
       {...rest}
     >

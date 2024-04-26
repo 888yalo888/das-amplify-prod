@@ -8,12 +8,15 @@ import SortArrow from '../assets/down-arrow.svg';
 import { gradeMapper } from '../utils/text';
 import '../styles/RosterTable.css';
 import { EntityStatus } from '../enums/entity-status.enum';
+import { useMediaQuery } from "react-responsive";
 import { ButtonRoster } from '../ui-components';
 
 
 const Roster = () => {
   const store = useStore();
   const [site, setSite] = React.useState();
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1020px)" });
+  const isSmallMobile = useMediaQuery({ query: "(max-width: 480px)" });
   const [sortedSite, setSortedSite] = React.useState();
   const [sortField, setSortField] = React.useState('fullName');
   const [sortAsc, setSortAsc] = React.useState(true);
@@ -63,32 +66,40 @@ const Roster = () => {
   }
 
   const RosterTable = () => {
-    const ActiveBadge = ({status}) => {
+    const ActiveBadge = ({ status }) => {
       if (status === EntityStatus.Active) {
-        return (<span className="custom-badge active-badge">Active</span>);
+        return <span className="custom-badge active-badge">Active</span>;
       }
-      return (<span className="custom-badge inactive-badge">Inactive</span>)
-    }
+      return <span className="custom-badge inactive-badge">Inactive</span>;
+    };
+  
     const RosterRows = () => {
       return sortedSite?.roster?.map((youth) => (
         <tr key={youth.id}>
-          <td className='table-data'>{youth?.fullName}</td>
-          <td className='table-data'>{youth?.dateOfBirth}</td>
-          <td className='table-data'>{youth?.guardianFullName}</td>
-          <td className='table-data'>{youth?.guardianPhoneNumber}</td>
-          <td className='table-data'>{gradeMapper(youth?.grade)}</td>
-          <td className='table-data'>{youth?.gender}</td>
-          <td className='table-data'>
-            <ActiveBadge status={youth?.status}></ActiveBadge>
-          </td>
-          <td className='table-data' style={{maxWidth: '30px'}}>
+          <td className="table-data" style={{ minWidth: "200px" }}>{youth?.fullName}</td>
+          <td className="table-data" style={{ minWidth: "120px" }}>{youth?.dateOfBirth}</td>
+          {!isTabletOrMobile && (
+            <>
+              <td className="table-data">{youth?.guardianFullName}</td>
+              <td className="table-data">{youth?.guardianPhoneNumber}</td>
+            </>
+          )}
+          <td className="table-data" style={{ minWidth: "90px" }}>{gradeMapper(youth?.grade)}</td>
+          <td className="table-data" style={{ minWidth: "70px" }}>{youth?.gender}</td>
+          {!isTabletOrMobile && (
+            <td className="table-data">
+              <ActiveBadge status={youth?.status}></ActiveBadge>
+            </td>
+          )}
+          <td className="table-data" style={{ maxWidth: "50px",minWidth:"40px" }}>
             <UpdateYouth youth={youth} refreshData={fetchSiteData}></UpdateYouth>
           </td>
         </tr>
       ));
     };
+  
     return (
-      <table className='roster-table'>
+      <table className="roster-table">
         <thead>
           <tr>
             <th className='table-data' onClick={() => onHeaderClick('fullName')}>
@@ -99,14 +110,18 @@ const Roster = () => {
               Date of Birth
               {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'dateOfBirth' ? SortArrow : ''} /> */}
             </th>
-            <th className='table-data' onClick={() => onHeaderClick('guardianName')}>
-              Guardian Name
-              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'guardianName' ? SortArrow : ''} /> */}
-            </th>
-            <th className='table-data' onClick={() => onHeaderClick('guardianPhone')}>
-              Guardian Phone
-              {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'guardianPhone' ? SortArrow : ''} /> */}
-            </th>
+            {!isTabletOrMobile && (
+              <>
+                <th className='table-data' onClick={() => onHeaderClick('guardianName')}>
+                  Guardian Name
+                  {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'guardianName' ? SortArrow : ''} /> */}
+                </th>
+                <th className='table-data' onClick={() => onHeaderClick('guardianPhone')}>
+                  Guardian Phone
+                  {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'guardianPhone' ? SortArrow : ''} /> */}
+                </th>
+              </>
+            )}
             <th className='table-data' onClick={() => onHeaderClick('grade')}>
               Grade
               {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'grade' ? SortArrow : ''} /> */}
@@ -115,10 +130,10 @@ const Roster = () => {
               Gender
               {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'gender' ? SortArrow : ''} /> */}
             </th>
-            <th className='table-data' onClick={() => onHeaderClick('status')}>
+            {!isTabletOrMobile && <th className='table-data' onClick={() => onHeaderClick('status')}>
               Status
               {/* <img className={sortAsc ? 'sort-asc' : ''} src={sortField === 'status' ? SortArrow : ''} /> */}
-            </th>
+            </th>}
             <th className='table-data'></th>
           </tr>
         </thead>
@@ -126,25 +141,33 @@ const Roster = () => {
           <RosterRows></RosterRows>
         </tbody>
       </table>
-    )
-  };
+    );
+  };  
 
   return (
+    <div style={{ overflowX: "auto" }}>
+
     <div>
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: isSmallMobile? "center" :"space-between",
           margin: "10px 20px",
+          flexDirection: isSmallMobile ? "column" : "row"
         }}
       >
-          <Link
+        <Link
           to="/check-in"
           style={{
             textDecoration: "none",
           }}
         >
           <ButtonRoster
+            overrides={{
+              ButtonRoster: {
+                justifyContent: isSmallMobile ? "center":"flex-start"
+              }
+            }}
             style={{
               width: "auto",
               minWidth: "190px",
@@ -155,13 +178,14 @@ const Roster = () => {
             ButtonCheckIn
           </ButtonRoster>
         </Link>
-          <AddYouth refreshData={fetchSiteData}></AddYouth>
+        <AddYouth overrides={{Button:{ width: '225px'} }} refreshData={fetchSiteData}></AddYouth>
       </div>
-      <div style={{ margin: '10px 20px' }}>
+      <div style={{ margin: '10px 20px',overflow:"auto" }}>
         <RosterTable></RosterTable>
       </div>
     </div>
-  );
-};
+    </div>
+
+  );};
 
 export default Roster;
