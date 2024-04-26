@@ -1,4 +1,4 @@
-import { getCurrentDate } from '../utils/date';
+import { getCurrentDateString } from '../utils/date';
 
 export const createVibe = /* GraphQL */ `
   mutation CreateVibe($input: CreateVibeInput!) {
@@ -68,7 +68,7 @@ export const getRosterById = /* GraphQL */ `
             guardianFullName
             guardianPhoneNumber
             status
-            vibes(filter: {createdAt:{beginsWith:"${getCurrentDate()}"}}) {
+            vibes(filter: {checkInTime:{beginsWith:"${getCurrentDateString()}"}}) {
               items {
                 id
                 checkInTime

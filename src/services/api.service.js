@@ -4,6 +4,7 @@ import { getYouth } from '../graphql/queries';
 import { createVibe, updateVibe, getRosterById, getSitesByProgramManager, updateYouth, createYouth, createYouthSite } from '../graphql/customQueries';
 import { EntityType } from '../enums/entity.enum';
 import { EntityStatus } from '../enums/entity-status.enum';
+import { getCurrentDateString, getCurrentDateWithOffset } from '../utils/date';
 
 const client = generateClient();
 
@@ -59,7 +60,7 @@ export const checkInYouth = async (siteID, youthID, vibe) => {
         query: createVibe,
         variables: {
             input: {
-                checkInTime: new Date(),
+                checkInTime: getCurrentDateWithOffset(),
                 checkInVibe: vibe,
                 vibeSiteId: siteID,
                 youthID,
