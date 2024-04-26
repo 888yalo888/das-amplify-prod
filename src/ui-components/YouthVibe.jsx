@@ -15,7 +15,14 @@ import {
 import { Divider, Flex, Image, Text } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function YouthVibe(props) {
-  const { youth, vibe, overrides: overridesProp, ...rest } = props;
+  const {
+    youth,
+    vibe,
+    nowrap,
+    hidden,
+    overrides: overridesProp,
+    ...rest
+  } = props;
   const variants = [
     {
       overrides: {
@@ -107,6 +114,9 @@ export default function YouthVibe(props) {
         padding="0px 0px 0px 0px"
         display="flex"
         backgroundColor=""
+        overflow={`${"hidden"}${""}`}
+        white-space="nowrap"
+        text-overflow="ellipsis"
         {...getOverrideProps(overrides, "TopCard")}
       >
         <Flex
@@ -140,6 +150,9 @@ export default function YouthVibe(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
+            overflow="hidden"
+            white-space="nowrap"
+            text-overflow="ellipsis"
             children={youth?.fullName}
             {...getOverrideProps(overrides, "YouthName")}
           ></Text>
