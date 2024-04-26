@@ -1,5 +1,4 @@
 import React from 'react';
-import { ButtonRoster } from '../ui-components';
 import { Link } from 'react-router-dom';
 import AddYouth from '../components/AddYouth';
 import UpdateYouth from '../components/UpdateYouth';
@@ -9,6 +8,7 @@ import SortArrow from '../assets/down-arrow.svg';
 import { gradeMapper } from '../utils/text';
 import '../styles/RosterTable.css';
 import { EntityStatus } from '../enums/entity-status.enum';
+import { ButtonRoster } from '../ui-components';
 
 
 const Roster = () => {
@@ -138,9 +138,23 @@ const Roster = () => {
           margin: "10px 20px",
         }}
       >
-          <Link to="/check-in" style={{ textDecoration: "none"}}>
-            <ButtonRoster overrides={{ ButtonRoster: { display: "flex-start" }, label: { fontFamily: '"InterVariable", "Inter var", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", sans-serif' }}}></ButtonRoster>
-          </Link>
+          <Link
+          to="/check-in"
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <ButtonRoster
+            style={{
+              width: "auto",
+              minWidth: "190px",
+              maxWidth: "225px",
+              padding: 0,
+            }}
+          >
+            ButtonCheckIn
+          </ButtonRoster>
+        </Link>
           <AddYouth refreshData={fetchSiteData}></AddYouth>
       </div>
       <div style={{ margin: '10px 20px' }}>
