@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Vibe, Site } from "../models";
+import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -28,7 +27,7 @@ export declare type VibeUpdateFormInputValues = {
     checkInTime?: string;
     checkOutTime?: string;
     youthID?: string;
-    site?: Site;
+    site?: any;
 };
 export declare type VibeUpdateFormValidationValues = {
     checkInVibe?: ValidationFunction<string>;
@@ -36,13 +35,13 @@ export declare type VibeUpdateFormValidationValues = {
     checkInTime?: ValidationFunction<string>;
     checkOutTime?: ValidationFunction<string>;
     youthID?: ValidationFunction<string>;
-    site?: ValidationFunction<Site>;
+    site?: ValidationFunction<any>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type VibeUpdateFormOverridesProps = {
     VibeUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    checkInVibe?: PrimitiveOverrideProps<SelectFieldProps>;
-    checkOutVibe?: PrimitiveOverrideProps<SelectFieldProps>;
+    checkInVibe?: PrimitiveOverrideProps<TextFieldProps>;
+    checkOutVibe?: PrimitiveOverrideProps<TextFieldProps>;
     checkInTime?: PrimitiveOverrideProps<TextFieldProps>;
     checkOutTime?: PrimitiveOverrideProps<TextFieldProps>;
     youthID?: PrimitiveOverrideProps<AutocompleteProps>;
@@ -52,7 +51,7 @@ export declare type VibeUpdateFormProps = React.PropsWithChildren<{
     overrides?: VibeUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    vibe?: Vibe;
+    vibe?: any;
     onSubmit?: (fields: VibeUpdateFormInputValues) => VibeUpdateFormInputValues;
     onSuccess?: (fields: VibeUpdateFormInputValues) => void;
     onError?: (fields: VibeUpdateFormInputValues, errorMessage: string) => void;

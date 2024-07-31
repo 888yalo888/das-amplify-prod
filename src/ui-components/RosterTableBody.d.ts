@@ -5,7 +5,6 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Youth } from "../models";
 import { BadgeProps, FlexProps, IconProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -39,9 +38,9 @@ export declare type RosterTableBodyOverridesProps = {
     Vector?: PrimitiveOverrideProps<IconProps>;
 } & EscapeHatchProps;
 export declare type RosterTableBodyProps = React.PropsWithChildren<Partial<FlexProps> & {
-    youth?: Youth;
+    youth?: any;
 } & {
-    property1?: "Active" | "Inactive";
+    status?: "Active" | "Inactive";
 } & {
     overrides?: RosterTableBodyOverridesProps | undefined | null;
 }>;

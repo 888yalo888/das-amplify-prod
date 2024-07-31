@@ -12,8 +12,8 @@ export default function EmoteAngry(props) {
   const { overrides, ...rest } = props;
   return (
     <View
-      width="30px"
-      height="30px"
+      width="50px"
+      height="50px"
       display="block"
       gap="unset"
       alignItems="unset"

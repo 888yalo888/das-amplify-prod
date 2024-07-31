@@ -1,28 +1,33 @@
 import { generateClient } from 'aws-amplify/api';
-import { createYouth, createVibe, updateVibe, updateYouth, updateSite, updateProgramManager } from '../graphql/mutations';
-import { getRosterById, getSitesByProgramManager } from '../graphql/customQueries';
+import { updateSite, updateProgramManager } from '../graphql/mutations';
+import { getYouth } from '../graphql/queries';
+import { createVibe, updateVibe, getRosterById, getSitesByProgramManager, updateYouth, createYouth, createYouthSite } from '../graphql/customQueries';
 import { EntityType } from '../enums/entity.enum';
 import { EntityStatus } from '../enums/entity-status.enum';
+import { getCurrentDateString, getCurrentDateWithOffset } from '../utils/date';
 
 const client = generateClient();
 
-export const getSite = async (siteId) => {
+export const getSite = async (siteId, activeOnly = true) => {
     const result = await client.graphql({
         query: getRosterById,
         variables: {
             id: siteId,
         },
     });
+    const roster = result.data.getSite.AttendedBy.items.map((youthWrapper) => {
+        youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
+        youthWrapper.youth.site = youthWrapper.youth.site.items.map((site) => site.id);
+        return youthWrapper.youth;
+    });
     return {
+        id: result.data.getSite.id,
+        address: result.data.getSite.address,
+        name: result.data.getSite.name,
         phoneNumber: result.data.getSite.phoneNumber,
-        roster: result.data.getSite.AttendedBy.items.map((youthWrapper) => {
-            youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
-            return youthWrapper.youth;
-        }).filter((youth) => youth.status === EntityStatus.Active),
-        siteAddress: result.data.getSite.address,
+        roster: activeOnly ? roster.filter((youth) => youth.status === EntityStatus.Active) : roster,
         siteAdminEmail: result.data.getSite.siteAdminEmail,
         siteAdminName: result.data.getSite.siteAdminName,
-        siteName: result.data.getSite.name,
     };
 };
 
@@ -40,12 +45,22 @@ export const getProgramManager = async (email) => {
     };
 };
 
+export const getYouthInfo = async (id) => {
+    const result = await client.graphql({
+        query: getYouth,
+        variables: {
+            id,
+        },
+    });
+    return result.data.getYouth;
+}
+
 export const checkInYouth = async (siteID, youthID, vibe) => {
     await client.graphql({
         query: createVibe,
         variables: {
             input: {
-                checkInTime: new Date(),
+                checkInTime: getCurrentDateWithOffset(),
                 checkInVibe: vibe,
                 vibeSiteId: siteID,
                 youthID,
@@ -67,13 +82,22 @@ export const checkOutYouth = async (vibeID, vibe) => {
     });
 };
 
-export const addYouths = async (youthDataArr) => {
-    const results = await Promise.allSettled(youthDataArr.map((youthData) => {
-        return client.graphql({
+export const addYouths = async (youthDataArr, site) => {
+    const results = await Promise.allSettled(youthDataArr.map(async (youthData) => {
+        const createYouthResult = await client.graphql({
             query: createYouth,
             variables: {
                 input: {
                     ...youthData,
+                },
+            },
+        });
+        return client.graphql({
+            query: createYouthSite,
+            variables: {
+                input: {
+                    siteId: site,
+                    youthId: createYouthResult.data.createYouth.id,
                 },
             },
         });
@@ -86,7 +110,6 @@ export const addYouths = async (youthDataArr) => {
 };
 
 const updateYouthInfo = async (updatedFields) => {
-    console.log('updatedFields', updatedFields);
     await client.graphql({
         query: updateYouth,
         variables: {

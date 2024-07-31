@@ -36,3 +36,62 @@
     transform: rotate(360deg);
   }
 }
+
+.header-btn:hover {
+  cursor: pointer;
+}
+
+[data-amplify-authenticator] {
+  height: 100vh;
+}
+
+.check-in-btn {
+  margin: 16px 0px;
+}
+
+.check-in-option {
+  margin: 8px;
+}
+
+.check-in-option:hover, .youth-card:hover {
+  cursor: pointer;
+  background: rgb(112, 187, 187,25%) !important;
+}
+
+/* TODO remove after attendance details routing added back */
+.picked-up:hover{
+  cursor: initial;
+  background: rgb(214, 245, 219) !important;
+
+}
+
+.check-in-option__selected {
+  background: rgb(112, 187, 187) !important;
+}
+.check-in-option__selected:hover {
+  background: rgb(112, 187, 187) !important;
+}
+
+
+.youth-card {
+  margin: 25px;
+}
+
+.site-selection-tooltip {
+  z-index: 1;
+}
+
+.site-selection-page {
+  .site-selection-header {
+    font-size: 24px;
+  }
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.profile-icon:hover {
+  cursor: pointer;
+}

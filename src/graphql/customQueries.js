@@ -1,8 +1,56 @@
-import { getCurrentDate } from '../utils/date';
+import { getCurrentDateString } from '../utils/date';
+
+export const createVibe = /* GraphQL */ `
+  mutation CreateVibe($input: CreateVibeInput!) {
+    createVibe(input: $input) {
+      id
+    }
+  }
+`;
+
+export const updateVibe = /* GraphQL */ `
+  mutation UpdateVibe($input: UpdateVibeInput!) {
+    updateVibe(input: $input) {
+      id
+    }
+  }
+`;
+
+export const createYouth = /* GraphQL */ `
+  mutation CreateYouth($input: CreateYouthInput!) {
+    createYouth(input: $input) {
+      id
+    }
+  }
+`;
+
+export const createYouthSite = /* GraphQL */ `
+  mutation CreateYouthSite($input: CreateYouthSiteInput!) {
+    createYouthSite(input: $input) {
+      id
+    }
+  }
+`;
+
+export const updateYouth = /* GraphQL */ `
+  mutation UpdateYouth($input: UpdateYouthInput!) {
+    updateYouth(input: $input) {
+      id
+      fullName
+      dateOfBirth
+      guardianFullName
+      guardianPhoneNumber
+      grade
+      gender
+      status
+    }
+  }
+`;
 
 export const getRosterById = /* GraphQL */ `
   query GetRoster($id: ID!) {
     getSite(id: $id) {
+      id
       address
       name
       phoneNumber
@@ -18,14 +66,20 @@ export const getRosterById = /* GraphQL */ `
             grade
             gender
             guardianFullName
+            guardianPhoneNumber
             status
-            vibes(filter: {createdAt:{beginsWith:"${getCurrentDate()}"}}) {
+            vibes(filter: {checkInTime:{beginsWith:"${getCurrentDateString()}"}}) {
               items {
                 id
                 checkInTime
                 checkInVibe
                 checkOutTime
                 checkOutVibe
+              }
+            }
+            site {
+              items {
+                id
               }
             }
           }

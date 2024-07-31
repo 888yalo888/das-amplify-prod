@@ -6,59 +6,252 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Youth } from "../models";
-import { SortDirection } from "@aws-amplify/datastore";
-import { getOverrideProps, useDataStoreBinding } from "./utils";
-import YouthVibe from "./YouthVibe";
-import { Collection } from "@aws-amplify/ui-react";
-export default function Youths(props) {
-  const { items: itemsProp, overrideItems, overrides, ...rest } = props;
-  const itemsPagination = { sort: (s) => s.fullName(SortDirection.ASCENDING) };
-  const [items, setItems] = React.useState(undefined);
-  const itemsDataStore = useDataStoreBinding({
-    type: "collection",
-    model: Youth,
-    pagination: itemsPagination,
-  }).items;
-  React.useEffect(() => {
-    if (itemsProp !== undefined) {
-      setItems(itemsProp);
-      return;
-    }
-    async function setItemsFromDataStore() {
-      var loaded = await Promise.all(
-        itemsDataStore.map(async (item) => ({
-          ...item,
-          vibes: await item.vibes.toArray(),
-        }))
-      );
-      setItems(loaded);
-    }
-    setItemsFromDataStore();
-  }, [itemsProp, itemsDataStore]);
+import {
+  getOverrideProps,
+  getOverridesFromVariants,
+  mergeVariantsAndOverrides,
+  useNavigateAction,
+} from "./utils";
+import { Divider, Flex, Image, Text } from "@aws-amplify/ui-react";
+import MyIcon from "./MyIcon";
+export default function YouthVibe(props) {
+  const {
+    youth,
+    vibe,
+    nowrap,
+    hidden,
+    overrides: overridesProp,
+    ...rest
+  } = props;
+  const variants = [
+    {
+      overrides: {
+        YouthName: {},
+        YouthGrade: {},
+        YouthInfo: {},
+        EmoteCool: {},
+        TopCard: {},
+        Divider: {},
+        YouthStatusIcon: {},
+        YouthStatus: {},
+        BottomCard: {},
+        YouthVibe: {},
+      },
+      variantValues: { youthStatus: "Default" },
+    },
+    {
+      overrides: {
+        YouthName: { fontSize: "20px", lineHeight: "30px", width: "206px" },
+        YouthGrade: {},
+        YouthInfo: {},
+        EmoteCool: { display: "block" },
+        TopCard: { gap: "26px", width: "272px" },
+        Divider: {},
+        YouthStatusIcon: {},
+        YouthStatus: { children: "CHECKED IN" },
+        BottomCard: { display: "flex" },
+        YouthVibe: {
+          padding: "7px 15px 7px 15px",
+          backgroundColor: "rgba(184,206,249,1)",
+        },
+      },
+      variantValues: { youthStatus: "CheckedIn" },
+    },
+    {
+      overrides: {
+        YouthName: { fontSize: "20px", lineHeight: "30px" },
+        YouthGrade: {},
+        YouthInfo: { shrink: "1", grow: "1", basis: "0" },
+        EmoteCool: { display: "block" },
+        TopCard: { gap: "16px", width: "272px" },
+        Divider: {},
+        YouthStatusIcon: { type: "checkmark" },
+        YouthStatus: { children: "PICKED UP" },
+        BottomCard: { gap: "8px", display: "flex" },
+        YouthVibe: {
+          padding: "7px 15px 7px 15px",
+          backgroundColor: "rgba(214,245,219,1)",
+        },
+      },
+      variantValues: { youthStatus: "PickedUp" },
+    },
+  ];
+  const overrides = mergeVariantsAndOverrides(
+    getOverridesFromVariants(variants, props),
+    overridesProp || {}
+  );
+  const youthVibeOnClick = useNavigateAction({ type: "url", url: "" });
   return (
-    <Collection
-      type="grid"
-      isSearchable={true}
-      searchPlaceholder="Search..."
-      templateColumns="1fr 1fr"
-      autoFlow="row"
-      alignItems="stretch"
-      justifyContent="stretch"
-      items={items || []}
-      {...getOverrideProps(overrides, "Youths")}
+    <Flex
+      gap="7px"
+      direction="column"
+      width="304px"
+      height="104px"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      position="relative"
+      border="1px SOLID rgba(174,179,183,1)"
+      borderRadius="8px"
+      padding="23px 15px 23px 15px"
+      backgroundColor="rgba(255,255,255,1)"
+      display="flex"
+      onClick={() => {
+        youthVibeOnClick();
+      }}
+      {...getOverrideProps(overrides, "YouthVibe")}
       {...rest}
     >
-      {(item, index) => (
-        <YouthVibe
-          youth={item}
-          height="100px"
-          width="250px"
-          margin="0px 10px 10px 10px"
-          key={item.id}
-          {...(overrideItems && overrideItems({ item, index }))}
-        ></YouthVibe>
-      )}
-    </Collection>
+      <Flex
+        gap="147px"
+        direction="row"
+        width="unset"
+        height="unset"
+        justifyContent="flex-start"
+        alignItems="center"
+        shrink="0"
+        alignSelf="stretch"
+        position="relative"
+        padding="0px 0px 0px 0px"
+        display="flex"
+        backgroundColor=""
+        overflow={`${"hidden"}${""}`}
+        white-space="nowrap"
+        text-overflow="ellipsis"
+        {...getOverrideProps(overrides, "TopCard")}
+      >
+        <Flex
+          gap="0"
+          direction="column"
+          width="unset"
+          height="unset"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          display="flex"
+          {...getOverrideProps(overrides, "YouthInfo")}
+        >
+          <Text
+            fontFamily="Inter"
+            fontSize="24px"
+            fontWeight="400"
+            color="rgba(0,0,0,1)"
+            lineHeight="36px"
+            textAlign="left"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            overflow="hidden"
+            white-space="nowrap"
+            text-overflow="ellipsis"
+            children={youth?.fullName}
+            {...getOverrideProps(overrides, "YouthName")}
+          ></Text>
+          <Text
+            fontFamily="Inter"
+            fontSize="12px"
+            fontWeight="400"
+            color="rgba(0,0,0,1)"
+            lineHeight="18px"
+            textAlign="left"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            children={youth?.dateOfBirth}
+            {...getOverrideProps(overrides, "YouthGrade")}
+          ></Text>
+        </Flex>
+        <Image
+          width="30px"
+          height="30px"
+          display="none"
+          gap="unset"
+          alignItems="unset"
+          justifyContent="unset"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          objectFit="cover"
+          {...getOverrideProps(overrides, "EmoteCool")}
+        ></Image>
+      </Flex>
+      <Divider
+        width="unset"
+        height="1px"
+        display="none"
+        shrink="0"
+        alignSelf="stretch"
+        size="small"
+        orientation="horizontal"
+        {...getOverrideProps(overrides, "Divider")}
+      ></Divider>
+      <Flex
+        gap="16px"
+        direction="row"
+        width="unset"
+        height="unset"
+        justifyContent="center"
+        alignItems="flex-start"
+        shrink="0"
+        alignSelf="stretch"
+        position="relative"
+        padding="0px 0px 0px 0px"
+        display="none"
+        {...getOverrideProps(overrides, "BottomCard")}
+      >
+        <MyIcon
+          width="24px"
+          height="24px"
+          display="block"
+          gap="unset"
+          alignItems="unset"
+          justifyContent="unset"
+          overflow="hidden"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          type="checkout"
+          {...getOverrideProps(overrides, "YouthStatusIcon")}
+        ></MyIcon>
+        <Text
+          fontFamily="Inter"
+          fontSize="14px"
+          fontWeight="400"
+          color="rgba(0,0,0,1)"
+          lineHeight="21px"
+          textAlign="left"
+          display="block"
+          direction="column"
+          justifyContent="unset"
+          width="unset"
+          height="unset"
+          gap="unset"
+          alignItems="unset"
+          shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
+          whiteSpace="pre-wrap"
+          children=""
+          {...getOverrideProps(overrides, "YouthStatus")}
+        ></Text>
+      </Flex>
+    </Flex>
   );
 }

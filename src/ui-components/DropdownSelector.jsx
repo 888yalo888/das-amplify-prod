@@ -9,7 +9,7 @@ import * as React from "react";
 import { getOverrideProps } from "./utils";
 import { Flex, SelectField } from "@aws-amplify/ui-react";
 export default function DropdownSelector(props) {
-  const { overrides, ...rest } = props;
+  const { dropdownSelector6031537, overrides, ...rest } = props;
   return (
     <Flex
       gap="0"
@@ -46,6 +46,7 @@ export default function DropdownSelector(props) {
           isDisabled={false}
           labelHidden={false}
           variation="default"
+          defaultValue=""
           {...getOverrideProps(overrides, "SelectField")}
         ></SelectField>
       </Flex>

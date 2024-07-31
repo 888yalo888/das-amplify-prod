@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { AutocompleteProps, GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Site } from "../models";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -24,38 +23,29 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type YouthCreateFormInputValues = {
     fullName?: string;
-    createdDate?: string;
     dateOfBirth?: string;
     guardianFullName?: string;
     guardianPhoneNumber?: string;
     grade?: string;
     gender?: string;
-    status?: string;
-    site?: Site[];
 };
 export declare type YouthCreateFormValidationValues = {
     fullName?: ValidationFunction<string>;
-    createdDate?: ValidationFunction<string>;
     dateOfBirth?: ValidationFunction<string>;
     guardianFullName?: ValidationFunction<string>;
     guardianPhoneNumber?: ValidationFunction<string>;
     grade?: ValidationFunction<string>;
     gender?: ValidationFunction<string>;
-    status?: ValidationFunction<string>;
-    site?: ValidationFunction<Site>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type YouthCreateFormOverridesProps = {
     YouthCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     fullName?: PrimitiveOverrideProps<TextFieldProps>;
-    createdDate?: PrimitiveOverrideProps<TextFieldProps>;
     dateOfBirth?: PrimitiveOverrideProps<TextFieldProps>;
     guardianFullName?: PrimitiveOverrideProps<TextFieldProps>;
     guardianPhoneNumber?: PrimitiveOverrideProps<TextFieldProps>;
     grade?: PrimitiveOverrideProps<SelectFieldProps>;
     gender?: PrimitiveOverrideProps<TextFieldProps>;
-    status?: PrimitiveOverrideProps<SelectFieldProps>;
-    site?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type YouthCreateFormProps = React.PropsWithChildren<{
     overrides?: YouthCreateFormOverridesProps | undefined | null;
@@ -64,6 +54,7 @@ export declare type YouthCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: YouthCreateFormInputValues) => YouthCreateFormInputValues;
     onSuccess?: (fields: YouthCreateFormInputValues) => void;
     onError?: (fields: YouthCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: YouthCreateFormInputValues) => YouthCreateFormInputValues;
     onValidate?: YouthCreateFormValidationValues;
 } & React.CSSProperties>;

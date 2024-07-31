@@ -20,14 +20,20 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { ProgramManager, Site, ProgramManagerSite } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import {
-  fetchByPath,
-  getOverrideProps,
-  useDataStoreBinding,
-  validateField,
-} from "./utils";
-import { DataStore } from "aws-amplify/datastore";
+  getProgramManager,
+  listProgramManagerSites,
+  listSites,
+  programManagerSitesByProgramManagerId,
+} from "../graphql/queries";
+import { generateClient } from "aws-amplify/api";
+import {
+  createProgramManagerSite,
+  deleteProgramManagerSite,
+  updateProgramManager,
+} from "../graphql/mutations";
+const client = generateClient();
 function ArrayField({
   items = [],
   onChange,
@@ -209,6 +215,9 @@ export default function ProgramManagerUpdateForm(props) {
   const [email, setEmail] = React.useState(initialValues.email);
   const [status, setStatus] = React.useState(initialValues.status);
   const [AssignedTo, setAssignedTo] = React.useState(initialValues.AssignedTo);
+  const [AssignedToLoading, setAssignedToLoading] = React.useState(false);
+  const [assignedToRecords, setAssignedToRecords] = React.useState([]);
+  const autocompleteLength = 10;
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = programManagerRecord
@@ -235,19 +244,28 @@ export default function ProgramManagerUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(ProgramManager, idProp)
-        : programManagerModelProp;
-      setProgramManagerRecord(record);
-      const linkedAssignedTo = record
-        ? await Promise.all(
-            (
-              await record.AssignedTo.toArray()
-            ).map((r) => {
-              return r.site;
+        ? (
+            await client.graphql({
+              query: getProgramManager.replaceAll("__typename", ""),
+              variables: { id: idProp },
             })
-          )
+          )?.data?.getProgramManager
+        : programManagerModelProp;
+      const linkedAssignedTo = record
+        ? (
+            await client.graphql({
+              query: programManagerSitesByProgramManagerId.replaceAll(
+                "__typename",
+                ""
+              ),
+              variables: {
+                programManagerId: record.id,
+              },
+            })
+          ).data.programManagerSitesByProgramManagerId.items.map((t) => t.site)
         : [];
       setLinkedAssignedTo(linkedAssignedTo);
+      setProgramManagerRecord(record);
     };
     queryData();
   }, [idProp, programManagerModelProp]);
@@ -265,10 +283,6 @@ export default function ProgramManagerUpdateForm(props) {
       ? AssignedTo.map((r) => getIDValue.AssignedTo?.(r))
       : getIDValue.AssignedTo?.(AssignedTo)
   );
-  const siteRecords = useDataStoreBinding({
-    type: "collection",
-    model: Site,
-  }).items;
   const getDisplayValue = {
     AssignedTo: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
   };
@@ -313,6 +327,38 @@ export default function ProgramManagerUpdateForm(props) {
     }, {});
     return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
   };
+  const fetchAssignedToRecords = async (value) => {
+    setAssignedToLoading(true);
+    const newOptions = [];
+    let newNext = "";
+    while (newOptions.length < autocompleteLength && newNext != null) {
+      const variables = {
+        limit: autocompleteLength * 5,
+        filter: {
+          or: [{ name: { contains: value } }, { id: { contains: value } }],
+        },
+      };
+      if (newNext) {
+        variables["nextToken"] = newNext;
+      }
+      const result = (
+        await client.graphql({
+          query: listSites.replaceAll("__typename", ""),
+          variables,
+        })
+      )?.data?.listSites?.items;
+      var loaded = result.filter(
+        (item) => !AssignedToIdSet.has(getIDValue.AssignedTo?.(item))
+      );
+      newOptions.push(...loaded);
+      newNext = result.nextToken;
+    }
+    setAssignedToRecords(newOptions.slice(0, autocompleteLength));
+    setAssignedToLoading(false);
+  };
+  React.useEffect(() => {
+    fetchAssignedToRecords("");
+  }, []);
   return (
     <Grid
       as="form"
@@ -322,11 +368,11 @@ export default function ProgramManagerUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          fullName,
-          createdDate,
-          email,
-          status,
-          AssignedTo,
+          fullName: fullName ?? null,
+          createdDate: createdDate ?? null,
+          email: email ?? null,
+          status: status ?? null,
+          AssignedTo: AssignedTo ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -403,49 +449,68 @@ export default function ProgramManagerUpdateForm(props) {
           });
           assignedToToUnLinkMap.forEach(async (count, id) => {
             const recordKeys = JSON.parse(id);
-            const programManagerSiteRecords = await DataStore.query(
-              ProgramManagerSite,
-              (r) =>
-                r.and((r) => {
-                  return [
-                    r.siteId.eq(recordKeys.id),
-                    r.programManagerId.eq(programManagerRecord.id),
-                  ];
-                })
-            );
+            const programManagerSiteRecords = (
+              await client.graphql({
+                query: listProgramManagerSites.replaceAll("__typename", ""),
+                variables: {
+                  filter: {
+                    and: [
+                      { siteId: { eq: recordKeys.id } },
+                      { programManagerId: { eq: programManagerRecord.id } },
+                    ],
+                  },
+                },
+              })
+            )?.data?.listProgramManagerSites?.items;
             for (let i = 0; i < count; i++) {
-              promises.push(DataStore.delete(programManagerSiteRecords[i]));
+              promises.push(
+                client.graphql({
+                  query: deleteProgramManagerSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      id: programManagerSiteRecords[i].id,
+                    },
+                  },
+                })
+              );
             }
           });
           assignedToToLinkMap.forEach((count, id) => {
-            const siteToLink = siteRecords.find((r) =>
+            const siteToLink = assignedToRecords.find((r) =>
               Object.entries(JSON.parse(id)).every(
                 ([key, value]) => r[key] === value
               )
             );
             for (let i = count; i > 0; i--) {
               promises.push(
-                DataStore.save(
-                  new ProgramManagerSite({
-                    programManager: programManagerRecord,
-                    site: siteToLink,
-                  })
-                )
+                client.graphql({
+                  query: createProgramManagerSite.replaceAll("__typename", ""),
+                  variables: {
+                    input: {
+                      programManagerId: programManagerRecord.id,
+                      siteId: siteToLink.id,
+                    },
+                  },
+                })
               );
             }
           });
           const modelFieldsToSave = {
-            fullName: modelFields.fullName,
-            createdDate: modelFields.createdDate,
-            email: modelFields.email,
-            status: modelFields.status,
+            fullName: modelFields.fullName ?? null,
+            createdDate: modelFields.createdDate ?? null,
+            email: modelFields.email ?? null,
+            status: modelFields.status ?? null,
           };
           promises.push(
-            DataStore.save(
-              ProgramManager.copyOf(programManagerRecord, (updated) => {
-                Object.assign(updated, modelFieldsToSave);
-              })
-            )
+            client.graphql({
+              query: updateProgramManager.replaceAll("__typename", ""),
+              variables: {
+                input: {
+                  id: programManagerRecord.id,
+                  ...modelFieldsToSave,
+                },
+              },
+            })
           );
           await Promise.all(promises);
           if (onSuccess) {
@@ -453,7 +518,8 @@ export default function ProgramManagerUpdateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -627,15 +693,14 @@ export default function ProgramManagerUpdateForm(props) {
           isReadOnly={false}
           placeholder="Search Site"
           value={currentAssignedToDisplayValue}
-          options={siteRecords
-            .filter((r) => !AssignedToIdSet.has(getIDValue.AssignedTo?.(r)))
-            .map((r) => ({
-              id: getIDValue.AssignedTo?.(r),
-              label: getDisplayValue.AssignedTo?.(r),
-            }))}
+          options={assignedToRecords.map((r) => ({
+            id: getIDValue.AssignedTo?.(r),
+            label: getDisplayValue.AssignedTo?.(r),
+          }))}
+          isLoading={AssignedToLoading}
           onSelect={({ id, label }) => {
             setCurrentAssignedToValue(
-              siteRecords.find((r) =>
+              assignedToRecords.find((r) =>
                 Object.entries(JSON.parse(id)).every(
                   ([key, value]) => r[key] === value
                 )
@@ -649,6 +714,7 @@ export default function ProgramManagerUpdateForm(props) {
           }}
           onChange={(e) => {
             let { value } = e.target;
+            fetchAssignedToRecords(value);
             if (errors.AssignedTo?.hasError) {
               runValidationTasks("AssignedTo", value);
             }

@@ -1,41 +1,27 @@
 import React from "react";
 import {
   ButtonCheckIn,
-  Youths,
   VibeSummary,
+  YouthCardCheckedIn,
+  YouthCardPickedUp,
+  YouthCardDefault,
+  Vibe,
 } from "../ui-components";
 import { Link } from "react-router-dom";
 
-import { generateClient } from "aws-amplify/api";
-import { getYouthRosterForSite } from "../graphql/queries";
-import { useLocation } from 'react-router-dom';
-
-
-const client = generateClient();
+import { getSite } from "../services/api.service";
+import useStore from "../store/store";
+import { gradeMapper } from "../utils/text";
+import { Vibe as VibeEnum } from "../enums/vibe.enum";
+import EmoteAngry from "../assets/EmoteAngry.png";
+import EmoteAtEase from "../assets/EmoteAtEase.png";
+import EmoteHappy from "../assets/EmoteHappy.png";
+import EmoteSad from "../assets/EmoteSad.png";
+import { useMediaQuery } from "react-responsive";
+import { VibeImageMap } from "../utils/image";
 
 const CheckIn = () => {
-  const { state } = useLocation();
-  console.log('siteId', state.siteId);
-  async function getRoster() {
-    const variables = {
-      date: new Date().toISOString().split("T")[0],
-      siteId: "03f24a65-f53c-4447-846f-922527d48a52",
-    };
-
-    const results = (
-      await client.graphql({
-        query: getYouthRosterForSite,
-        variables,
-      })
-    ).data.getSite.AttendedBy.items;
-
-    const reduced = results.reduce((youths, item) => {
-      youths.push(item.youth);
-      return youths;
-    }, []);
-    return reduced;
-  }
-
+  const store = useStore();
   function getCurrentDate() {
     const now = new Date();
     const options = {
@@ -47,43 +33,190 @@ const CheckIn = () => {
     return now.toLocaleDateString("en-US", options);
   }
 
-  const [roster, setRoster] = React.useState();
+  const [site, setSite] = React.useState();
 
   React.useEffect(() => {
-    const fetchRosterData = async () => {
-      const data = await getRoster();
-      setRoster(data);
+    const fetchSiteData = async () => {
+      const data = await getSite(store?.currentSite?.id);
+      setSite(data);
+      store.setSite(data);
     };
-    fetchRosterData();
-  }, []);
+    if (store.currentSite?.id) {
+      fetchSiteData();
+    }
+  }, [store.currentSite?.id]);
+
+  function isCheckedIn(youth) {
+    return youth.vibes.length > 0;
+  }
+
+  function isCheckedOut(youth) {
+    return youth.vibes.length > 0 && youth.vibes[0].checkOutTime;
+  }
+
+  const Roster = () => {
+    return site?.roster?.map((youth) => {
+      const overrides = {
+        YouthName: {
+          children: youth.fullName,
+        },
+        YouthGrade: {
+          children: gradeMapper(youth.grade),
+        },
+        EmoteCool: {
+          src: VibeImageMap[youth.vibes?.[0]?.checkOutVibe] || VibeImageMap[youth.vibes?.[0]?.checkInVibe] || '',
+        },
+      };
+      if (youth.vibes.length > 0) {
+        if (youth.vibes[0].checkOutTime) {
+          return (
+            <YouthCardPickedUp
+              key={youth?.id}
+              youth={youth}
+              className={["youth-card","picked-up"]}
+              overrides={overrides}
+            />
+          );
+        }
+        return (
+          <YouthCardCheckedIn
+            key={youth?.id}
+            youth={youth}
+            className={"youth-card"}
+            overrides={overrides}
+          />
+        );
+      }
+      return (
+        <YouthCardDefault
+          key={youth?.id}
+          youth={youth}
+          className={"youth-card"}
+          overrides={overrides}
+        />
+      );
+    });
+  };
+
+  const getVibeSummaryOverrides = () => {
+    const checkedIn = site?.roster.filter((youth) => isCheckedIn(youth));
+    const checkedOut = site?.roster.filter((youth) => isCheckedOut(youth));
+    const total = site?.roster;
+    const totalAtEase = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.AtEase || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.AtEase)
+    ).length;
+    const totalAngry = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.Angry || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.Angry)
+    ).length;
+    const totalSad = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.Sad || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.Sad)
+    ).length;
+    const totalHappy = checkedIn?.filter(
+      (youth) => youth.vibes[0].checkOutVibe === VibeEnum.Happy || (!youth.vibes[0].checkOutVibe && youth.vibes[0].checkInVibe === VibeEnum.Happy)
+    ).length;
+    return {
+      "4/11": {
+        children: `${checkedIn?.length || 0}/${total?.length || 0}`,
+        fontFamily: "fantasy",
+        fontWeight: "900",
+      },
+      "1/4": {
+        children: `${checkedOut?.length || 0}/${checkedIn?.length || 0}`,
+        fontFamily: "fantasy",
+        fontWeight: "900",
+      },
+      15922672: {
+        children: totalAtEase,
+        fontFamily: "fantasy",
+        fontWeight: "900",
+      },
+      15922669: {
+        children: totalAngry,
+        fontFamily: "fantasy",
+        fontWeight: "900",
+      },
+      15922670: {
+        children: totalSad,
+        fontFamily: "fantasy",
+        fontWeight: "900",
+      },
+      15922671: {
+        children: totalHappy,
+        fontFamily: "fantasy",
+        fontWeight: "900",
+      },
+      EmoteCool: {
+        src: EmoteAtEase,
+      },
+      EmoteHappy: {
+        src: EmoteHappy,
+      },
+      EmoteSad: {
+        src: EmoteSad,
+      },
+      EmoteAngry: {
+        src: EmoteAngry,
+      },
+    };
+  };
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1020px)" });
 
   return (
     <div>
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          margin: "10px 20px",
+          justifyContent: "space-around",
+          alignItems: "center",
+          margin: "10px 30px",
+          flexDirection: isTabletOrMobile ? "column" : "row",
         }}
       >
-        <Link to="/roster" style={{ textDecoration: "none" }}>
-          <ButtonCheckIn>ButtonCheckIn</ButtonCheckIn>
+        <Link
+          to="/roster"
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <ButtonCheckIn
+            style={{
+              width: "auto",
+              minWidth: "190px",
+              maxWidth: "300px",
+              padding: 0,
+            }}
+          >
+            ButtonCheckIn
+          </ButtonCheckIn>
         </Link>
         <div
           style={{
             fontFamily: "var(--amplify-fonts-default-variable)",
-            fontSize: "2em",
+            fontSize: isTabletOrMobile ? "1.4em" : "2em",
             fontWeight: "bold",
+            margin: isTabletOrMobile ? "30px 10px" : 0,
+            textAlign: "center",
           }}
         >
           {getCurrentDate()}
-        </div>{" "}
+        </div>
         <div>
-          <VibeSummary />
+          <VibeSummary
+            overrides={getVibeSummaryOverrides()}
+          />
         </div>
       </div>
-      <div>
-        <Youths items={roster} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: isTabletOrMobile ? "column" : "row",
+          alignItems: isTabletOrMobile ? "center" : "",
+          flexWrap: "wrap",
+          justifyContent: "center"
+        }}
+      >
+        <Roster></Roster>
       </div>
     </div>
   );

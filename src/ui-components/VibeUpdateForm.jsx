@@ -15,19 +15,15 @@ import {
   Grid,
   Icon,
   ScrollView,
-  SelectField,
   Text,
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { Vibe, Site, Youth } from "../models";
-import {
-  fetchByPath,
-  getOverrideProps,
-  useDataStoreBinding,
-  validateField,
-} from "./utils";
-import { DataStore } from "aws-amplify/datastore";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { generateClient } from "aws-amplify/api";
+import { getVibe, getYouth, listSites, listYouths } from "../graphql/queries";
+import { updateVibe } from "../graphql/mutations";
+const client = generateClient();
 function ArrayField({
   items = [],
   onChange,
@@ -216,7 +212,15 @@ export default function VibeUpdateForm(props) {
     initialValues.checkOutTime
   );
   const [youthID, setYouthID] = React.useState(initialValues.youthID);
+  const [youthIDLoading, setYouthIDLoading] = React.useState(false);
+  const [youthIDRecords, setYouthIDRecords] = React.useState([]);
+  const [selectedYouthIDRecords, setSelectedYouthIDRecords] = React.useState(
+    []
+  );
   const [site, setSite] = React.useState(initialValues.site);
+  const [siteLoading, setSiteLoading] = React.useState(false);
+  const [siteRecords, setSiteRecords] = React.useState([]);
+  const autocompleteLength = 10;
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = vibeRecord
@@ -238,13 +242,27 @@ export default function VibeUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(Vibe, idProp)
+        ? (
+            await client.graphql({
+              query: getVibe.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getVibe
         : vibeModelProp;
-      setVibeRecord(record);
-      const youthIDRecord = record ? await record.youthID : undefined;
+      const youthIDRecord = record ? record.youthID : undefined;
+      const youthRecord = youthIDRecord
+        ? (
+            await client.graphql({
+              query: getYouth.replaceAll("__typename", ""),
+              variables: { id: youthIDRecord },
+            })
+          )?.data?.getYouth
+        : undefined;
       setYouthID(youthIDRecord);
+      setSelectedYouthIDRecords([youthRecord]);
       const siteRecord = record ? await record.site : undefined;
       setSite(siteRecord);
+      setVibeRecord(record);
     };
     queryData();
   }, [idProp, vibeModelProp]);
@@ -266,14 +284,6 @@ export default function VibeUpdateForm(props) {
       ? site.map((r) => getIDValue.site?.(r))
       : getIDValue.site?.(site)
   );
-  const youthRecords = useDataStoreBinding({
-    type: "collection",
-    model: Youth,
-  }).items;
-  const siteRecords = useDataStoreBinding({
-    type: "collection",
-    model: Site,
-  }).items;
   const getDisplayValue = {
     youthID: (r) => `${r?.fullName ? r?.fullName + " - " : ""}${r?.id}`,
     site: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
@@ -320,6 +330,66 @@ export default function VibeUpdateForm(props) {
     }, {});
     return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
   };
+  const fetchYouthIDRecords = async (value) => {
+    setYouthIDLoading(true);
+    const newOptions = [];
+    let newNext = "";
+    while (newOptions.length < autocompleteLength && newNext != null) {
+      const variables = {
+        limit: autocompleteLength * 5,
+        filter: {
+          or: [{ fullName: { contains: value } }, { id: { contains: value } }],
+        },
+      };
+      if (newNext) {
+        variables["nextToken"] = newNext;
+      }
+      const result = (
+        await client.graphql({
+          query: listYouths.replaceAll("__typename", ""),
+          variables,
+        })
+      )?.data?.listYouths?.items;
+      var loaded = result.filter((item) => youthID !== item.id);
+      newOptions.push(...loaded);
+      newNext = result.nextToken;
+    }
+    setYouthIDRecords(newOptions.slice(0, autocompleteLength));
+    setYouthIDLoading(false);
+  };
+  const fetchSiteRecords = async (value) => {
+    setSiteLoading(true);
+    const newOptions = [];
+    let newNext = "";
+    while (newOptions.length < autocompleteLength && newNext != null) {
+      const variables = {
+        limit: autocompleteLength * 5,
+        filter: {
+          or: [{ name: { contains: value } }, { id: { contains: value } }],
+        },
+      };
+      if (newNext) {
+        variables["nextToken"] = newNext;
+      }
+      const result = (
+        await client.graphql({
+          query: listSites.replaceAll("__typename", ""),
+          variables,
+        })
+      )?.data?.listSites?.items;
+      var loaded = result.filter(
+        (item) => !siteIdSet.has(getIDValue.site?.(item))
+      );
+      newOptions.push(...loaded);
+      newNext = result.nextToken;
+    }
+    setSiteRecords(newOptions.slice(0, autocompleteLength));
+    setSiteLoading(false);
+  };
+  React.useEffect(() => {
+    fetchYouthIDRecords("");
+    fetchSiteRecords("");
+  }, []);
   return (
     <Grid
       as="form"
@@ -329,10 +399,10 @@ export default function VibeUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          checkInVibe,
-          checkOutVibe,
-          checkInTime,
-          checkOutTime,
+          checkInVibe: checkInVibe ?? null,
+          checkOutVibe: checkOutVibe ?? null,
+          checkInTime: checkInTime ?? null,
+          checkOutTime: checkOutTime ?? null,
           youthID,
           site,
         };
@@ -372,30 +442,40 @@ export default function VibeUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            Vibe.copyOf(vibeRecord, (updated) => {
-              Object.assign(updated, modelFields);
-              if (!modelFields.site) {
-                updated.vibeSiteId = undefined;
-              }
-            })
-          );
+          const modelFieldsToSave = {
+            checkInVibe: modelFields.checkInVibe ?? null,
+            checkOutVibe: modelFields.checkOutVibe ?? null,
+            checkInTime: modelFields.checkInTime ?? null,
+            checkOutTime: modelFields.checkOutTime ?? null,
+            youthID: modelFields.youthID,
+            vibeSiteId: modelFields?.site?.id ?? null,
+          };
+          await client.graphql({
+            query: updateVibe.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: vibeRecord.id,
+                ...modelFieldsToSave,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
       {...getOverrideProps(overrides, "VibeUpdateForm")}
       {...rest}
     >
-      <SelectField
+      <TextField
         label="Check in vibe"
-        placeholder="Please select an option"
-        isDisabled={false}
+        isRequired={false}
+        isReadOnly={false}
         value={checkInVibe}
         onChange={(e) => {
           let { value } = e.target;
@@ -420,32 +500,11 @@ export default function VibeUpdateForm(props) {
         errorMessage={errors.checkInVibe?.errorMessage}
         hasError={errors.checkInVibe?.hasError}
         {...getOverrideProps(overrides, "checkInVibe")}
-      >
-        <option
-          children="Atease"
-          value="ATEASE"
-          {...getOverrideProps(overrides, "checkInVibeoption0")}
-        ></option>
-        <option
-          children="Angry"
-          value="ANGRY"
-          {...getOverrideProps(overrides, "checkInVibeoption1")}
-        ></option>
-        <option
-          children="Sad"
-          value="SAD"
-          {...getOverrideProps(overrides, "checkInVibeoption2")}
-        ></option>
-        <option
-          children="Happy"
-          value="HAPPY"
-          {...getOverrideProps(overrides, "checkInVibeoption3")}
-        ></option>
-      </SelectField>
-      <SelectField
+      ></TextField>
+      <TextField
         label="Check out vibe"
-        placeholder="Please select an option"
-        isDisabled={false}
+        isRequired={false}
+        isReadOnly={false}
         value={checkOutVibe}
         onChange={(e) => {
           let { value } = e.target;
@@ -470,28 +529,7 @@ export default function VibeUpdateForm(props) {
         errorMessage={errors.checkOutVibe?.errorMessage}
         hasError={errors.checkOutVibe?.hasError}
         {...getOverrideProps(overrides, "checkOutVibe")}
-      >
-        <option
-          children="Atease"
-          value="ATEASE"
-          {...getOverrideProps(overrides, "checkOutVibeoption0")}
-        ></option>
-        <option
-          children="Angry"
-          value="ANGRY"
-          {...getOverrideProps(overrides, "checkOutVibeoption1")}
-        ></option>
-        <option
-          children="Sad"
-          value="SAD"
-          {...getOverrideProps(overrides, "checkOutVibeoption2")}
-        ></option>
-        <option
-          children="Happy"
-          value="HAPPY"
-          {...getOverrideProps(overrides, "checkOutVibeoption3")}
-        ></option>
-      </SelectField>
+      ></TextField>
       <TextField
         label="Check in time"
         isRequired={false}
@@ -583,18 +621,26 @@ export default function VibeUpdateForm(props) {
         errorMessage={errors?.youthID?.errorMessage}
         getBadgeText={(value) =>
           value
-            ? getDisplayValue.youthID(youthRecords.find((r) => r.id === value))
+            ? getDisplayValue.youthID(
+                youthIDRecords.find((r) => r.id === value) ??
+                  selectedYouthIDRecords.find((r) => r.id === value)
+              )
             : ""
         }
         setFieldValue={(value) => {
           setCurrentYouthIDDisplayValue(
             value
               ? getDisplayValue.youthID(
-                  youthRecords.find((r) => r.id === value)
+                  youthIDRecords.find((r) => r.id === value) ??
+                    selectedYouthIDRecords.find((r) => r.id === value)
                 )
               : ""
           );
           setCurrentYouthIDValue(value);
+          const selectedRecord = youthIDRecords.find((r) => r.id === value);
+          if (selectedRecord) {
+            setSelectedYouthIDRecords([selectedRecord]);
+          }
         }}
         inputFieldRef={youthIDRef}
         defaultFieldValue={""}
@@ -605,7 +651,7 @@ export default function VibeUpdateForm(props) {
           isReadOnly={false}
           placeholder="Search Youth"
           value={currentYouthIDDisplayValue}
-          options={youthRecords
+          options={youthIDRecords
             .filter(
               (r, i, arr) =>
                 arr.findIndex((member) => member?.id === r?.id) === i
@@ -614,6 +660,7 @@ export default function VibeUpdateForm(props) {
               id: r?.id,
               label: getDisplayValue.youthID?.(r),
             }))}
+          isLoading={youthIDLoading}
           onSelect={({ id, label }) => {
             setCurrentYouthIDValue(id);
             setCurrentYouthIDDisplayValue(label);
@@ -625,6 +672,7 @@ export default function VibeUpdateForm(props) {
           defaultValue={youthID}
           onChange={(e) => {
             let { value } = e.target;
+            fetchYouthIDRecords(value);
             if (errors.youthID?.hasError) {
               runValidationTasks("youthID", value);
             }
@@ -687,6 +735,7 @@ export default function VibeUpdateForm(props) {
               id: getIDValue.site?.(r),
               label: getDisplayValue.site?.(r),
             }))}
+          isLoading={siteLoading}
           onSelect={({ id, label }) => {
             setCurrentSiteValue(
               siteRecords.find((r) =>
@@ -704,6 +753,7 @@ export default function VibeUpdateForm(props) {
           defaultValue={site}
           onChange={(e) => {
             let { value } = e.target;
+            fetchSiteRecords(value);
             if (errors.site?.hasError) {
               runValidationTasks("site", value);
             }
