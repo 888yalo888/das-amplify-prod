@@ -16,10 +16,21 @@ export const getSite = async (siteId, activeOnly = true) => {
         },
     });
     const roster = result.data.getSite.AttendedBy.items.map((youthWrapper) => {
-        youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
+            youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
         youthWrapper.youth.site = youthWrapper.youth.site.items.map((site) => site.id);
-        return youthWrapper.youth;
-    });
+            return youthWrapper.youth;
+        })
+        .sort((youthA, youthB) => {
+            const lastNameA = youthA.fullName.includes(' ')
+                ? youthA.fullName.split(' ')[1]
+                : youthA.fullName;
+            const lastNameB = youthB.fullName.includes(' ')
+                ? youthB.fullName.split(' ')[1]
+                : youthB.fullName;
+
+            return lastNameA.localeCompare(lastNameB);
+        });
+
     return {
         id: result.data.getSite.id,
         address: result.data.getSite.address,
@@ -84,23 +95,23 @@ export const checkOutYouth = async (vibeID, vibe) => {
 
 export const addYouths = async (youthDataArr, site) => {
     const results = await Promise.allSettled(youthDataArr.map(async (youthData) => {
-        const createYouthResult = await client.graphql({
-            query: createYouth,
-            variables: {
-                input: {
-                    ...youthData,
+            const createYouthResult = await client.graphql({
+                query: createYouth,
+                variables: {
+                    input: {
+                        ...youthData,
+                    },
                 },
-            },
-        });
-        return client.graphql({
-            query: createYouthSite,
-            variables: {
-                input: {
-                    siteId: site,
-                    youthId: createYouthResult.data.createYouth.id,
+            });
+            return client.graphql({
+                query: createYouthSite,
+                variables: {
+                    input: {
+                        siteId: site,
+                        youthId: createYouthResult.data.createYouth.id,
+                    },
                 },
-            },
-        });
+            });
     }));
 
     return {
