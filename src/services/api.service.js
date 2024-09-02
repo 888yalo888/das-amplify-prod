@@ -21,14 +21,7 @@ export const getSite = async (siteId, activeOnly = true) => {
             return youthWrapper.youth;
         })
         .sort((youthA, youthB) => {
-            const lastNameA = youthA.fullName.includes(' ')
-                ? youthA.fullName.split(' ')[1]
-                : youthA.fullName;
-            const lastNameB = youthB.fullName.includes(' ')
-                ? youthB.fullName.split(' ')[1]
-                : youthB.fullName;
-
-            return lastNameA.localeCompare(lastNameB);
+            return youthA.fullName.localeCompare(youthB.fullName)
         });
 
     return {
