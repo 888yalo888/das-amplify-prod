@@ -80,7 +80,7 @@ export const useStateMutationAction = (initialState) => {
 };
 export const useNavigateAction = (options) => {
   const { type, url, anchor, target } = options;
-  const run = React.useMemo(() => {
+  const run = React.useCallback(() => {
     switch (type) {
       case "url":
         return () => {
