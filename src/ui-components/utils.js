@@ -93,7 +93,28 @@ export const useNavigateAction = (options) => {
             EVENT_ACTION_CORE_NAVIGATE,
             AMPLIFY_SYMBOL
         );
-        run();
+        switch (type) {
+            case 'url':
+                // root cause: when target === _self window.open causes page to reload
+                //fix: useNavigate from react-router-dom
+                if (target && target !== '_self') {
+                    window.open(url, target, 'noopener noreferrer');
+                } else {
+                    navigate(url);
+                }
+                break;
+            case 'anchor':
+                window.location.hash = anchor ?? '';
+                break;
+            case 'reload':
+                window.location.reload();
+                break;
+            default:
+                console.warn(
+                    'Please provide a valid navigate type. Available types are "url", "anchor", and "reload".'
+                );
+                break;
+        }
         Hub.dispatch(
             UI_CHANNEL,
             {
