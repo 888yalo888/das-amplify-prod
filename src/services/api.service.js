@@ -1,7 +1,15 @@
 import { generateClient } from 'aws-amplify/api';
 import { updateSite, updateProgramManager } from '../graphql/mutations';
 import { getYouth } from '../graphql/queries';
-import { createVibe, updateVibe, getRosterById, getSitesByProgramManager, updateYouth, createYouth, createYouthSite } from '../graphql/customQueries';
+import {
+    createVibe,
+    updateVibe,
+    getRosterById,
+    getSitesByProgramManager,
+    updateYouth,
+    createYouth,
+    createYouthSite,
+} from '../graphql/customQueries';
 import { EntityType } from '../enums/entity.enum';
 import { EntityStatus } from '../enums/entity-status.enum';
 import { getCurrentDateString, getCurrentDateWithOffset } from '../utils/date';
@@ -15,17 +23,26 @@ export const getSite = async (siteId, activeOnly = true) => {
             id: siteId,
         },
     });
-    const roster = result.data.getSite.AttendedBy.items.map((youthWrapper) => {
-        youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
-        youthWrapper.youth.site = youthWrapper.youth.site.items.map((site) => site.id);
-        return youthWrapper.youth;
-    });
+    const roster = result.data.getSite.AttendedBy.items
+        .map((youthWrapper) => {
+            youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
+            youthWrapper.youth.site = youthWrapper.youth.site.items.map(
+                (site) => site.id
+            );
+            return youthWrapper.youth;
+        })
+        .sort((youthA, youthB) => {
+            return youthA.fullName.localeCompare(youthB.fullName);
+        });
+
     return {
         id: result.data.getSite.id,
         address: result.data.getSite.address,
         name: result.data.getSite.name,
         phoneNumber: result.data.getSite.phoneNumber,
-        roster: activeOnly ? roster.filter((youth) => youth.status === EntityStatus.Active) : roster,
+        roster: activeOnly
+            ? roster.filter((youth) => youth.status === EntityStatus.Active)
+            : roster,
         siteAdminEmail: result.data.getSite.siteAdminEmail,
         siteAdminName: result.data.getSite.siteAdminName,
     };
@@ -41,7 +58,9 @@ export const getProgramManager = async (email) => {
     return {
         id: result.data.listProgramManagers.items[0].id,
         fullName: result.data.listProgramManagers.items[0].fullName,
-        sites: result.data.listProgramManagers.items[0].AssignedTo.items.map((siteWrapper) => siteWrapper.site),
+        sites: result.data.listProgramManagers.items[0].AssignedTo.items.map(
+            (siteWrapper) => siteWrapper.site
+        ),
     };
 };
 
@@ -53,7 +72,7 @@ export const getYouthInfo = async (id) => {
         },
     });
     return result.data.getYouth;
-}
+};
 
 export const checkInYouth = async (siteID, youthID, vibe) => {
     await client.graphql({
@@ -83,29 +102,35 @@ export const checkOutYouth = async (vibeID, vibe) => {
 };
 
 export const addYouths = async (youthDataArr, site) => {
-    const results = await Promise.allSettled(youthDataArr.map(async (youthData) => {
-        const createYouthResult = await client.graphql({
-            query: createYouth,
-            variables: {
-                input: {
-                    ...youthData,
+    const results = await Promise.allSettled(
+        youthDataArr.map(async (youthData) => {
+            const createYouthResult = await client.graphql({
+                query: createYouth,
+                variables: {
+                    input: {
+                        ...youthData,
+                    },
                 },
-            },
-        });
-        return client.graphql({
-            query: createYouthSite,
-            variables: {
-                input: {
-                    siteId: site,
-                    youthId: createYouthResult.data.createYouth.id,
+            });
+            return client.graphql({
+                query: createYouthSite,
+                variables: {
+                    input: {
+                        siteId: site,
+                        youthId: createYouthResult.data.createYouth.id,
+                    },
                 },
-            },
-        });
-    }));
+            });
+        })
+    );
 
     return {
-        successfulResults: results.filter((result) => result.status === 'fulfilled').map((result) => result.value),
-        failures: results.filter((result) => result.status === 'rejected').map((result) => result.reason),
+        successfulResults: results
+            .filter((result) => result.status === 'fulfilled')
+            .map((result) => result.value),
+        failures: results
+            .filter((result) => result.status === 'rejected')
+            .map((result) => result.reason),
     };
 };
 
@@ -125,7 +150,7 @@ const updateSiteInfo = async (updatedFields) => {
         query: updateSite,
         variables: {
             input: {
-                ...updatedFields
+                ...updatedFields,
             },
         },
     });
@@ -136,7 +161,7 @@ const updateProgramManagerInfo = async (updatedFields) => {
         query: updateProgramManager,
         variables: {
             input: {
-                ...updatedFields
+                ...updatedFields,
             },
         },
     });
