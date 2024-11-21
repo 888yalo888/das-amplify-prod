@@ -1,5 +1,5 @@
-export const getCurrentDateString = () => {
-    const date = new Date();
+export const getDateString = (date) => {
+    // const date = new Date();
     date.setHours(date.getHours() - (date.getTimezoneOffset() / 60));
     const year = date.getFullYear();
     const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
