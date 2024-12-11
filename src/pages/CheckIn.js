@@ -22,6 +22,9 @@ import EmoteSad from "../assets/EmoteSad.png";
 import { useMediaQuery } from "react-responsive";
 import { VibeImageMap } from "../utils/image";
 
+import "react-day-picker/style.css";
+import "../styles/DayPicker.css";
+
 const CheckIn = () => {
     const store = useStore();
 
@@ -48,7 +51,7 @@ const CheckIn = () => {
 
     const handleOutsideClick = (event) => {
         if (
-            dayPickerRef.current &&
+            !!dayPickerRef.current &&
             !dayPickerRef.current.contains(event.target)
         ) {
             setShowDayPicker(false);
@@ -232,9 +235,10 @@ const CheckIn = () => {
             <div
                 style={{
                     display: "flex",
-                    justifyContent: "space-around",
+                    flexFlow: "wrap",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    margin: "10px 30px",
+                    margin: isTabletOrMobile ? "10px" : "10px 152px",
                     flexDirection: isTabletOrMobile ? "column" : "row",
                 }}
             >
@@ -279,27 +283,57 @@ const CheckIn = () => {
                         <div
                             ref={dayPickerRef}
                             style={{
+                                backgroundColor: "white",
                                 position: "absolute",
-                                top: "80px",
-                                zIndex: 1,
-                            }}
-                        >
-                            <DayPicker onDayClick={handleDayClick} />
-                        </div>
-                    ) : (
-                        <div
-                            style={{
-                                fontFamily:
-                                    "var(--amplify-fonts-default-variable)",
+                                // top: "80px",
+                                zIndex: 99,
                                 fontSize: isTabletOrMobile ? "1.4em" : "2em",
-                                fontWeight: "bold",
+                                // fontWeight: "bold",
                                 margin: isTabletOrMobile ? "30px 10px" : 0,
                                 textAlign: "center",
-                                cursor: "pointer",
+                                fontFamily:
+                                    "var(--amplify-fonts-default-variable)",
                             }}
-                            onClick={() => setShowDayPicker(true)}
                         >
-                            {getDate(selectedDate)}
+                            <DayPicker
+                                onDayClick={handleDayClick}
+                                // captionLayout="dropdown"
+                            />
+                        </div>
+                    ) : (
+                        <div>
+                            <div
+                                style={{
+                                    fontFamily:
+                                        "var(--amplify-fonts-default-variable)",
+                                    fontSize: isTabletOrMobile
+                                        ? "1.4em"
+                                        : "2em",
+                                    fontWeight: "bold",
+                                    margin: isTabletOrMobile ? "30px 10px" : 0,
+                                    textAlign: "center",
+                                    cursor: "pointer",
+                                }}
+                                onClick={() => setShowDayPicker(true)}
+                            >
+                                {getDate(selectedDate)}
+                            </div>
+                            {/* {showDayPicker && (
+                            <div
+                                ref={dayPickerRef}
+                                style={{
+                                    backgroundColor: "white",
+                                    position: "absolute",
+                                    top: "80px",
+                                    zIndex: 1,
+                                }}
+                            >
+                                <DayPicker
+                                    captionLayout="dropdown"
+                                    onDayClick={handleDayClick}
+                                />
+                            </div>
+                        )} */}
                         </div>
                     )}
                 </div>
