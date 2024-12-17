@@ -45,39 +45,39 @@ export const EVENT_ACTION_DATASTORE_UPDATE = `${EVENT_ACTION_DATASTORE}:${ACTION
 export const ACTION_DATASTORE_UPDATE_STARTED = `${EVENT_ACTION_DATASTORE_UPDATE}:${STATUS_STARTED}`;
 export const ACTION_DATASTORE_UPDATE_FINISHED = `${EVENT_ACTION_DATASTORE_UPDATE}:${STATUS_FINISHED}`;
 export const DATASTORE_QUERY_BY_ID_ERROR =
-  "Error querying datastore item by id";
+    "Error querying datastore item by id";
 export const AMPLIFY_SYMBOL =
-  typeof Symbol !== "undefined" && typeof Symbol.for === "function"
-    ? Symbol.for("amplify_default")
-    : "@@amplify_default";
+    typeof Symbol !== "undefined" && typeof Symbol.for === "function"
+        ? Symbol.for("amplify_default")
+        : "@@amplify_default";
 export const useStateMutationAction = (initialState) => {
-  const [state, setState] = React.useState(initialState);
-  const setNewState = React.useCallback(
-    (newState) => {
-      const prevState = state;
-      Hub.dispatch(
-        UI_CHANNEL,
-        {
-          event: ACTION_STATE_MUTATION_STARTED,
-          data: { prevState, newState },
+    const [state, setState] = React.useState(initialState);
+    const setNewState = React.useCallback(
+        (newState) => {
+            const prevState = state;
+            Hub.dispatch(
+                UI_CHANNEL,
+                {
+                    event: ACTION_STATE_MUTATION_STARTED,
+                    data: { prevState, newState },
+                },
+                EVENT_ACTION_CORE_STATE_MUTATION,
+                AMPLIFY_SYMBOL
+            );
+            setState(newState);
+            Hub.dispatch(
+                UI_CHANNEL,
+                {
+                    event: ACTION_STATE_MUTATION_FINISHED,
+                    data: { prevState, newState },
+                },
+                EVENT_ACTION_CORE_STATE_MUTATION,
+                AMPLIFY_SYMBOL
+            );
         },
-        EVENT_ACTION_CORE_STATE_MUTATION,
-        AMPLIFY_SYMBOL
-      );
-      setState(newState);
-      Hub.dispatch(
-        UI_CHANNEL,
-        {
-          event: ACTION_STATE_MUTATION_FINISHED,
-          data: { prevState, newState },
-        },
-        EVENT_ACTION_CORE_STATE_MUTATION,
-        AMPLIFY_SYMBOL
-      );
-    },
-    [state]
-  );
-  return [state, setNewState];
+        [state]
+    );
+    return [state, setNewState];
 };
 export const useNavigateAction = (options) => {
   const navigate = useNavigate();
@@ -127,6 +127,7 @@ export const useNavigateAction = (options) => {
   };
   return navigateAction;
 };
+
 export const findChildOverrides = (overrides, elementHierarchy) => {
   if (!overrides) {
     return null;

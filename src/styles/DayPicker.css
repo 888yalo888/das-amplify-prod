@@ -1,0 +1,22 @@
+.rdp-root {
+  --rdp-accent-color: rgb(4, 125, 149);
+  font-family:"InterVariable";
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 10px;
+  
+}
+.rdp-month_caption {
+    font-size: 1em;
+}
+
+
+@media (min-width: 1020px){
+    .rdp-root {
+        --rdp-day-height: 3.75rem;
+  --rdp-day-width: 3.75rem;
+  background-color: #f4f4f4;
+  padding: 30px;
+  border: 4px solid #ddd;
+    }
+}

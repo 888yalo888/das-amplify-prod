@@ -1,51 +1,45 @@
-import { generateClient } from "aws-amplify/api";
-import { updateSite, updateProgramManager } from "../graphql/mutations";
-import { getYouth } from "../graphql/queries";
-import {
-  createVibe,
-  updateVibe,
-  getRosterById,
-  getSitesByProgramManager,
-  updateYouth,
-  createYouth,
-  createYouthSite,
-} from "../graphql/customQueries";
-import { EntityType } from "../enums/entity.enum";
-import { EntityStatus } from "../enums/entity-status.enum";
-import { getCurrentDateString, getCurrentDateWithOffset } from "../utils/date";
+import { generateClient } from 'aws-amplify/api';
+import { updateSite, updateProgramManager } from '../graphql/mutations';
+import { getYouth } from '../graphql/queries';
+import { createVibe, updateVibe, getRosterById, getSitesByProgramManager, updateYouth, createYouth, createYouthSite } from '../graphql/customQueries';
+import { EntityType } from '../enums/entity.enum';
+import { EntityStatus } from '../enums/entity-status.enum';
+import { getDateString, getCurrentDateWithOffset } from '../utils/date';
 
 const client = generateClient();
 
-export const getSite = async (siteId, activeOnly = true) => {
-  const result = await client.graphql({
-    query: getRosterById,
-    variables: {
-      id: siteId,
-    },
-  });
-  const roster = result.data.getSite.AttendedBy.items
-    .map((youthWrapper) => {
-      youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
-      youthWrapper.youth.site = youthWrapper.youth.site.items.map(
-        (site) => site.id
-      );
-      return youthWrapper.youth;
-    })
-    .sort((youthA, youthB) => {
-      return youthA.fullName.localeCompare(youthB.fullName);
+export const getSite = async (siteId, selectedDate, activeOnly = true) => {
+    const result = await client.graphql({
+        query: getRosterById,
+        variables: {
+            id: siteId,
+            date: getDateString(new Date(selectedDate)),
+            // date: selectedDate ? selectedDate.toISOString().split('T')[0] : null
+        },
     });
+    const roster = result.data.getSite.AttendedBy.items
+        .map((youthWrapper) => {
+            youthWrapper.youth.vibes = youthWrapper.youth.vibes.items;
+            youthWrapper.youth.site = youthWrapper.youth.site.items.map(
+                (site) => site.id
+            );
+            return youthWrapper.youth;
+        })
+        .sort((youthA, youthB) => {
+            return youthA.fullName.localeCompare(youthB.fullName);
+        });
 
-  return {
-    id: result.data.getSite.id,
-    address: result.data.getSite.address,
-    name: result.data.getSite.name,
-    phoneNumber: result.data.getSite.phoneNumber,
-    roster: activeOnly
-      ? roster.filter((youth) => youth.status === EntityStatus.Active)
-      : roster,
-    siteAdminEmail: result.data.getSite.siteAdminEmail,
-    siteAdminName: result.data.getSite.siteAdminName,
-  };
+    return {
+        id: result.data.getSite.id,
+        address: result.data.getSite.address,
+        name: result.data.getSite.name,
+        phoneNumber: result.data.getSite.phoneNumber,
+        roster: activeOnly
+            ? roster.filter((youth) => youth.status === EntityStatus.Active)
+            : roster,
+        siteAdminEmail: result.data.getSite.siteAdminEmail,
+        siteAdminName: result.data.getSite.siteAdminName,
+    };
 };
 
 export const getProgramManager = async (email) => {
