@@ -284,7 +284,9 @@ const CheckIn = () => {
                             ref={dayPickerRef}
                             style={{
                                 backgroundColor: "white",
-                                position: "absolute",
+                                position: isTabletOrMobile
+                                    ? "relative"
+                                    : "absolute",
                                 // top: "80px",
                                 zIndex: 99,
                                 fontSize: isTabletOrMobile ? "1.4em" : "2em",
@@ -348,7 +350,9 @@ const CheckIn = () => {
                     flexDirection: isTabletOrMobile ? "column" : "row",
                     alignItems: isTabletOrMobile ? "center" : "",
                     flexWrap: "wrap",
-                    justifyContent: "center",
+                    justifyContent: "space-between",
+                    margin: isTabletOrMobile ? "0 0" : "30px 152px",
+                    gap: "50px",
                 }}
             >
                 <Roster></Roster>
